@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
@@ -9,7 +10,7 @@ export default new Vuex.Store({
         accountsView: {
             accounts: [
                 {
-                    id: 1,
+                    id: 10,
                     insTime: '2019-08-31T20:51:35.836',
                     modifTime: '2019-08-31T20:51:37.721',
                     name: 'Наличные',
@@ -23,7 +24,7 @@ export default new Vuex.Store({
                     balance: true,
                 },
                 {
-                    id: 2,
+                    id: 20,
                     insTime: '2019-08-31T20:51:35.836',
                     modifTime: '2019-08-31T20:51:37.721',
                     name: 'Наличные',
@@ -37,7 +38,7 @@ export default new Vuex.Store({
                     balance: true,
                 },
                 {
-                    id: 3,
+                    id: 30,
                     insTime: '2019-08-31T20:51:35.836',
                     modifTime: '2019-08-31T20:51:37.721',
                     name: 'Наличные',
@@ -53,6 +54,16 @@ export default new Vuex.Store({
             ],
         },
     },
-    mutations: {},
-    actions: {},
+    mutations: {
+        updateAccounts: (state, newAccountsList) => {
+            state.accountsView.accounts = newAccountsList;
+        }
+    },
+    actions: {
+        loadAccounts(context) {
+            axios
+                .get('http://localhost:8092/api/accounts?size=100')
+                .then((response) => (console.log(response), context.commit("updateAccounts",response.data.content)));
+        }
+    },
 });

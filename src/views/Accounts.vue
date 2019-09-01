@@ -17,7 +17,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in accounts" :key="item.name">
+                <tr v-for="item in accounts" :key="item.id">
                     <td>{{ item.id }}</td>
                     <td>{{ item.insTime | dateFormatter}}</td>
                     <td>{{ item.name }}</td>
@@ -40,6 +40,10 @@
 
     @Component
     export default class Accounts extends Vue{
+        created() {
+            // `this` указывает на экземпляр vm
+            this.$store.dispatch("loadAccounts");
+        }
         get accounts() {
             return this.$store.state.accountsView.accounts;
         }
