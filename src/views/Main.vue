@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <span>{{myComputedProp}}</span>
         <LastOperations/>
         <CreateOperation/>
     </div>
@@ -14,7 +15,11 @@
         components: {
             CreateOperation,
             LastOperations,
-        },
+        }
     })
-    export default class Main extends Vue {}
+    export default class Main extends Vue {
+        get myComputedProp() {
+            return this.$store.state.testVar;
+        }
+    }
 </script>
