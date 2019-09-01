@@ -6,64 +6,50 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        testVar: '12345',
+        mainView: {
+            lastConsumptionOperations: [],
+            lastTransferAndIncomeOperations: [],
+        },
         accountsView: {
-            accounts: [
-                {
-                    id: 10,
-                    insTime: '2019-08-31T20:51:35.836',
-                    modifTime: '2019-08-31T20:51:37.721',
-                    name: 'Наличные',
-                    description: 'Наши наличные',
-                    accountType: 'SIMPLE',
-                    targetCost: null,
-                    color: 'BLACK',
-                    round: false,
-                    status: 'ACTIVE',
-                    currency: 'RUBLES',
-                    balance: true,
-                },
-                {
-                    id: 20,
-                    insTime: '2019-08-31T20:51:35.836',
-                    modifTime: '2019-08-31T20:51:37.721',
-                    name: 'Наличные',
-                    description: 'Наши наличные',
-                    accountType: 'SIMPLE',
-                    targetCost: null,
-                    color: 'BLACK',
-                    round: false,
-                    status: 'ACTIVE',
-                    currency: 'RUBLES',
-                    balance: true,
-                },
-                {
-                    id: 30,
-                    insTime: '2019-08-31T20:51:35.836',
-                    modifTime: '2019-08-31T20:51:37.721',
-                    name: 'Наличные',
-                    description: 'Наши наличные',
-                    accountType: 'SIMPLE',
-                    targetCost: null,
-                    color: 'BLACK',
-                    round: false,
-                    status: 'ACTIVE',
-                    currency: 'RUBLES',
-                    balance: true,
-                },
-            ],
+            accounts: [],
         },
     },
     mutations: {
         updateAccounts: (state, newAccountsList) => {
             state.accountsView.accounts = newAccountsList;
-        }
+        },
+        updateLastConsumptionOperations: (state, newOperations) => {
+            state.mainView.lastConsumptionOperations = newOperations;
+        },
+        updateLastTransferAndIncomeOperations: (state, newOperations) => {
+            state.mainView.lastTransferAndIncomeOperations = newOperations;
+        },
     },
     actions: {
         loadAccounts(context) {
             axios
                 .get('http://localhost:8092/api/accounts?size=100')
-                .then((response) => (console.log(response), context.commit("updateAccounts",response.data.content)));
-        }
+                .then((response) => (console.log(response), context.commit('updateAccounts', response.data.content)));
+        },
+
+        loadLastConsumptionOperations(context) {
+            axios
+                .get('http://localhost:8092/api/operations/search', {
+                    params: {
+                        operationTypes:  'CONSUMPTION',
+                    },
+                })
+                .then((response) => (console.log(response), context.commit('updateLastConsumptionOperations', response.data.content)));
+        },
+
+        loadLastTransferAndIncomingOperations(context) {
+            axios
+                .get('http://localhost:8092/api/operations/search', {
+                    params: {
+                        operationTypes:  'INCOME,TRANSFER',
+                    },
+                })
+                .then((response) => (console.log(response), context.commit('updateLastTransferAndIncomeOperations', response.data.content)));
+        },
     },
 });
