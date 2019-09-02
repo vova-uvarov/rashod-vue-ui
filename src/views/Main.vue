@@ -2,6 +2,14 @@
     <div class="home">
         <v-row>
             <v-col cols="6">
+                <CreateOperation/>
+            </v-col>
+            <v-col cols="6">
+                <LastOperations title="Расходы2" :operations="lastConsumptionOperations"/>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="6">
                 <LastOperations title="Расходы" :operations="lastConsumptionOperations"/>
             </v-col>
             <v-col cols="6">
