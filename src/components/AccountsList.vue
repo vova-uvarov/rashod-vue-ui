@@ -45,7 +45,7 @@
             this.$store.dispatch("loadAccounts");
         }
         get accounts() {
-            return this.$store.state.accountsView.accounts;
+            return this.$store.state.accounts;
         }
     }
 </script>

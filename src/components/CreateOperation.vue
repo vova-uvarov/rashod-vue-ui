@@ -3,7 +3,7 @@
         <v-col cols="12">
             <v-card :raised="true" :color="cardColor">
                 <v-card-title>
-                    <v-col>Создать</v-col>
+                    <v-col>Создать - {{cardName}}</v-col>
                     <v-radio-group v-model="operation.operationType" :column="false">
                         <v-radio
                                 key="CONSUMPTION"
@@ -80,14 +80,15 @@
                             </v-col>
                         </v-row>
                         <v-row>
-                            <v-col cols="4">
-                                <v-dialog
-                                        ref="dialog"
-                                        v-model="modal"
-                                        :return-value.sync="operation.date"
-                                        persistent
+                            <v-col cols="6">
+                                <v-menu
+                                        v-model="operationDateMenu"
+                                        :close-on-content-click="false"
+                                        :nudge-right="40"
+                                        transition="scale-transition"
+                                        offset-y
                                         full-width
-                                        width="290px"
+                                        min-width="290px"
                                 >
                                     <template v-slot:activator="{ on }">
                                         <v-text-field
@@ -98,27 +99,27 @@
                                                 v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <v-date-picker v-model="operation.date" scrollable>
-                                        <div class="flex-grow-1"></div>
-                                        <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
-                                        <v-btn text color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
-                                    </v-date-picker>
-                                </v-dialog>
+                                    <v-date-picker v-model="date" @input="operationDateMenu = false"></v-date-picker>
+                                </v-menu>
                             </v-col>
-                            <v-col cols="4">
+
+                            <v-col cols="3">
+                                <v-select
+                                        :items="repeatCounts"
+                                        label="Количество повторений"
+                                ></v-select>
+                            </v-col>
+
+                            <v-col cols="3">
                                 <v-switch
                                         v-model="operation.isPlan"
                                         label="План?"
                                 ></v-switch>
                             </v-col>
 
-                            <v-col cols="4">
-                                {{operation.operationType}}
-                                <v-select
-                                        :items="repeatCounts"
-                                        label="Количество повторений"
-                                ></v-select>
-                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col offset="6" cols="6"> <v-btn color="success" block="true">Созать Операцию</v-btn></v-col>
                         </v-row>
                     </v-container>
                 </v-card-text>
@@ -132,27 +133,51 @@
 
     @Component
     export default class CreateOperation extends Vue {
+        created() {
+            // `this` указывает на экземпляр vm
+            this.$store.dispatch("loadAccounts");
+            this.$store.dispatch("loadCategories");
+        }
+
         get categories() {
-            return [
-                {text: "Продукты", value: 1},
-                {text: "Авто", value: 2}
-            ];
+            return this.$store.state.categories.map(val => ({
+                text: val.name,
+                value: val.id
+            }));
         }
 
         get accounts() {
-            return [
-                {text: "Тинькофф", value: 1},
-                {text: "Наличные", value: 2}
-            ];
+            return this.$store.state.accounts.map(val => ({
+                text: val.name,
+                value: val.id
+            }));
         }
 
         get repeatCounts() {
             return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         }
 
+        get cardName(){
+            if (this.operation.operationType=='CONSUMPTION'){
+                return 'Расход';
+            }
+
+            if (this.operation.operationType=='TRANSFER'){
+                return 'Перевод';
+            }
+            return 'Доход';
+        }
+
         get cardColor(){
-            console.log(this.operation)
-            return 'green';
+            console.log("operation="+this.operation.operationType)
+            if (this.operation.operationType=='CONSUMPTION'){
+                return '#FFF8F8';
+            }
+
+            if (this.operation.operationType=='TRANSFER'){
+                return '#FBFFD8';
+            }
+            return '#F6FFEA';
         }
 
         data() {
@@ -167,7 +192,7 @@
                     cost: 0,
                     operationType: 'CONSUMPTION'
                 },
-                modal: false,
+                operationDateMenu: false,
 
             };
         }

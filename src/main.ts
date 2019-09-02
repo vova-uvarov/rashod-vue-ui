@@ -10,13 +10,23 @@ import '@mdi/font/css/materialdesignicons.css';
 Vue.config.productionTip = false;
 
 Vue.filter('dateFormatter', function(value: any) {
-  if (!value) { return ''; }
-  return moment(value).format('YYYY-MM-DD');
+    if (!value) {
+        return '';
+    }
+    return moment(value).format('YYYY-MM-DD');
+});
+
+Vue.filter('truncateString', function(value: any) {
+    if (value.length > 30) {
+        return value.substring(0, 30) + '...';
+    } else {
+        return value;
+    }
 });
 
 new Vue({
-  router,
-  store,
-  vuetify,
-  render: (h) => h(App),
+    router,
+    store,
+    vuetify,
+    render: (h) => h(App),
 }).$mount('#app');

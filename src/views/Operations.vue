@@ -16,11 +16,11 @@
                 </thead>
                 <tbody>
                 <tr v-for="item in operations" :key="item.name">
-                    <td>{{ item.date }}</td>
+                    <td>{{ item.operationDate | dateFormatter }}</td>
                     <td>{{ item.account }}</td>
-                    <td>{{ item.category }}</td>
-                    <td>{{ item.sum }}</td>
-                    <td>{{ item.shoppingList }}</td>
+                    <td>{{ item.category.name }}</td>
+                    <td>{{ item.cost }}</td>
+                    <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                     <td>{{ item.place }}</td>
                     <td>{{ item.comment }}</td>
                     <td>{{ item.author }}</td>
@@ -31,103 +31,25 @@
     </v-row>
 </template>
 <script lang="ts">
-    export default {
-        data() {
-            return {
-                operations: [
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    },
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    },
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    },
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    },
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    },
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    },
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    },
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    },
-                    {
-                        date: '2018-01-01',
-                        account: 'Наличные',
-                        category: 'Продукты',
-                        sum: 1200,
-                        shoppingList: 'Молоко, яблоки, сосиски',
-                        place: 'Пятерочка',
-                        comment: 'На ДР к Диме',
-                        author: 'Вова'
-                    }
 
-                ],
+    import {Component, Vue} from "vue-property-decorator";
+
+    @Component
+    export default class AccountList extends Vue {
+        created() {
+            // `this` указывает на экземпляр vm
+            this.$store.dispatch("loadOperations");
+        }
+
+        shoppingListFormatter(shoppingList){
+            if (!shoppingList){
+                return '';
             }
-        },
+            return shoppingList.map(val => (val.name)).toString();
+        }
+        get operations() {
+            return this.$store.state.operations;
+        }
+
     }
 </script>
