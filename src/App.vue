@@ -60,10 +60,12 @@
             <v-toolbar-title>Домашние финансы</v-toolbar-title>
         </v-app-bar>
 
+
         <v-content>
             <v-container
                     fluid
             >
+               <BalanceListBar/>
                 <router-view/>
             </v-container>
         </v-content>
@@ -75,7 +77,10 @@
 </template>
 
 <script>
+    import BalanceListBar from "./components/BalanceListBar";
+
     export default {
+        components: {BalanceListBar},
         props: {
             source: String,
         },
