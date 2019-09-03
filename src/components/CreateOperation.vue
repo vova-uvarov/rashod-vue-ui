@@ -30,7 +30,7 @@
                             <v-col cols="6">
                                 <v-select
                                         :items="categories"
-                                        v-model="operation.category"
+                                        v-model="operation.category.id"
                                         label="Категория"
                                 ></v-select>
                             </v-col>
@@ -61,7 +61,7 @@
                             <v-col cols="6">
                                 <v-select
                                         :items="accounts"
-                                        v-model="operation.account"
+                                        v-model="operation.account.id"
                                         label="Со счета"
                                 ></v-select>
                             </v-col>
@@ -99,7 +99,8 @@
                                                 v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <v-date-picker v-model="operation.date" @input="operationDateMenu = false"></v-date-picker>
+                                    <v-date-picker v-model="operation.date"
+                                                   @input="operationDateMenu = false"></v-date-picker>
                                 </v-menu>
                             </v-col>
 
@@ -119,7 +120,10 @@
 
                         </v-row>
                         <v-row>
-                            <v-col offset="6" cols="6"> <v-btn color="success" :block="true">Созать Операцию</v-btn></v-col>
+                            <v-col offset="6" cols="6">
+                                <v-btn color="success" :block="true" v-on:click="createOperation">Созать Операцию
+                                </v-btn>
+                            </v-col>
                         </v-row>
                     </v-container>
                 </v-card-text>
@@ -129,6 +133,8 @@
 </template>
 
 <script lang="ts">
+    import axios from 'axios';
+
     import {Component, Vue} from "vue-property-decorator";
 
     @Component
@@ -137,6 +143,19 @@
             // `this` указывает на экземпляр vm
             this.$store.dispatch("loadAccounts");
             this.$store.dispatch("loadCategories");
+        }
+
+        createOperation() {
+            axios
+                .post('http://localhost:8092/api/operations', this.operation)
+                .then((response) => {
+                        alert('Операция успешно создана');
+                        this.$store.dispatch("loadAccounts");
+                        this.$store.dispatch("loadCategories");
+                        this.$root.$emit('operationCreated')
+                    }
+                )
+            ;
         }
 
         get categories() {
@@ -157,24 +176,24 @@
             return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         }
 
-        get cardName(){
-            if (this.operation.operationType=='CONSUMPTION'){
+        get cardName() {
+            if (this.operation.operationType == 'CONSUMPTION') {
                 return 'Расход';
             }
 
-            if (this.operation.operationType=='TRANSFER'){
+            if (this.operation.operationType == 'TRANSFER') {
                 return 'Перевод';
             }
             return 'Доход';
         }
 
-        get cardColor(){
-            console.log("operation="+this.operation.operationType)
-            if (this.operation.operationType=='CONSUMPTION'){
+        get cardColor() {
+            console.log("operation=" + this.operation.operationType)
+            if (this.operation.operationType == 'CONSUMPTION') {
                 return '#FFF8F8';
             }
 
-            if (this.operation.operationType=='TRANSFER'){
+            if (this.operation.operationType == 'TRANSFER') {
                 return '#FBFFD8';
             }
             return '#F6FFEA';
@@ -187,8 +206,8 @@
                     comment: '',
                     isPlan: false,
                     place: '',
-                    category: 2,
-                    account: 2,
+                    category: {id: 2},
+                    account: {id: 2},
                     cost: 0,
                     operationType: 'CONSUMPTION'
                 },

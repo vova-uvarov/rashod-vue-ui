@@ -43,6 +43,10 @@
     })
     export default class Main extends Vue {
         created() {
+            this.loadData();
+        }
+
+        private loadData() {
             axios
                 .get('http://localhost:8092/api/operations/search', {
                     params: {
@@ -69,6 +73,12 @@
                     },
                 })
                 .then((response) => (this.lastPlansOperations = response.data.content));
+        }
+
+        mounted(){
+            this.$root.$on('operationCreated', () => {
+                this.loadData();
+            })
         }
 
         data() {
