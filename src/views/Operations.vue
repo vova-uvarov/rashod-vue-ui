@@ -1,3 +1,4 @@
+<!--todo из view сделать компонент-->
 <template>
     <v-row justify="center" align="start">
         <v-col cols="12">
@@ -25,7 +26,13 @@
                     <td>{{ item.place }}</td>
                     <td>{{ item.comment }}</td>
                     <td>{{ item.author }}</td>
-                    <td>{{ item.plan }}</td>
+                    <td>
+                        <v-switch
+                                v-model="item.plan"
+                                label=""
+                                :disabled="true"
+                        ></v-switch>
+                    </td>
                 </tr>
                 </tbody>
             </v-simple-table>
