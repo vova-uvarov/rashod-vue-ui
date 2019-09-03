@@ -6,7 +6,7 @@
                 color="primary"
                 outlined
         >
-            <b>{{item.accountName}}:{{item.balance}}</b>
+            <b>{{item.accountName}}:</b> {{item.balance|moneyFormat}}
         </v-chip>
     </v-toolbar>
 </template>
