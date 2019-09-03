@@ -59,9 +59,11 @@
                                           label="На счет"
                                 ></v-select>
 
-                                <v-text-field v-else
+                                <v-autocomplete v-else
                                         label="Список покупок"
-                                ></v-text-field>
+                                        :items="shoppingItems()"
+                                ></v-autocomplete>
+
                             </v-col>
                         </v-row>
 
@@ -155,6 +157,14 @@
             // `this` указывает на экземпляр vm
             this.$store.dispatch("loadAccounts");
             this.$store.dispatch("loadCategories");
+        }
+
+        shoppingItems(){
+            return [
+                {text: 'Яблоки'},
+                {text: 'Помидоры'},
+                {text: 'Огурцы'},
+        ]
         }
 
         createOperation() {
