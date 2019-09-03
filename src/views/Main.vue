@@ -23,9 +23,6 @@
                                 :operations="lastPlansOperations"/>
             </v-col>
         </v-row>
-        <v-row>
-            Тут еще что-то будет
-        </v-row>
     </div>
 </template>
 
