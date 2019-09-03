@@ -99,7 +99,7 @@
                                                 v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <v-date-picker v-model="date" @input="operationDateMenu = false"></v-date-picker>
+                                    <v-date-picker v-model="operation.date" @input="operationDateMenu = false"></v-date-picker>
                                 </v-menu>
                             </v-col>
 
@@ -119,7 +119,7 @@
 
                         </v-row>
                         <v-row>
-                            <v-col offset="6" cols="6"> <v-btn color="success" block="true">Созать Операцию</v-btn></v-col>
+                            <v-col offset="6" cols="6"> <v-btn color="success" :block="true">Созать Операцию</v-btn></v-col>
                         </v-row>
                     </v-container>
                 </v-card-text>

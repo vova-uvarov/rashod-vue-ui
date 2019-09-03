@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center" align="start">
         <v-col cols="12">
-            <v-card>
+            <v-card :color="cardColor">
                 <v-card-title>{{title}}</v-card-title>
                 <v-simple-table>
                     <thead>
@@ -14,9 +14,9 @@
                     </thead>
                     <tbody>
                     <tr v-for="item in operations" :key="item.id">
-                        <td>{{ item.insTime | dateFormatter}}</td>
+                        <td>{{ item.operationDate | dateFormatter }}</td>
                         <td>{{ item.category.name }}</td>
-                        <td>{{ item.shoppingList }}</td>
+                        <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                         <td>{{ item.cost }}</td>
                     </tr>
                     </tbody>
@@ -36,5 +36,16 @@
 
         @Prop({default: "Операции"})
         title: string;
+
+        @Prop({default: "white"})
+        cardColor: string;
+
+        //todo Копипаста из LastOpeartions
+        shoppingListFormatter(shoppingList){
+            if (!shoppingList){
+                return '';
+            }
+            return shoppingList.map(val => (val.name)).toString();
+        }
     }
 </script>
