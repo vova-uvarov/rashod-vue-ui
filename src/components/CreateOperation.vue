@@ -36,25 +36,12 @@
                             </v-col>
                             <v-col cols="6">
                                 <v-text-field
-                                        label="Список покупок"
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-
-                        <v-row>
-                            <v-col cols="6">
-                                <v-text-field
                                         type="number"
                                         label="Сумма"
                                         v-model="operation.cost"
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="6">
-                                <v-text-field
-                                        label="Место"
-                                        v-model="operation.place"
-                                ></v-text-field>
-                            </v-col>
+
                         </v-row>
 
                         <v-row>
@@ -66,10 +53,35 @@
                                 ></v-select>
                             </v-col>
                             <v-col cols="6">
-                                <v-text-field label="Теги" disabled
+                                <v-select v-if="operation.operationType==='TRANSFER'"
+                                          :items="accounts"
+                                          v-model="operation.accountToTransfer.id"
+                                          label="На счет"
+                                ></v-select>
+
+                                <v-text-field v-else
+                                        label="Список покупок"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
+
+                        <v-row>
+                            <v-col cols="6">
+                                <v-text-field
+                                        label="Место"
+                                        v-model="operation.place"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="6">
+                                <v-text-field label="Теги" disabled
+                                ></v-text-field>
+                            </v-col>
+
+                        </v-row>
+
+
+
 
                         <v-row>
                             <v-col cols="12">
@@ -92,14 +104,14 @@
                                 >
                                     <template v-slot:activator="{ on }">
                                         <v-text-field
-                                                v-model="operation.date"
+                                                v-model="operation.operationDate"
                                                 label="Дата"
                                                 prepend-icon="event"
                                                 readonly
                                                 v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <v-date-picker v-model="operation.date"
+                                    <v-date-picker v-model="operation.operationDate"
                                                    @input="operationDateMenu = false"></v-date-picker>
                                 </v-menu>
                             </v-col>
@@ -113,7 +125,7 @@
 
                             <v-col cols="3">
                                 <v-switch
-                                        v-model="operation.isPlan"
+                                        v-model="operation.plan"
                                         label="План?"
                                 ></v-switch>
                             </v-col>
@@ -149,6 +161,7 @@
             axios
                 .post('http://localhost:8092/api/operations', this.operation)
                 .then((response) => {
+                        this.operation=this.initOperationData();
                         alert('Операция успешно создана');
                         this.$store.dispatch("loadAccounts");
                         this.$store.dispatch("loadCategories");
@@ -201,18 +214,23 @@
 
         data() {
             return {
-                operation: {
-                    date: new Date().toISOString().substr(0, 10),
-                    comment: '',
-                    isPlan: false,
-                    place: '',
-                    category: {id: 2},
-                    account: {id: 2},
-                    cost: 0,
-                    operationType: 'CONSUMPTION'
-                },
+                operation: this.initOperationData(),
                 operationDateMenu: false,
 
+            };
+        }
+
+        private initOperationData() {
+            return {
+                operationDate: new Date().toISOString().substr(0, 10),
+                comment: '',
+                plan: false,
+                place: '',
+                category: {id: 2},
+                account: {id: 2},
+                accountToTransfer: {},
+                cost: 0,
+                operationType: 'CONSUMPTION'
             };
         }
     }
