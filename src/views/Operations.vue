@@ -43,7 +43,7 @@
             this.$store.dispatch("loadOperations");
         }
 
-        shoppingListFormatter(shoppingList){
+        shoppingListFormatter(shoppingList: Array<any>){
             if (!shoppingList){
                 return '';
             }
