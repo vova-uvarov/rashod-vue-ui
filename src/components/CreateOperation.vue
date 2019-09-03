@@ -168,8 +168,10 @@
         }
 
         createOperation() {
+            let data1 = this.operation;
+            data1.operationDate=this.operation.operationDate+'T00:00'; // todo дичайщий хак
             axios
-                .post('http://localhost:8092/api/operations', this.operation)
+                .post('http://localhost:8092/api/operations', data1)
                 .then((response) => {
                         this.operation=this.initOperationData();
                         alert('Операция успешно создана');
