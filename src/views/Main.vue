@@ -76,6 +76,10 @@
             this.$root.$on('operationCreated', () => {
                 this.loadData();
             })
+
+            this.$root.$on('operationDeleted', () => {
+                this.loadData();
+            })
         }
 
         data() {

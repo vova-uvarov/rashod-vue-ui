@@ -35,16 +35,20 @@
     @Component
     export default class BalanceListBar extends Vue {
         created() {
+            this.loadBalances();
+        }
+
+        private loadBalances() {
             axios
-                .get('http://localhost:8092/api/accounts/balances')
+                .get("http://localhost:8092/api/accounts/balances")
                 .then((response) => (this.balances = response.data));
 
             axios
-                .get('http://localhost:8092/api/accounts/totalBalance')
+                .get("http://localhost:8092/api/accounts/totalBalance")
                 .then((response) => (this.totalBalance = response.data));
 
             axios
-                .get('http://localhost:8092/api/accounts/balances/goal/byCurrency')
+                .get("http://localhost:8092/api/accounts/balances/goal/byCurrency")
                 .then((response) => (this.balancesGoalByCurrency = response.data));
         }
 
@@ -54,6 +58,16 @@
                 balances: [],
                 balancesGoalByCurrency: [],
             };
+        }
+
+        mounted(){
+            this.$root.$on('operationCreated', () => {
+                this.loadBalances();
+            })
+
+            this.$root.$on('operationDeleted', () => {
+                this.loadBalances();
+            })
         }
     }
 </script>
