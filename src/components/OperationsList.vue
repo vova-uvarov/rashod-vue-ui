@@ -5,6 +5,7 @@
             <v-simple-table>
                 <thead>
                 <tr>
+                    <th class="text-left">Действия</th>
                     <th class="text-left">Дата</th>
                     <th class="text-left">Счет</th>
                     <th class="text-left">Категория</th>
@@ -18,6 +19,11 @@
                 </thead>
                 <tbody>
                 <tr v-for="item in operations" :key="item.name">
+                    <td>
+                        <v-btn class="mx-2" fab dark small color="primary"  @click="deleteOperation(item.id)">
+                            <v-icon dark>mdi-minus</v-icon>
+                        </v-btn>
+                    </td>
                     <td>{{ item.operationDate | dateFormatter }}</td>
                     <td>{{ item.account.name }}</td>
                     <td>{{ item.category.name }}</td>
@@ -42,6 +48,7 @@
 <script lang="ts">
 
     import {Component, Vue} from "vue-property-decorator";
+    import axios from "axios";
 
     @Component
     export default class OperationsList extends Vue {
@@ -50,12 +57,25 @@
             this.$store.dispatch("loadOperations");
         }
 
-        shoppingListFormatter(shoppingList: Array<any>){
-            if (!shoppingList){
-                return '';
+        deleteOperation(id) {
+            if (confirm("Вы действительно хотите удалить операцию?")) {
+                axios
+                    .delete("http://localhost:8092/api/operations/" + id)
+                    .then((response) => {
+                            this.$root.$emit('operationCreated');
+                            this.$store.dispatch("loadOperations");
+                        }
+                    );
+            }
+        }
+
+        shoppingListFormatter(shoppingList: Array<any>) {
+            if (!shoppingList) {
+                return "";
             }
             return shoppingList.map(val => (val.name)).toString();
         }
+
         get operations() {
             return this.$store.state.operationsView.operations;
         }
