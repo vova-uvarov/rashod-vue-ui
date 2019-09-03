@@ -23,7 +23,7 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.accountType }}</td>
-                    <td>{{ item.targetCost|moneyFormat }}</td>
+                    <td>{{ item.targetCost | moneyFormat }}</td>
                     <td>
                         <v-switch
                                 v-model="item.round"
