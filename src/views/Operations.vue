@@ -19,7 +19,7 @@
                     <td>{{ item.operationDate | dateFormatter }}</td>
                     <td>{{ item.account }}</td>
                     <td>{{ item.category.name }}</td>
-                    <td>{{ item.cost }}</td>
+                    <td>{{ item.cost |moneyFormat}}</td>
                     <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                     <td>{{ item.place }}</td>
                     <td>{{ item.comment }}</td>
