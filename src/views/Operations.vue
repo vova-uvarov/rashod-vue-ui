@@ -1,5 +1,14 @@
 <template>
     <div class="operations">
+        <v-expansion-panels>
+            <v-expansion-panel :key="operationsFilter">
+                <v-expansion-panel-header>Фильтр</v-expansion-panel-header>
+                <v-expansion-panel-content>
+                    <OperationsFilter/>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+        </v-expansion-panels>
+
         <OperationsList/>
         <template>
             <div class="text-center">
@@ -16,10 +25,12 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import OperationsList from "@/components/OperationsList.vue"; // @ is an alias to /src
+    import OperationsList from "@/components/OperationsList.vue";
+    import OperationsFilter from "@/components/OperationsFilter.vue"; // @ is an alias to /src
 
     @Component({
         components: {
+            OperationsFilter,
             OperationsList,
         }
     })
