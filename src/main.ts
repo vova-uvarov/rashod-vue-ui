@@ -24,6 +24,13 @@ Vue.filter('truncateString', function(value: any) {
     }
 });
 
+Vue.filter('moneyFormat', function(value: any) {
+    let val = (value/1).toFixed(2).replace('.', ',')
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+});
+
+
+
 new Vue({
     router,
     store,
