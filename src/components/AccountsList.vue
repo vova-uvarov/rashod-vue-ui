@@ -24,10 +24,22 @@
                     <td>{{ item.description }}</td>
                     <td>{{ item.accountType }}</td>
                     <td>{{ item.targetCost|moneyFormat }}</td>
-                    <td>{{ item.round }}</td>
+                    <td>
+                        <v-switch
+                                v-model="item.round"
+                                label=""
+                                :disabled="true"
+                        ></v-switch>
+                    </td>
                     <td>{{ item.status }}</td>
                     <td>{{ item.currency }}</td>
-                    <td>{{ item.balance }}</td>
+                    <td>
+                        <v-switch
+                                v-model="item.balance"
+                                label=""
+                                :disabled="true"
+                        ></v-switch>
+                    </td>
                 </tr>
                 </tbody>
             </v-simple-table>
@@ -36,14 +48,15 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
+    import {Component, Vue} from "vue-property-decorator";
 
     @Component
-    export default class AccountList extends Vue{
+    export default class AccountList extends Vue {
         created() {
             // `this` указывает на экземпляр vm
             this.$store.dispatch("loadAccounts");
         }
+
         get accounts() {
             return this.$store.state.accounts;
         }
