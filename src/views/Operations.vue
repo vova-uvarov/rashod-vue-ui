@@ -1,64 +1,40 @@
-<!--todo из view сделать компонент-->
 <template>
-    <v-row justify="center" align="start">
-        <v-col cols="12">
-            <v-simple-table>
-                <thead>
-                <tr>
-                    <th class="text-left">Дата</th>
-                    <th class="text-left">Счет</th>
-                    <th class="text-left">Категория</th>
-                    <th class="text-left">Сумма</th>
-                    <th class="text-left">Список покупок</th>
-                    <th class="text-left">Место</th>
-                    <th class="text-left">Комментарий</th>
-                    <th class="text-left">Автор</th>
-                    <th class="text-left">План</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="item in operations" :key="item.name">
-                    <td>{{ item.operationDate | dateFormatter }}</td>
-                    <td>{{ item.account.name }}</td>
-                    <td>{{ item.category.name }}</td>
-                    <td>{{ item.cost |moneyFormat}}</td>
-                    <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
-                    <td>{{ item.place }}</td>
-                    <td>{{ item.comment }}</td>
-                    <td>{{ item.author }}</td>
-                    <td>
-                        <v-switch
-                                v-model="item.plan"
-                                label=""
-                                :disabled="true"
-                        ></v-switch>
-                    </td>
-                </tr>
-                </tbody>
-            </v-simple-table>
-        </v-col>
-    </v-row>
+    <div class="operations">
+        <OperationsList/>
+        <template>
+            <div class="text-center">
+                <v-pagination
+                        v-model="page"
+                        :length="length"
+                        :total-visible="8"
+                        circle
+                ></v-pagination>
+            </div>
+        </template>
+    </div>
 </template>
+
 <script lang="ts">
-
     import {Component, Vue} from "vue-property-decorator";
+    import OperationsList from "@/components/OperationsList.vue"; // @ is an alias to /src
 
-    @Component
-    export default class AccountList extends Vue {
-        created() {
-            // `this` указывает на экземпляр vm
+    @Component({
+        components: {
+            OperationsList,
+        }
+    })
+    export default class OperationsView extends Vue {
+        get page() {
+            return this.$store.state.operationsView.currentPage;
+        }
+
+        set page(value) {
+            this.$store.commit("setOperationViewCurrentPage", value);
             this.$store.dispatch("loadOperations");
         }
 
-        shoppingListFormatter(shoppingList: Array<any>){
-            if (!shoppingList){
-                return '';
-            }
-            return shoppingList.map(val => (val.name)).toString();
+        get length() {
+            return this.$store.state.operationsView.totalPages;
         }
-        get operations() {
-            return this.$store.state.operations;
-        }
-
     }
 </script>
