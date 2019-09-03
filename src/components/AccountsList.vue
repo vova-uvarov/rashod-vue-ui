@@ -23,7 +23,7 @@
                     <td>{{ item.name }}</td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.accountType }}</td>
-                    <td>{{ item.targetCost }}</td>
+                    <td>{{ item.targetCost|moneyFormat }}</td>
                     <td>{{ item.round }}</td>
                     <td>{{ item.status }}</td>
                     <td>{{ item.currency }}</td>

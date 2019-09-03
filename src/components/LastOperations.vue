@@ -17,7 +17,7 @@
                         <td>{{ item.operationDate | dateFormatter }}</td>
                         <td>{{ item.category.name }}</td>
                         <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
-                        <td>{{ item.cost }}</td>
+                        <td>{{ item.cost |moneyFormat}}</td>
                     </tr>
                     </tbody>
                 </v-simple-table>
