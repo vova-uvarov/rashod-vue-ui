@@ -12,18 +12,20 @@
                     <th class="text-left">Место</th>
                     <th class="text-left">Комментарий</th>
                     <th class="text-left">Автор</th>
+                    <th class="text-left">План</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="item in operations" :key="item.name">
                     <td>{{ item.operationDate | dateFormatter }}</td>
-                    <td>{{ item.account }}</td>
+                    <td>{{ item.account.name }}</td>
                     <td>{{ item.category.name }}</td>
                     <td>{{ item.cost |moneyFormat}}</td>
                     <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                     <td>{{ item.place }}</td>
                     <td>{{ item.comment }}</td>
                     <td>{{ item.author }}</td>
+                    <td>{{ item.plan }}</td>
                 </tr>
                 </tbody>
             </v-simple-table>
