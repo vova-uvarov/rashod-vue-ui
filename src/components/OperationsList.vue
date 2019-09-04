@@ -52,18 +52,14 @@
 
     @Component
     export default class OperationsList extends Vue {
-        created() {
-            // `this` указывает на экземпляр vm
-            this.$store.dispatch("loadOperations");
-        }
 
         deleteOperation(id) {
             if (confirm("Вы действительно хотите удалить операцию?")) {
                 axios
                     .delete("http://localhost:8092/api/operations/" + id)
                     .then((response) => {
-                            this.$root.$emit('operationCreated');
-                            this.$store.dispatch("loadOperations");
+                            this.$root.$emit('operationDeleted');
+                            this.$store.dispatch("reloadOperations");
                         }
                     );
             }

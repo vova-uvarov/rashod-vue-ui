@@ -135,7 +135,7 @@
                         </v-row>
                         <v-row>
                             <v-col offset="6" cols="6">
-                                <v-btn color="success" :block="true" v-on:click="createOperation">Созать Операцию
+                                <v-btn color="success" :block="true" v-on:click="createOperation">Создать Операцию
                                 </v-btn>
                             </v-col>
                         </v-row>

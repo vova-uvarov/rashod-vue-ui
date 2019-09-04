@@ -129,8 +129,21 @@
                 <v-text-field
                         type="text"
                         label="Тэги"
-                        v-model="operationFilter.tags"
+                        v-model="operationFilter.tag"
                 ></v-text-field>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col  cols="6">
+                <v-select
+                        :items="countsPerPage"
+                        v-model="operationFilter.size"
+                        label="Отображать на странице"
+                ></v-select>
+            </v-col>
+            <v-col  cols="6">
+                <v-btn color="success" :block="true" v-on:click="applyFilter">Применить фильтр
+                </v-btn>
             </v-col>
         </v-row>
 
@@ -149,6 +162,9 @@
             this.$store.dispatch("loadCategories");
         }
 
+        get countsPerPage() {
+            return [5,10,20,50,100]
+        }
         get accounts() {
             return this.$store.state.accounts.map(val => ({
                 text: val.name,
@@ -163,20 +179,17 @@
             }));
         }
 
+        applyFilter() {
+            this.$store.commit("updateOperationsFilter", this.operationFilter);
+            this.$store.dispatch("reloadOperations")
+        }
+
         data() {
             let now = new Date();
             now.setDate(now.getDate() - 30);
             let dateFrom = now.toISOString().substr(0, 10);
             return {
-                operationFilter: {
-                    dateFrom: dateFrom,
-                    dateTo: new Date().toISOString().substr(0, 10),
-                    category: {},
-                    account: {},
-                    place: "",
-                    costFrom: null,
-                    costTo: null,
-                },
+                operationFilter: JSON.parse(JSON.stringify(this.$store.state.operationsView.filter)),
                 dateFromMenu: false,
                 dateToMenu: false,
             };

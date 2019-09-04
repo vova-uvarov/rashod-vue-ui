@@ -5,17 +5,39 @@ import axios from 'axios';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+
+    strict: true,
     state: {
         operationsView: {
             operations: [],
             totalPages: 0,
-            currentPage: 1
+            currentPage: 1,
+            filter: {
+                dateFrom: '',
+                dateTo: new Date().toISOString().substr(0, 10),
+                category: {},
+                account: {},
+                place: '',
+                tag: '',
+                costFrom: null,
+                costTo: null,
+                size: 10,
+                page: 1,
+            },
         },
 
         categories: [],
         accounts: [],
     },
     mutations: {
+        initState: (state) => {
+            const now = new Date();
+            now.setDate(now.getDate() - 30);
+            state.operationsView.filter.dateFrom = now.toISOString().substr(0, 10);
+        },
+        updateOperationsFilter: (state, newValue) => {
+            state.operationsView.filter = newValue;
+        },
 
         setOperationViewCurrentPage: (state, newValue) => {
             state.operationsView.currentPage = newValue;
@@ -29,12 +51,23 @@ export default new Vuex.Store({
         },
         updateAccounts: (state, newAccountsList) => {
             state.accounts = newAccountsList;
-        }
+        },
     },
     actions: {
-        loadOperations(context) {
+        reloadOperations(context) {
+            const filter = JSON.parse(JSON.stringify(this.state.operationsView.filter));
+            filter.page = this.state.operationsView.currentPage - 1;
+            if (filter.dateFrom) {
+                filter.dateFrom = filter.dateFrom + "T00:00"; // todo дикий хак
+            }
+
+            if (filter.dateTo) {
+                filter.dateTo = filter.dateTo + "T00:00"; // todo дикий хак
+            }
             axios
-                .get('http://localhost:8092/api/operations/search?isPlan=false&size=10&page=' + (this.state.operationsView.currentPage - 1))
+                .get('http://localhost:8092/api/operations/search', {
+                    params: filter,
+                })
                 .then((response) => (context.commit('updateOperations', response.data)));
         },
 
