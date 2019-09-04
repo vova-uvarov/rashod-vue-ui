@@ -8,6 +8,7 @@
                     <th class="text-left">Действия</th>
                     <th class="text-left">Дата</th>
                     <th class="text-left">Счет</th>
+                    <th class="text-left">На Счет</th>
                     <th class="text-left">Категория</th>
                     <th class="text-left">Сумма</th>
                     <th class="text-left">Список покупок</th>
@@ -26,6 +27,7 @@
                     </td>
                     <td>{{ item.operationDate | dateFormatter }}</td>
                     <td>{{ item.account.name }}</td>
+                    <td>{{ item.accountToTransfer?item.accountToTransfer.name:'' }}</td>
                     <td>{{ item.category.name }}</td>
                     <td>{{ item.cost |moneyFormat}}</td>
                     <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>

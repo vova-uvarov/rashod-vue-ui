@@ -62,7 +62,7 @@
             <v-col cols="3">
                 <v-select
                         :items="accounts"
-                        v-model="operationFilter.account.id"
+                        v-model="operationFilter.accountId"
                         label="Счет"
                 ></v-select>
             </v-col>
@@ -96,7 +96,6 @@
             <v-col cols="3">
                 <v-select
                         :items="accounts"
-                        v-model="operationFilter.account.id"
                         label="Тип операции"
                 ></v-select>
             </v-col>
