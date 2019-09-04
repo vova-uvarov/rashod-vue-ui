@@ -153,11 +153,6 @@
 
     @Component
     export default class CreateOperation extends Vue {
-        created() {
-            // `this` указывает на экземпляр vm
-            this.$store.dispatch("loadAccounts");
-            this.$store.dispatch("loadCategories");
-        }
 
         shoppingItems(){
             return [
