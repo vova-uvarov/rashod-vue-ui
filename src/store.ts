@@ -16,6 +16,7 @@ export default new Vuex.Store({
                 dateFrom: '',
                 dateTo: new Date().toISOString().substr(0, 10),
                 category: {},
+                operationTypes: [],
                 accountId: null,
                 place: '',
                 tag: '',
@@ -28,6 +29,7 @@ export default new Vuex.Store({
 
         categories: [],
         accounts: [],
+        operationTypes: [],
     },
     mutations: {
         initState: (state) => {
@@ -35,8 +37,13 @@ export default new Vuex.Store({
             now.setDate(now.getDate() - 30);
             state.operationsView.filter.dateFrom = now.toISOString().substr(0, 10);
         },
+
         updateOperationsFilter: (state, newValue) => {
             state.operationsView.filter = newValue;
+        },
+
+        updateOperationTypes: (state, newValue) => {
+            state.operationTypes = newValue;
         },
 
         setOperationViewCurrentPage: (state, newValue) => {
@@ -69,6 +76,11 @@ export default new Vuex.Store({
                     params: filter,
                 })
                 .then((response) => (context.commit('updateOperations', response.data)));
+        },
+        loadDictionaries(context){
+            axios
+                .get('http://localhost:8092/api/dictionary/operationTypes')
+                .then((response) => (context.commit('updateOperationTypes', response.data)));
         },
 
         loadCategories(context) {

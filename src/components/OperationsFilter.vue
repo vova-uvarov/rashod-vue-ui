@@ -95,7 +95,8 @@
 
             <v-col cols="3">
                 <v-select
-                        :items="accounts"
+                        :items="operationTypes"
+                        v-model="operationFilter.operationTypes[0]"
                         label="Тип операции"
                 ></v-select>
             </v-col>
@@ -154,12 +155,6 @@
 
     @Component
     export default class OperationsFilter extends Vue {
-        //todo копипаста
-        created() {
-            // `this` указывает на экземпляр vm
-            this.$store.dispatch("loadAccounts");
-            this.$store.dispatch("loadCategories");
-        }
 
         get countsPerPage() {
             return [5,10,20,50,100]
@@ -171,6 +166,9 @@
             }));
         }
 
+        get operationTypes(){
+            return this.$store.state.operationTypes;
+        }
         get categories() {
             return this.$store.state.categories.map(val => ({
                 text: val.name,

@@ -90,6 +90,9 @@
         created() {
             this.$vuetify.theme.dark = false;
             this.$store.commit("initState");
+            this.$store.dispatch("loadDictionaries");
+            this.$store.dispatch("loadAccounts");
+            this.$store.dispatch("loadCategories");
         },
     }
 </script>
