@@ -1,7 +1,7 @@
 <template>
     <div class="operations">
         <v-expansion-panels>
-            <v-expansion-panel :key="operationsFilter">
+            <v-expansion-panel key="operationsFilter">
                 <v-expansion-panel-header>Фильтр</v-expansion-panel-header>
                 <v-expansion-panel-content>
                     <OperationsFilter/>
@@ -35,13 +35,17 @@
         }
     })
     export default class OperationsView extends Vue {
+        created() {
+            this.$store.dispatch("reloadOperations");
+        }
+
         get page() {
             return this.$store.state.operationsView.currentPage;
         }
 
         set page(value) {
             this.$store.commit("setOperationViewCurrentPage", value);
-            this.$store.dispatch("loadOperations");
+            this.$store.dispatch("reloadOperations");
         }
 
         get length() {
