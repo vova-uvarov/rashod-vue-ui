@@ -118,9 +118,10 @@
                             </v-col>
 
                             <v-col cols="3">
-                                <v-select
-                                        :items="repeatCounts"
-                                        label="Количество повторений"
+                                <v-select v-if="formMode=='CREATE'"
+                                          :disabled="!operation.plan"
+                                          :items="repeatCounts"
+                                          label="Количество повторений"
                                 ></v-select>
                             </v-col>
 
