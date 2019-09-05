@@ -3,7 +3,8 @@
         <v-col cols="12">
             <v-card :raised="true" :color="cardColor">
                 <v-card-title>
-                    <v-col>Создать - {{cardName}}</v-col>
+                    <v-col v-if="formMode==='CREATE'">Создать - {{cardName}}</v-col>
+                    <v-col v-else> Обновить - {{cardName}}</v-col>
                     <v-radio-group v-model="operation.operationType" :column="false">
                         <v-radio
                                 key="CONSUMPTION"
@@ -60,8 +61,8 @@
                                 ></v-select>
 
                                 <v-autocomplete v-else
-                                        label="Список покупок"
-                                        :items="shoppingItems()"
+                                                label="Список покупок"
+                                                :items="shoppingItems()"
                                 ></v-autocomplete>
 
                             </v-col>
@@ -81,8 +82,6 @@
                             </v-col>
 
                         </v-row>
-
-
 
 
                         <v-row>
@@ -135,7 +134,9 @@
                         </v-row>
                         <v-row>
                             <v-col offset="6" cols="6">
-                                <v-btn color="success" :block="true" v-on:click="createOperation">Создать Операцию
+                                <v-btn color="success" :block="true" v-on:click="createOperation">
+                                    <span v-if="formMode==='CREATE'">Создать Операцию</span>
+                                    <span v-else>Обновить Операцию</span>
                                 </v-btn>
                             </v-col>
                         </v-row>
@@ -147,32 +148,52 @@
 </template>
 
 <script lang="ts">
-    import axios from 'axios';
+    import axios from "axios";
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Prop, Vue} from "vue-property-decorator";
+
+    function defaultOperation() {
+        return {
+            operationDate: new Date().toISOString().substr(0, 10),
+            comment: "",
+            plan: false,
+            place: "",
+            category: {id: 2},
+            account: {id: 2},
+            accountToTransfer: {},
+            cost: 0,
+            operationType: "CONSUMPTION"
+        };
+    }
 
     @Component
     export default class CreateOperation extends Vue {
 
-        shoppingItems(){
+        @Prop({default: "CREATE"})
+        formMode: string;
+
+        @Prop({default: defaultOperation})
+        operation: any;
+
+        shoppingItems() {
             return [
-                {text: 'Яблоки'},
-                {text: 'Помидоры'},
-                {text: 'Огурцы'},
-        ]
+                {text: "Яблоки"},
+                {text: "Помидоры"},
+                {text: "Огурцы"},
+            ];
         }
 
         createOperation() {
             let data1 = this.operation;
-            data1.operationDate=this.operation.operationDate+'T00:00'; // todo дичайщий хак
+            data1.operationDate = this.operation.operationDate + "T00:00"; // todo дичайщий хак
             axios
-                .post('http://localhost:8092/api/operations', data1)
+                .post("http://localhost:8092/api/operations", data1)
                 .then((response) => {
-                        this.operation=this.initOperationData();
-                        alert('Операция успешно создана');
+                        this.operation = defaultOperation();
+                        alert("Операция успешно создана");
                         this.$store.dispatch("loadAccounts");
                         this.$store.dispatch("loadCategories");
-                        this.$root.$emit('operationCreated')
+                        this.$root.$emit("operationCreated");
                     }
                 )
             ;
@@ -197,48 +218,33 @@
         }
 
         get cardName() {
-            if (this.operation.operationType == 'CONSUMPTION') {
-                return 'Расход';
+            if (this.operation.operationType == "CONSUMPTION") {
+                return "Расход";
             }
 
-            if (this.operation.operationType == 'TRANSFER') {
-                return 'Перевод';
+            if (this.operation.operationType == "TRANSFER") {
+                return "Перевод";
             }
-            return 'Доход';
+            return "Доход";
         }
 
         get cardColor() {
-            console.log("operation=" + this.operation.operationType)
-            if (this.operation.operationType == 'CONSUMPTION') {
-                return '#FFF8F8';
+            console.log("operation=" + this.operation.operationType);
+            if (this.operation.operationType == "CONSUMPTION") {
+                return "#FFF8F8";
             }
 
-            if (this.operation.operationType == 'TRANSFER') {
-                return '#FBFFD8';
+            if (this.operation.operationType == "TRANSFER") {
+                return "#FBFFD8";
             }
-            return '#F6FFEA';
+            return "#F6FFEA";
         }
 
         data() {
             return {
-                operation: this.initOperationData(),
                 operationDateMenu: false,
-
             };
         }
 
-        private initOperationData() {
-            return {
-                operationDate: new Date().toISOString().substr(0, 10),
-                comment: '',
-                plan: false,
-                place: '',
-                category: {id: 2},
-                account: {id: 2},
-                accountToTransfer: {},
-                cost: 0,
-                operationType: 'CONSUMPTION'
-            };
-        }
     }
 </script>
