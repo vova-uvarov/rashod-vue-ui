@@ -2,7 +2,7 @@
     <v-row justify="center" align="start">
         <v-col cols="12">
             <v-card :color="cardColor">
-                <v-card-title>{{title}} = {{showEditDialog}}</v-card-title>
+                <v-card-title>{{title}}</v-card-title>
                 <v-simple-table>
                     <thead>
                     <tr>
