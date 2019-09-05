@@ -16,6 +16,7 @@
                     <th class="text-left">Комментарий</th>
                     <th class="text-left">Автор</th>
                     <th class="text-left">План</th>
+                    <th class="text-left"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,18 +42,27 @@
                                 :disabled="true"
                         ></v-switch>
                     </td>
+                    <td>
+                        <v-btn class="mx-2" fab dark small color="primary" @click.stop="editOperation(item.id)">
+                            <v-icon>mdi-file-document-edit</v-icon>
+                        </v-btn>
+                    </td>
                 </tr>
                 </tbody>
             </v-simple-table>
         </v-col>
+        <EditOperationDialog :operationId="operationId" :visible="showEditDialog" @close="showEditDialog=false"/>
     </v-row>
 </template>
 <script lang="ts">
 
     import {Component, Vue} from "vue-property-decorator";
+    import EditOperationDialog from "@/components/EditOperationDialog.vue";
     import axios from "axios";
 
-    @Component
+    @Component({
+        components: {EditOperationDialog}
+    })
     export default class OperationsList extends Vue {
 
         deleteOperation(id) {
@@ -67,6 +77,11 @@
             }
         }
 
+        editOperation(selectOperationId) {
+            this.operationId = selectOperationId;
+            this.showEditDialog = true;
+        }
+
         shoppingListFormatter(shoppingList: Array<any>) {
             if (!shoppingList) {
                 return "";
@@ -76,6 +91,13 @@
 
         get operations() {
             return this.$store.state.operationsView.operations;
+        }
+
+        data() {
+            return {
+                operationId: null,
+                showEditDialog: false
+            };
         }
 
     }
