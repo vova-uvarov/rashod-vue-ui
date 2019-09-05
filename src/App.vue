@@ -6,48 +6,132 @@
                 clipped
         >
             <v-list dense>
-                <v-list-item @click="">
+                <v-list-item to="/">
                     <v-list-item-action>
                         <v-icon>mdi-view-dashboard</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>
-                            <router-link to="/">Главная страница</router-link>
-                        </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item @click="">
-                    <v-list-item-action>
-                        <v-icon>mdi-account-details</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>
-                            <router-link to="/accounts">Счета</router-link>
+                            Главная страница
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item @click="">
+                <v-list-item to="/operations">
                     <v-list-item-action>
                         <v-icon>mdi-bank-transfer</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>
-                            <router-link to="/operations">Операции</router-link>
+                            Операции
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
-                <v-list-item @click="">
+                <v-list-item to="/plans">
                     <v-list-item-action>
-                        <v-icon>mdi-chart-pie</v-icon>
+                        <v-icon>mdi-finance</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>
-                            <router-link to="/statistics">Статистика</router-link>
+                            План
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+
+                <v-list-group
+                        prepend-icon="mdi-account-details"
+                >
+
+                    <template v-slot:activator>
+                        <v-list-item-title>Счета</v-list-item-title>
+                    </template>
+
+                    <v-list-item to="/accounts">
+                        <v-list-item-action>
+                            <v-icon>mdi-account-details</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                Список
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item to="/accounts">
+                        <v-list-item-action>
+                            <v-icon>mdi-account-details</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                Цели
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item to="/accounts">
+                        <v-list-item-action>
+                            <v-icon>mdi-account-details</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                Долги
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-group>
+
+                <v-list-group
+                        prepend-icon="mdi-chart-pie"
+                >
+                    <template v-slot:activator>
+                        <v-list-item-title>Статистика</v-list-item-title>
+                    </template>
+                    <v-list-item to="/statistics">
+                        <v-list-item-action>
+                            <v-icon>mdi-chart-pie</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                Общая
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item to="/statistics">
+                        <v-list-item-action>
+                            <v-icon>mdi-chart-pie</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                В среднем по годам
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item to="/statistics">
+                        <v-list-item-action>
+                            <v-icon>mdi-chart-pie</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                2019
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item to="/statistics">
+                        <v-list-item-action>
+                            <v-icon>mdi-chart-pie</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                2018
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list-group>
+
             </v-list>
         </v-navigation-drawer>
 
@@ -62,10 +146,8 @@
 
 
         <v-content>
-            <v-container
-                    fluid
-            >
-               <BalanceListBar/>
+            <v-container fluid>
+                <BalanceListBar/>
                 <router-view/>
             </v-container>
         </v-content>
