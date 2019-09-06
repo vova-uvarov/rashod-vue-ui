@@ -44,7 +44,6 @@
                 .then((data) => {
                         this.loading = false;
                         this.operation = data;
-                        this.operation.operationDate = new Date(this.operation.operationDate).toISOString().substr(0, 10) // todo старнный хак какой-то сделать красиво.
                     }
                 )
         }

@@ -184,9 +184,7 @@
         }
 
         createOperation() {
-            let data1 = this.operation;
-            data1.operationDate = this.operation.operationDate + "T00:00"; // todo дичайщий хак
-            OperationService.create(data1)
+            OperationService.create(this.operation)
                 .then((response) => {
                         this.operation = defaultOperation();
                         alert("Операция успешно создана");

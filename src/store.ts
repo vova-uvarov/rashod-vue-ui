@@ -67,13 +67,6 @@ export default new Vuex.Store({
         reloadOperations(context) {
             const filter = JSON.parse(JSON.stringify(this.state.operationsView.filter));
             filter.page = this.state.operationsView.currentPage - 1;
-            if (filter.dateFrom) {
-                filter.dateFrom = filter.dateFrom + "T00:00"; // todo дикий хак
-            }
-
-            if (filter.dateTo) {
-                filter.dateTo = filter.dateTo + "T00:00"; // todo дикий хак
-            }
             OperationService.search(filter)
                 .then((data) => (context.commit('updateOperations', data)));
 

@@ -1,4 +1,3 @@
-<!--todo из view сделать компонент-->
 <template>
     <v-row justify="center" align="start">
         <v-col cols="12">
