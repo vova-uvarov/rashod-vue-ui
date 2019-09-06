@@ -3,7 +3,7 @@
         <v-col cols="12">
             <v-card :color="cardColor">
                 <v-card-title>{{title}}</v-card-title>
-                <v-simple-table>
+                <v-simple-table :dense="true">
                     <thead>
                     <tr>
                         <th class="text-left">Дата</th>

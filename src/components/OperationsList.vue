@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center" align="start">
         <v-col cols="12">
-            <v-simple-table>
+            <v-simple-table :dense="true">
                 <thead>
                 <tr>
                     <th class="text-left">Действия</th>
