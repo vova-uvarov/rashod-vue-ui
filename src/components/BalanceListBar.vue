@@ -5,7 +5,7 @@
                 color="secondary"
                 outlined
         >
-            <b>Баланс: </b> {{totalBalance|moneyFormat}}
+            <b>Баланс: </b> {{totalBalance | moneyFormat}}
         </v-chip>
 
         <v-chip
@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts">
-    import axios from 'axios';
-    import {Component, Vue} from 'vue-property-decorator';
+    import AccountService, {Balance} from "@/services/AccountService";
+    import {Component, Vue} from "vue-property-decorator";
 
     @Component
     export default class BalanceListBar extends Vue {
@@ -39,35 +39,40 @@
         }
 
         private loadBalances() {
-            axios
-                .get("http://localhost:8092/api/accounts/balances")
-                .then((response) => (this.balances = response.data));
+            AccountService.loadBalances()
+                .then((balances) => {
+                    this.balances = balances;
+                });
 
-            axios
-                .get("http://localhost:8092/api/accounts/totalBalance")
-                .then((response) => (this.totalBalance = response.data));
+            AccountService.totalBalance()
+                .then((balance) => {
+                    this.totalBalance = balance;
+                });
 
-            axios
-                .get("http://localhost:8092/api/accounts/balances/goal/byCurrency")
-                .then((response) => (this.balancesGoalByCurrency = response.data));
+            AccountService.balancesByCurrency()
+                .then((balances) => {
+                    this.balancesGoalByCurrency = balances;
+                });
         }
 
         data() {
-            return {
+
+            let newVar: { totalBalance: number, balances: Balance[], balancesGoalByCurrency: any[] } = {
                 totalBalance: 0,
                 balances: [],
                 balancesGoalByCurrency: [],
             };
+            return newVar;
         }
 
-        mounted(){
-            this.$root.$on('operationCreated', () => {
+        mounted() {
+            this.$root.$on("operationCreated", () => {
                 this.loadBalances();
-            })
+            });
 
-            this.$root.$on('operationDeleted', () => {
+            this.$root.$on("operationDeleted", () => {
                 this.loadBalances();
-            })
+            });
         }
     }
 </script>
