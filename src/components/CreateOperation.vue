@@ -3,8 +3,7 @@
         <v-col cols="12">
             <v-card :raised="true" :color="cardColor">
                 <v-card-title>
-                    <v-col v-if="formMode==='CREATE'">Создать - {{cardName}}</v-col>
-                    <v-col v-else> Обновить - {{cardName}}</v-col>
+                    <v-col> {{cardTitle}}</v-col>
                     <v-radio-group v-model="operation.operationType" :column="false">
                         <v-radio
                                 key="CONSUMPTION"
@@ -193,6 +192,18 @@
                         this.$root.$emit("operationCreated");
                     }
                 );
+        }
+
+        get cardTitle() {
+            if (this.formMode === 'CREATE') {
+                return "Создать - " + this.cardName;
+            }
+            if (this.formMode === 'EDIT') {
+                return "Обновить - " + this.cardName;
+            }
+            if (this.formMode === 'DIVIDE') {
+                return "Разбить - " + this.cardName;
+            }
         }
 
         get categories() {

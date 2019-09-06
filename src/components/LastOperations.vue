@@ -23,22 +23,33 @@
                             <v-btn class="mx-2" fab dark small color="primary" @click.stop="editOperation(item.id)">
                                 <v-icon>mdi-file-document-edit</v-icon>
                             </v-btn>
+
+                            <v-btn class="mx-2" fab dark small color="primary" @click.stop="divideOperation(item.id)">
+                                <v-icon>mdi-call-split</v-icon>
+                            </v-btn>
                         </td>
                     </tr>
                     </tbody>
                 </v-simple-table>
             </v-card>
         </v-col>
-        <EditOperationDialog :operationId="operationId" :visible="showEditDialog" @close="showEditDialog=false"/>
+        <EditOperationDialog :operationId="operationId"
+                             :visible="showEditDialog"
+                             @close="showEditDialog=false"/>
+
+        <DivideOperationDialog :parentOperationId="operationId"
+                               :visible="showDivideDialog"
+                               @close="showDivideDialog=false"/>
     </v-row>
 </template>
 
 <script lang="ts">
     import {Component, Prop, Vue} from "vue-property-decorator";
     import EditOperationDialog from "@/components/EditOperationDialog.vue";
+    import DivideOperationDialog from "@/components/DivideOperationDialog.vue";
 
     @Component({
-        components: {EditOperationDialog}
+        components: {EditOperationDialog, DivideOperationDialog}
     })
     export default class AccountList extends Vue {
         @Prop({default: []})
@@ -50,6 +61,11 @@
         @Prop({default: "white"})
         cardColor: string;
 
+        divideOperation(selectOperationId) {
+            this.operationId = selectOperationId;
+            this.showDivideDialog = true;
+        }
+
         editOperation(selectOperationId) {
             this.operationId = selectOperationId;
             this.showEditDialog = true;
@@ -59,10 +75,12 @@
         data() {
             return {
                 operationId: null,
-                showEditDialog: false
+                showEditDialog: false,
+                showDivideDialog: false
             };
         }
 
+        //todo Копипаста из LastOpeartions
         //todo Копипаста из LastOpeartions
         shoppingListFormatter(shoppingList) {
             if (!shoppingList) {
