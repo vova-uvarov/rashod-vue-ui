@@ -30,7 +30,7 @@
     import {Component, Vue} from "vue-property-decorator";
     import CreateOperation from "../components/CreateOperation.vue"; // @ is an alias to /src
     import LastOperations from "../components/LastOperations.vue"; // @ is an alias to /src
-    import axios from 'axios';
+    import OperationService from '../services/OperationService';
 
     @Component({
         components: {
@@ -44,38 +44,32 @@
         }
 
         private loadData() {
-            axios
-                .get('http://localhost:8092/api/operations/search', {
-                    params: {
-                        operationTypes: 'CONSUMPTION',
-                        isPlan: false,
-                    },
-                })
-                .then((response) => (this.lastConsumptionOperations = response.data.content));
+            OperationService.search({
+                operationTypes: 'CONSUMPTION',
+                isPlan: false,
+            }).then((data) => {
+                this.lastConsumptionOperations = data.content
+            });
 
-            axios
-                .get('http://localhost:8092/api/operations/search', {
-                    params: {
-                        operationTypes: 'INCOME,TRANSFER',
-                        isPlan: false,
-                    },
-                })
-                .then((response) => (this.lastTransferAndIncomeOperations = response.data.content));
+            OperationService.search({
+                operationTypes: 'INCOME,TRANSFER',
+                isPlan: false,
+            }).then((data) => {
+                this.lastTransferAndIncomeOperations = data.content
+            });
 
-            axios
-                .get('http://localhost:8092/api/operations/search', {
-                    params: {
-                        operationTypes: 'INCOME,TRANSFER,CONSUMPTION',
-                        isPlan: true,
-                    },
-                })
-                .then((response) => (this.lastPlansOperations = response.data.content));
+            OperationService.search({
+                operationTypes: 'INCOME,TRANSFER,CONSUMPTION',
+                isPlan: true,
+            }).then((data) => {
+                this.lastPlansOperations = data.content
+            });
         }
 
-        mounted(){
+        mounted() {
             this.$root.$on('operationCreated', () => {
                 this.loadData();
-            })
+            });
 
             this.$root.$on('operationDeleted', () => {
                 this.loadData();

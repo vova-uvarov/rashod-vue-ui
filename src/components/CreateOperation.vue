@@ -149,9 +149,8 @@
 </template>
 
 <script lang="ts">
-    import axios from "axios";
-
     import {Component, Prop, Vue} from "vue-property-decorator";
+    import OperationService from "@/services/OperationService";
 
     function defaultOperation() {
         return {
@@ -187,8 +186,7 @@
         createOperation() {
             let data1 = this.operation;
             data1.operationDate = this.operation.operationDate + "T00:00"; // todo дичайщий хак
-            axios
-                .post("http://localhost:8092/api/operations", data1)
+            OperationService.create(data1)
                 .then((response) => {
                         this.operation = defaultOperation();
                         alert("Операция успешно создана");
@@ -196,8 +194,7 @@
                         this.$store.dispatch("loadCategories");
                         this.$root.$emit("operationCreated");
                     }
-                )
-            ;
+                );
         }
 
         get categories() {

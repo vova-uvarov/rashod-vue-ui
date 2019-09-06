@@ -8,6 +8,12 @@ export interface Balance {
 
 export default class AccountService {
 
+    public static getAllAccounts(): Promise<AxiosResponse<Object>> {
+        return axios
+            .get('http://localhost:8092/api/accounts?size=100')
+            .then((response) => (response.data.content));
+    }
+
     public static loadBalances(): Promise<AxiosResponse<Balance>> {
         return axios
             .get('http://localhost:8092/api/accounts/balances')

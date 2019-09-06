@@ -22,7 +22,7 @@
                 <tbody>
                 <tr v-for="item in operations" :key="item.name">
                     <td>
-                        <v-btn class="mx-2" fab dark small color="primary"  @click="deleteOperation(item.id)">
+                        <v-btn class="mx-2" fab dark small color="primary" @click="deleteOperation(item.id)">
                             <v-icon dark>mdi-minus</v-icon>
                         </v-btn>
                     </td>
@@ -58,17 +58,16 @@
 
     import {Component, Vue} from "vue-property-decorator";
     import EditOperationDialog from "@/components/EditOperationDialog.vue";
-    import axios from "axios";
+    import OperationService from "@/services/OperationService";
 
     @Component({
         components: {EditOperationDialog}
     })
     export default class OperationsList extends Vue {
 
-        deleteOperation(id) {
+        deleteOperation(id: string) {
             if (confirm("Вы действительно хотите удалить операцию?")) {
-                axios
-                    .delete("http://localhost:8092/api/operations/" + id)
+                OperationService.delete(id)
                     .then((response) => {
                             this.$root.$emit('operationDeleted');
                             this.$store.dispatch("reloadOperations");
