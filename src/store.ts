@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
+import AccountService from "@/services/AccountService";
+import OperationService from "@/services/OperationService";
+import DictionaryService from "@/services/DictionaryService";
+import CategoryService from "@/services/CategoryService";
 
 Vue.use(Vuex);
 
@@ -71,27 +74,22 @@ export default new Vuex.Store({
             if (filter.dateTo) {
                 filter.dateTo = filter.dateTo + "T00:00"; // todo дикий хак
             }
-            axios
-                .get('http://localhost:8092/api/operations/search', {
-                    params: filter,
-                })
-                .then((response) => (context.commit('updateOperations', response.data)));
+            OperationService.search(filter)
+                .then((data) => (context.commit('updateOperations', data)));
+
         },
-        loadDictionaries(context){
-            axios
-                .get('http://localhost:8092/api/dictionary/operationTypes')
-                .then((response) => (context.commit('updateOperationTypes', response.data)));
+        loadDictionaries(context) {
+            DictionaryService.getOperationTypes()
+                .then((data) => (context.commit('updateOperationTypes', data)));
         },
 
         loadCategories(context) {
-            axios
-                .get('http://localhost:8092/api/categories?size=10000')
-                .then((response) => (context.commit('updateCategories', response.data.content)));
+            CategoryService.getAllCategories()
+                .then((categories) => (context.commit('updateCategories', categories)));
         },
         loadAccounts(context) {
-            axios
-                .get('http://localhost:8092/api/accounts?size=100')
-                .then((response) => (context.commit('updateAccounts', response.data.content)));
+            AccountService.getAllAccounts()
+                .then((accounts) => (context.commit('updateAccounts', accounts)));
         },
     },
 });

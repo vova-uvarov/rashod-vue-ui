@@ -14,7 +14,7 @@
 
     import {Component, Prop, Vue, Watch} from "vue-property-decorator";
     import CreateOperation from "@/components/CreateOperation.vue";
-    import axios from "axios";
+    import OperationService from "@/services/OperationService";
 
     @Component({
         components: {CreateOperation}
@@ -27,11 +27,11 @@
         @Prop()
         visible: string;
 
-        get showDialog(){
+        get showDialog() {
             return this.visible;
         }
 
-        set showDialog(value){
+        set showDialog(value) {
             if (!value) {
                 this.$emit("close");
             }
@@ -40,12 +40,11 @@
         @Watch("operationId")
         operationIdChanged(value: string, oldValue: string) {
             this.loading = true;
-            axios
-                .get("http://localhost:8092/api/operations/" + value)
-                .then((response) => {
+            OperationService.get(value)
+                .then((data) => {
                         this.loading = false;
-                        this.operation = response.data;
-                        this.operation.operationDate=new Date(this.operation.operationDate).toISOString().substr(0, 10)
+                        this.operation = data;
+                        this.operation.operationDate = new Date(this.operation.operationDate).toISOString().substr(0, 10) // todo старнный хак какой-то сделать красиво.
                     }
                 )
         }
