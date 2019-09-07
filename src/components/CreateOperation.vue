@@ -3,7 +3,7 @@
         <v-col cols="12">
             <v-card :raised="true" :color="cardColor">
                 <v-card-title>
-                    <v-col> {{cardTitle}} = {{operation.shoppingList}}</v-col>
+                    <v-col> {{cardTitle}}</v-col>
                     <v-radio-group v-model="operation.operationType" :column="false">
                         <v-radio
                                 key="CONSUMPTION"
@@ -187,8 +187,8 @@
                 .then((response) => {
                         this.operation = defaultOperation();
                         // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
-                        this.showShoppingItem=false;
-                        this.$nextTick().then(()=>(this.showShoppingItem=true));
+                        this.showShoppingItem = false;
+                        this.$nextTick().then(() => (this.showShoppingItem = true));
                         alert("Операция успешно создана: " + response.id);
                         this.$store.dispatch("loadAccounts");
                         this.$store.dispatch("loadCategories");
