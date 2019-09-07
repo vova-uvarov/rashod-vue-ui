@@ -1,33 +1,35 @@
 <template>
-    <v-combobox
-            v-model="selectedItemsInner"
-            :items="items"
-            chips
-            color="blue-grey lighten-2"
-            label="Список покупок"
-            multiple
-            item-text="name"
-            item-value="name"
-            return-object
-    >
-        <template v-slot:selection="data">
-            <v-chip
-                    v-bind="data.attrs"
-                    :input-value="data.selected"
-                    close
-                    @click="data.select"
-                    @click:close="remove(data.item)"
-            >
-                {{ data.item }}
-            </v-chip>
-        </template>
-
-        <template v-slot:item="data">
-            <template>
-                <v-list-item-content v-text="data.item"></v-list-item-content>
+    <div>
+        <v-combobox
+                v-model="selectedItemsInner"
+                :items="items"
+                chips
+                color="blue-grey lighten-2"
+                label="Список покупок"
+                multiple
+                item-text="name"
+                item-value="name"
+                return-object
+        >
+            <template v-slot:selection="data">
+                <v-chip
+                        v-bind="data.attrs"
+                        :input-value="data.selected"
+                        close
+                        @click="data.select"
+                        @click:close="remove(data.item)"
+                >
+                    {{ data.item.name }}
+                </v-chip>
             </template>
-        </template>
-    </v-combobox>
+
+            <template v-slot:item="data">
+                <template>
+                    <v-list-item-content v-text="data.item.name"></v-list-item-content>
+                </template>
+            </template>
+        </v-combobox>
+    </div>
 </template>
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from "vue-property-decorator";
@@ -64,12 +66,8 @@
 
         data() {
             return {
-                selectedItemsInner: this.selectedItems.map((item) => (item.name))
+                selectedItemsInner: this.selectedItems
             };
-        }
-
-        private emptyArray() {
-            return [];
         }
 
     }
