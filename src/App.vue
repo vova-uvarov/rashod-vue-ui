@@ -175,6 +175,7 @@
             this.$store.dispatch("loadDictionaries");
             this.$store.dispatch("loadAccounts");
             this.$store.dispatch("loadCategories");
+            this.$store.dispatch("loadShoppingItems");
         },
     }
 </script>

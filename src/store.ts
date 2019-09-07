@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import AccountService from "@/services/AccountService";
-import OperationService from "@/services/OperationService";
-import DictionaryService from "@/services/DictionaryService";
-import CategoryService from "@/services/CategoryService";
+import AccountService from '@/services/AccountService';
+import OperationService from '@/services/OperationService';
+import DictionaryService from '@/services/DictionaryService';
+import CategoryService from '@/services/CategoryService';
+import ShoppingItemService from '@/services/ShoppingItemService';
 
 Vue.use(Vuex);
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
             },
         },
 
+        shoppingItemNames: [],
         categories: [],
         accounts: [],
         operationTypes: [],
@@ -62,6 +64,9 @@ export default new Vuex.Store({
         updateAccounts: (state, newAccountsList) => {
             state.accounts = newAccountsList;
         },
+        updateShoppingItemsNames: (state, newValue: object[]) => {
+            state.shoppingItemNames = newValue;
+        },
     },
     actions: {
         reloadOperations(context) {
@@ -83,6 +88,12 @@ export default new Vuex.Store({
         loadAccounts(context) {
             AccountService.getAllAccounts()
                 .then((accounts) => (context.commit('updateAccounts', accounts)));
+        },
+        loadShoppingItems(context) {
+            ShoppingItemService.getAllNames()
+                .then((names) => {
+                    context.commit('updateShoppingItemsNames', names);
+                });
         },
     },
 });

@@ -3,7 +3,7 @@
         <v-col cols="12">
             <v-card :raised="true" :color="cardColor">
                 <v-card-title>
-                    <v-col> {{cardTitle}}</v-col>
+                    <v-col> {{cardTitle}} = {{operation.shoppingList}}</v-col>
                     <v-radio-group v-model="operation.operationType" :column="false">
                         <v-radio
                                 key="CONSUMPTION"
@@ -59,10 +59,9 @@
                                           label="На счет"
                                 ></v-select>
 
-                                <v-autocomplete v-else
-                                                label="Список покупок"
-                                                :items="shoppingItems()"
-                                ></v-autocomplete>
+                                <SelectShoppingItems v-if="operation.operationType!='TRANSFER' && showShoppingItem"
+                                                     :selectedItems.sync="operation.shoppingList"
+                                                     :items="shoppingItems"/>
 
                             </v-col>
                         </v-row>
@@ -151,6 +150,7 @@
 <script lang="ts">
     import {Component, Prop, Vue} from "vue-property-decorator";
     import OperationService from "@/services/OperationService";
+    import SelectShoppingItems from "@/components/SelectShoppingItems.vue";
 
     function defaultOperation() {
         return {
@@ -162,11 +162,14 @@
             account: {id: 2},
             accountToTransfer: {},
             cost: 0,
+            shoppingList: undefined,
             operationType: "CONSUMPTION"
         };
     }
 
-    @Component
+    @Component({
+        components: {SelectShoppingItems}
+    })
     export default class CreateOperation extends Vue {
 
         @Prop({default: "CREATE"})
@@ -175,19 +178,18 @@
         @Prop({default: defaultOperation})
         operation: any;
 
-        shoppingItems() {
-            return [
-                {text: "Яблоки"},
-                {text: "Помидоры"},
-                {text: "Огурцы"},
-            ];
+        get shoppingItems() {
+            return this.$store.state.shoppingItemNames;
         }
 
         createOperation() {
             OperationService.create(this.operation, this.countRepeat)
                 .then((response) => {
                         this.operation = defaultOperation();
-                        alert("Операция успешно создана");
+                        // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
+                        this.showShoppingItem=false;
+                        this.$nextTick().then(()=>(this.showShoppingItem=true));
+                        alert("Операция успешно создана: " + response.id);
                         this.$store.dispatch("loadAccounts");
                         this.$store.dispatch("loadCategories");
                         this.$root.$emit("operationCreated");
@@ -252,6 +254,7 @@
             return {
                 countRepeat: 1,
                 operationDateMenu: false,
+                showShoppingItem: true,
             };
         }
 
