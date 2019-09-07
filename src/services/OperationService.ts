@@ -23,7 +23,7 @@ export default class OperationService {
 
         return axios
             .post('http://localhost:8092/api/operations', createRequest)
-            .then((response) => (response));
+            .then((response) => (response.data));
     }
 
     public static get(operationId: string): Promise<AxiosResponse<object>> {
