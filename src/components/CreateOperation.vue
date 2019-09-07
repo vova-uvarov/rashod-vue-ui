@@ -117,8 +117,8 @@
                             </v-col>
 
                             <v-col cols="3">
-                                <v-select v-if="formMode=='CREATE'"
-                                          :disabled="!operation.plan"
+                                <v-select v-if="formMode==='CREATE'"
+                                          v-model="countRepeat"
                                           :items="repeatCounts"
                                           label="Количество повторений"
                                 ></v-select>
@@ -183,7 +183,7 @@
         }
 
         createOperation() {
-            OperationService.create(this.operation)
+            OperationService.create(this.operation, this.countRepeat)
                 .then((response) => {
                         this.operation = defaultOperation();
                         alert("Операция успешно создана");
@@ -195,13 +195,13 @@
         }
 
         get cardTitle() {
-            if (this.formMode === 'CREATE') {
+            if (this.formMode === "CREATE") {
                 return "Создать - " + this.cardName;
             }
-            if (this.formMode === 'EDIT') {
+            if (this.formMode === "EDIT") {
                 return "Обновить - " + this.cardName;
             }
-            if (this.formMode === 'DIVIDE') {
+            if (this.formMode === "DIVIDE") {
                 return "Разбить - " + this.cardName;
             }
         }
@@ -249,6 +249,7 @@
 
         data() {
             return {
+                countRepeat: 1,
                 operationDateMenu: false,
             };
         }
