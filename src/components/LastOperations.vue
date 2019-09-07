@@ -52,7 +52,11 @@
         components: {EditOperationDialog, DivideOperationDialog}
     })
     export default class AccountList extends Vue {
-        @Prop({default: []})
+        @Prop({
+            default: function() {
+                return [];
+            }
+        })
         operations: Array<Object>;
 
         @Prop({default: "Операции"})

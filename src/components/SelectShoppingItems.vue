@@ -6,6 +6,9 @@
             color="blue-grey lighten-2"
             label="Список покупок"
             multiple
+            item-text="name"
+            item-value="name"
+            return-object
     >
         <template v-slot:selection="data">
             <v-chip
@@ -31,24 +34,24 @@
 
     @Component
     export default class SelectShoppingItems extends Vue {
-        @Prop({default: []})
+        @Prop({
+            default: function() {
+                return [];
+            }
+        })
         items;
 
-        @Prop({default: []})
+        @Prop({
+            default: function() {
+                return [];
+            }
+        })
         selectedItems: object[];
-
-        @Watch("selectedItems")
-        selectedItemsChanged(value: object[], oldValue: object[]) {
-
-        }
 
         @Watch("selectedItemsInner")
         selectedItemsInnerChanged(value: string[], oldValue: string[]) {
             if (value != undefined) {
-                let mapped = value.map((item) => {
-                    return {name: item};
-                });
-                this.$emit("update:selectedItems", mapped);
+                this.$emit("update:selectedItems", value);
             }
         }
 
@@ -63,6 +66,10 @@
             return {
                 selectedItemsInner: this.selectedItems.map((item) => (item.name))
             };
+        }
+
+        private emptyArray() {
+            return [];
         }
 
     }

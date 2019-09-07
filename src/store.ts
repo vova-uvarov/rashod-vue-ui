@@ -65,7 +65,7 @@ export default new Vuex.Store({
             state.accounts = newAccountsList;
         },
         updateShoppingItemsNames: (state, newValue: object[]) => {
-            state.shoppingItemNames = newValue;
+            state.shoppingItemNames = newValue.map((item) => ({name: item}));
         },
     },
     actions: {
