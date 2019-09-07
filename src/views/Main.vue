@@ -61,6 +61,7 @@
             OperationService.search({
                 operationTypes: 'INCOME,TRANSFER,CONSUMPTION',
                 isPlan: true,
+                sort: 'operationDate'
             }).then((data) => {
                 this.lastPlansOperations = data.content
             });
