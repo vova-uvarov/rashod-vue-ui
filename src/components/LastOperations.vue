@@ -3,7 +3,7 @@
         <v-col cols="12">
             <v-card :color="cardColor">
                 <v-card-title>{{title}}</v-card-title>
-                <v-simple-table :dense="true">
+                <v-simple-table :dense="false">
                     <thead>
                     <tr>
                         <th class="text-left">Дата</th>
@@ -19,12 +19,12 @@
                         <td>{{ item.category.name }}</td>
                         <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                         <td>{{ item.cost |moneyFormat}}</td>
-                        <td>
-                            <v-btn class="mx-2" fab dark small color="primary" @click.stop="editOperation(item.id)">
+                        <td style="white-space: nowrap; width: 1%">
+                            <v-btn class="mx-2" icon color="primary" @click.stop="editOperation(item.id)">
                                 <v-icon>mdi-file-document-edit</v-icon>
                             </v-btn>
 
-                            <v-btn class="mx-2" fab dark small color="primary" @click.stop="divideOperation(item.id)">
+                            <v-btn class="mx-2" icon color="primary" @click.stop="divideOperation(item.id)">
                                 <v-icon>mdi-call-split</v-icon>
                             </v-btn>
                         </td>
@@ -90,3 +90,7 @@
         }
     }
 </script>
+
+<style>
+
+</style>

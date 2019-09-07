@@ -47,7 +47,7 @@
                         this.loading = false;
                         this.operation = data;
                         this.operation.id = null;
-                        this.operation.parentOperationId = value;
+                        this.operation.parentId = value;
                     }
                 )
         }
