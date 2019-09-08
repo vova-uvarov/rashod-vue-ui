@@ -3,8 +3,20 @@ import axios, {AxiosResponse} from 'axios';
 export default class OperationService {
 
     public static search(requestParams: object): Promise<AxiosResponse<object>> {
-        if (requestParams.categoryIds) {
+        if (requestParams.categoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
             requestParams.categoryIds = requestParams.categoryIds.join(',');
+        }
+
+        if (requestParams.accountIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+            requestParams.accountIds = requestParams.accountIds.join(',');
+        }
+
+        if (requestParams.operationTypes) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+            requestParams.operationTypes = requestParams.operationTypes.join(',');
+        }
+
+        if (requestParams.shoppingList) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+            requestParams.shoppingList = requestParams.shoppingList.map((item) => (item.name)).join(',');
         }
         return axios.get('http://localhost:8092/api/operations/search', {params: requestParams})
             .then((response) => {

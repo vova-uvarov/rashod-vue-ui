@@ -64,7 +64,9 @@
             <v-col cols="3">
                 <v-select
                         :items="accounts"
-                        v-model="operationFilter.accountId"
+                        v-model="operationFilter.accountIds"
+                        :clearable="true"
+                        multiple
                         label="Счет"
                 ></v-select>
             </v-col>
@@ -98,19 +100,14 @@
             <v-col cols="3">
                 <v-select
                         :items="operationTypes"
-                        v-model="operationFilter.operationTypes[0]"
+                        v-model="operationFilter.operationTypes"
+                        clearable
+                        multiple
                         label="Тип операции"
                 ></v-select>
             </v-col>
         </v-row>
         <v-row>
-            <v-col cols="3">
-                <v-text-field
-                        type="text"
-                        label="Автор"
-                        v-model="operationFilter.author"
-                ></v-text-field>
-            </v-col>
             <v-col cols="3">
                 <v-text-field
                         type="text"
@@ -120,30 +117,20 @@
             </v-col>
 
             <v-col cols="3">
-                <v-text-field
-                        type="text"
-                        label="Список покупок"
-                        v-model="operationFilter.shoppingList"
-                ></v-text-field>
+                <SelectShoppingItems
+                        :selectedItems.sync="operationFilter.shoppingList"
+                        :items="shoppingItems"/>
             </v-col>
 
-            <v-col cols="3">
-                <v-text-field
-                        type="text"
-                        label="Тэги"
-                        v-model="operationFilter.tag"
-                ></v-text-field>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col  cols="6">
+            <v-col  cols="3">
                 <v-select
                         :items="countsPerPage"
                         v-model="operationFilter.size"
                         label="Отображать на странице"
                 ></v-select>
             </v-col>
-            <v-col  cols="6">
+
+            <v-col  cols="3">
                 <v-btn color="success" :block="true" v-on:click="applyFilter">Применить фильтр
                 </v-btn>
             </v-col>
@@ -154,9 +141,16 @@
 <script lang="ts">
 
     import {Component, Vue} from "vue-property-decorator";
+    import SelectShoppingItems from "@/components/SelectShoppingItems.vue";
 
-    @Component
+    @Component({
+        components: {SelectShoppingItems}
+    })
     export default class OperationsFilter extends Vue {
+
+        get shoppingItems() {
+            return this.$store.state.shoppingItemNames;
+        }
 
         get countsPerPage() {
             return [5,10,20,50,100]
@@ -169,7 +163,28 @@
         }
 
         get operationTypes(){
-            return this.$store.state.operationTypes;
+            //todo сделать справочником в БД по хорошему
+            return this.$store.state.operationTypes.map((val)=>{
+                if (val==='CONSUMPTION'){
+                    return {
+                        text: "Расход",
+                        value: val
+                    }
+                }
+                if (val==='INCOME'){
+                    return {
+                        text: "Доход",
+                        value: val
+                    }
+                }
+
+                if (val==='TRANSFER'){
+                    return {
+                        text: "Перевод",
+                        value: val
+                    }
+                }
+            });
         }
         get categories() {
             return this.$store.state.categories.map(val => ({
