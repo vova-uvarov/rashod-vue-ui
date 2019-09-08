@@ -90,11 +90,12 @@
             </v-col>
 
             <v-col cols="3">
-                <v-text-field
-                        type="text"
-                        label="Место"
+
+                <v-combobox
                         v-model="operationFilter.place"
-                ></v-text-field>
+                        :items="places"
+                        label="Место"
+                ></v-combobox>
             </v-col>
 
             <v-col cols="3">
@@ -122,7 +123,7 @@
                         :items="shoppingItems"/>
             </v-col>
 
-            <v-col  cols="3">
+            <v-col cols="3">
                 <v-select
                         :items="countsPerPage"
                         v-model="operationFilter.size"
@@ -130,7 +131,7 @@
                 ></v-select>
             </v-col>
 
-            <v-col  cols="3">
+            <v-col cols="3">
                 <v-btn color="success" :block="true" v-on:click="applyFilter">Применить фильтр
                 </v-btn>
             </v-col>
@@ -144,7 +145,14 @@
     import SelectShoppingItems from "@/components/SelectShoppingItems.vue";
 
     @Component({
-        components: {SelectShoppingItems}
+        components: {SelectShoppingItems},
+        computed: {
+            places: {
+                get() {
+                    return this.$store.state.places;
+                }
+            }
+        }
     })
     export default class OperationsFilter extends Vue {
 
@@ -153,8 +161,9 @@
         }
 
         get countsPerPage() {
-            return [5,10,20,50,100]
+            return [5, 10, 20, 50, 100];
         }
+
         get accounts() {
             return this.$store.state.accounts.map(val => ({
                 text: val.name,
@@ -162,30 +171,31 @@
             }));
         }
 
-        get operationTypes(){
+        get operationTypes() {
             //todo сделать справочником в БД по хорошему
-            return this.$store.state.operationTypes.map((val)=>{
-                if (val==='CONSUMPTION'){
+            return this.$store.state.operationTypes.map((val) => {
+                if (val === "CONSUMPTION") {
                     return {
                         text: "Расход",
                         value: val
-                    }
+                    };
                 }
-                if (val==='INCOME'){
+                if (val === "INCOME") {
                     return {
                         text: "Доход",
                         value: val
-                    }
+                    };
                 }
 
-                if (val==='TRANSFER'){
+                if (val === "TRANSFER") {
                     return {
                         text: "Перевод",
                         value: val
-                    }
+                    };
                 }
             });
         }
+
         get categories() {
             return this.$store.state.categories.map(val => ({
                 text: val.name,
@@ -195,7 +205,7 @@
 
         applyFilter() {
             this.$store.commit("updateOperationsFilter", this.operationFilter);
-            this.$store.dispatch("reloadOperations")
+            this.$store.dispatch("reloadOperations");
         }
 
         data() {

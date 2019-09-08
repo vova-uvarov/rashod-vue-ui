@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import PlaceService from '@/services/PlaceService';
 import AccountService from '@/services/AccountService';
 import OperationService from '@/services/OperationService';
 import DictionaryService from '@/services/DictionaryService';
@@ -35,6 +36,7 @@ export default new Vuex.Store({
         categories: [],
         accounts: [],
         operationTypes: [],
+        places: [],
     },
     mutations: {
         initState: (state) => {
@@ -63,6 +65,9 @@ export default new Vuex.Store({
         },
         updateAccounts: (state, newAccountsList) => {
             state.accounts = newAccountsList;
+        },
+        updatePlaces: (state, newValue) => {
+            state.places = newValue;
         },
         updateShoppingItemsNames: (state, newValue: object[]) => {
             state.shoppingItemNames = newValue.map((item) => ({name: item}));
@@ -94,6 +99,10 @@ export default new Vuex.Store({
                 .then((names) => {
                     context.commit('updateShoppingItemsNames', names);
                 });
+        },
+        loadPlaces(context) {
+            PlaceService.getPlaces()
+                .then((places) => (context.commit('updatePlaces', places)));
         },
     },
 });
