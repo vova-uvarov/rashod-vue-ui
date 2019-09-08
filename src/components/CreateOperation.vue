@@ -68,10 +68,11 @@
 
                         <v-row>
                             <v-col cols="6">
-                                <v-text-field
-                                        label="Место"
-                                        v-model="operation.place"
-                                ></v-text-field>
+                                <v-combobox
+                                          v-model="operation.place"
+                                          :items="places"
+                                          label="Место"
+                                ></v-combobox>
                             </v-col>
 
                             <v-col cols="6">
@@ -177,6 +178,10 @@
 
         @Prop({default: defaultOperation})
         operation: any;
+
+        get places() {
+            return this.$store.state.places;
+        }
 
         get shoppingItems() {
             return this.$store.state.shoppingItemNames;
