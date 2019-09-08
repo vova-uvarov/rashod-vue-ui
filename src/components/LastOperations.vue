@@ -18,7 +18,7 @@
                         <td>{{ item.operationDate | dateFormatter }}</td>
                         <td>{{ item.category.name }}</td>
                         <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
-                        <td>{{ item.cost |moneyFormat}}</td>
+                        <td>{{getCostSign(item)}}{{ item.cost |moneyFormat}}</td>
                         <td style="white-space: nowrap; width: 1%">
                             <v-btn class="mx-2" icon color="primary" @click.stop="editOperation(item.id)">
                                 <v-icon>mdi-file-document-edit</v-icon>
@@ -45,11 +45,17 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from "vue-property-decorator";
+    import OperationUtils from "@/utils/OperationUtils";
     import EditOperationDialog from "@/components/EditOperationDialog.vue";
     import DivideOperationDialog from "@/components/DivideOperationDialog.vue";
 
     @Component({
-        components: {EditOperationDialog, DivideOperationDialog}
+        components: {EditOperationDialog, DivideOperationDialog},
+        methods: {
+            getCostSign(item) {
+                return OperationUtils.getCostSign(item);
+            }
+        }
     })
     export default class AccountList extends Vue {
         @Prop({

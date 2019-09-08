@@ -29,7 +29,7 @@
                     <td>{{ item.account.name }}</td>
                     <td>{{ item.accountToTransfer?item.accountToTransfer.name:'' }}</td>
                     <td>{{ item.category.name }}</td>
-                    <td>{{ item.cost |moneyFormat}}</td>
+                    <td>{{getCostSign(item)}}{{ item.cost |moneyFormat}}</td>
                     <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                     <td>{{ item.place }}</td>
                     <td>{{ item.comment }}</td>
@@ -58,9 +58,15 @@
     import {Component, Vue} from "vue-property-decorator";
     import EditOperationDialog from "@/components/EditOperationDialog.vue";
     import OperationService from "@/services/OperationService";
+    import OperationUtils from "@/utils/OperationUtils";
 
     @Component({
-        components: {EditOperationDialog}
+        components: {EditOperationDialog},
+        methods: {
+            getCostSign(item) {
+                return OperationUtils.getCostSign(item);
+            }
+        }
     })
     export default class OperationsList extends Vue {
 
@@ -68,7 +74,7 @@
             if (confirm("Вы действительно хотите удалить операцию?")) {
                 OperationService.delete(id)
                     .then((response) => {
-                            this.$root.$emit('operationDeleted');
+                            this.$root.$emit("operationDeleted");
                             this.$store.dispatch("reloadOperations");
                         }
                     );

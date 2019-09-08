@@ -45,21 +45,20 @@
 
         private loadData() {
             OperationService.search({
-                operationTypes: 'CONSUMPTION',
+                operationTypes: ['CONSUMPTION'],
                 isPlan: false,
             }).then((data) => {
                 this.lastConsumptionOperations = data.content
             });
 
             OperationService.search({
-                operationTypes: 'INCOME,TRANSFER',
+                operationTypes: ['INCOME','TRANSFER'],
                 isPlan: false,
             }).then((data) => {
                 this.lastTransferAndIncomeOperations = data.content
             });
 
             OperationService.search({
-                operationTypes: 'INCOME,TRANSFER,CONSUMPTION',
                 isPlan: true,
                 sort: 'operationDate'
             }).then((data) => {
