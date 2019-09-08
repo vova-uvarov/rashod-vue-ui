@@ -13,6 +13,9 @@ export default new Vuex.Store({
 
     strict: true,
     state: {
+        operationPlans: {
+            operations: [],
+        },
         operationsView: {
             operations: [],
             totalPages: 0,
@@ -44,6 +47,10 @@ export default new Vuex.Store({
             const now = new Date();
             now.setDate(now.getDate() - 30);
             state.operationsView.filter.dateFrom = now.toISOString().substr(0, 10);
+        },
+
+        updatePlanOperations: (state, newValue) => {
+            state.operationPlans.operations = newValue;
         },
 
         updateOperationsFilter: (state, newValue) => {
@@ -104,6 +111,10 @@ export default new Vuex.Store({
         loadPlaces(context) {
             PlaceService.getPlaces()
                 .then((places) => (context.commit('updatePlaces', places)));
+        },
+        loadPlans(context) {
+            OperationService.search({isPlan: true, size: 100000, sort: "operationDate"})
+                .then((data) => (context.commit('updatePlanOperations', data.content)));
         },
     },
 });

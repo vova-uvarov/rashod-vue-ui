@@ -9,7 +9,7 @@
             </v-expansion-panel>
         </v-expansion-panels>
 
-        <OperationsList/>
+        <OperationsList :operations="operations"/>
         <template>
             <div class="text-center">
                 <v-pagination
@@ -39,6 +39,10 @@
             this.$store.dispatch("reloadOperations");
         }
 
+        get operations() {
+            return this.$store.state.operationsView.operations;
+        }
+
         get page() {
             return this.$store.state.operationsView.currentPage;
         }
@@ -50,6 +54,12 @@
 
         get length() {
             return this.$store.state.operationsView.totalPages;
+        }
+
+        mounted() {
+            this.$root.$on("operationDeleted", () => {
+                this.$store.dispatch("reloadOperations");
+            });
         }
     }
 </script>
