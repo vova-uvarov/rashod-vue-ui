@@ -4,7 +4,7 @@ export default class OperationService {
 
     public static search(requestParams: object): Promise<AxiosResponse<object>> {
         if (requestParams.categoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
-            requestParams.categoryIds = requestParams.categoryIds.join(',');
+            requestParams.categoryIds = requestParams.categoryIds.map((item) => (item.value)).join(',');
         }
 
         if (requestParams.accountIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
