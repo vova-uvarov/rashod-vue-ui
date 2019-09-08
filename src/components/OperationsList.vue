@@ -19,7 +19,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in operations" :key="item.name">
+                <tr v-for="(item, index) in operations" :key="item.name" :class="rowStyle(item,index)">
                     <td>
                         <v-btn class="mx-2" fab dark small color="primary" @click="deleteOperation(item.id)">
                             <v-icon dark>mdi-minus</v-icon>
@@ -65,6 +65,26 @@
         methods: {
             getCostSign(item) {
                 return OperationUtils.getCostSign(item);
+            },
+            rowStyle(item, index) {
+                let mainClass = "";
+                if (item.operationType == "CONSUMPTION") {
+                     mainClass = "consumptionRow";
+                }
+
+                if (item.operationType=='TRANSFER'){
+                    mainClass = "transfer";
+                }
+
+                if (item.operationType=='INCOME'){
+                    mainClass = "income";
+                }
+
+                if (index % 2 == 0) {
+                    return mainClass + " odd";
+                } else {
+                    return mainClass + " even";
+                }
             }
         }
     })
@@ -106,3 +126,31 @@
 
     }
 </script>
+
+<style>
+    .consumptionRow.odd {
+        background-color: #ffd0d9;
+    }
+
+    .consumptionRow.even {
+        background-color: #ffe8ed;
+    }
+
+    .income.odd {
+        background-color: #c4ffbe;
+    }
+
+    .income.even {
+        background-color: #deffd2;
+    }
+
+    .transfer.odd {
+        background-color: #fdff95;
+    }
+
+    .transfer.even {
+        background-color: #f6ffcf;
+    }
+
+
+</style>
