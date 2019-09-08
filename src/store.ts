@@ -29,6 +29,7 @@ export default new Vuex.Store({
                 costTo: null,
                 size: 10,
                 page: 1,
+                isPlan: false,
             },
         },
 

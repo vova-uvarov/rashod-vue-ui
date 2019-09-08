@@ -122,7 +122,12 @@
                         :selectedItems.sync="operationFilter.shoppingList"
                         :items="shoppingItems"/>
             </v-col>
-
+            <v-col cols="3">
+                <v-switch
+                        v-model="operationFilter.isPlan"
+                        label="План?"
+                ></v-switch>
+            </v-col>
             <v-col cols="3">
                 <v-select
                         :items="countsPerPage"
@@ -131,7 +136,10 @@
                 ></v-select>
             </v-col>
 
-            <v-col cols="3">
+
+        </v-row>
+        <v-row>
+            <v-col cols="12">
                 <v-btn color="success" :block="true" v-on:click="applyFilter">Применить фильтр
                 </v-btn>
             </v-col>
