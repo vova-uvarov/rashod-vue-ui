@@ -3,6 +3,9 @@ import axios, {AxiosResponse} from 'axios';
 export default class OperationService {
 
     public static search(requestParams: object): Promise<AxiosResponse<object>> {
+        if (requestParams.categoryIds) {
+            requestParams.categoryIds = requestParams.categoryIds.join(',');
+        }
         return axios.get('http://localhost:8092/api/operations/search', {params: requestParams})
             .then((response) => {
                 return response.data;

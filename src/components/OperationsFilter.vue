@@ -54,7 +54,9 @@
             <v-col cols="3">
                 <v-select
                         :items="categories"
-                        v-model="operationFilter.category.id"
+                        v-model="operationFilter.categoryIds"
+                        :clearable="true"
+                        multiple
                         label="Категория"
                 ></v-select>
             </v-col>
