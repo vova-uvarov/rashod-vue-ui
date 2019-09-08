@@ -31,4 +31,10 @@ export default class AppParamService {
             .get('http://localhost:8092/api/app/params/keys')
             .then((response) => (response.data));
     }
+
+    public static delete(id: string) {
+        return axios
+            .delete('http://localhost:8092/api/app/params/' + id)
+            .then((response) => (response));
+    }
 }

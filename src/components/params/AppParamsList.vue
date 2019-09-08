@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center" align="start">
         <v-col cols="12">
-            <v-card :color="cardColor">
+            <v-card>
                 <v-card-title>Параметры приложения</v-card-title>
                 <v-simple-table :dense="false">
                     <thead>
@@ -51,14 +51,15 @@
             </v-card>
         </v-col>
         <EditParamDialog :app-param-id="paramId"
-                             :visible="showEditDialog"
-                             @close="closeDialog()"/>
+                         :visible="showEditDialog"
+                         @close="closeDialog()"/>
     </v-row>
 </template>
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import EditParamDialog from "@/components/params/EditParamDialog.vue";
+    import AppParamService from "@/services/AppParamService";
 
     @Component({
         components: {EditParamDialog},
@@ -69,11 +70,19 @@
             return this.$store.state.appParams;
         }
 
-        closeDialog(){
-            this.showEditDialog=false;
+        closeDialog() {
+            this.showEditDialog = false;
             this.$store.dispatch("loadParams");
         }
 
+
+        deleteParam(id) {
+            AppParamService.delete(id)
+                .then((response) => {
+                    alert("Параметр успешно удален");
+                });
+            this.$store.dispatch("loadParams");
+        }
 
         editParam(id) {
             this.paramId = id;
