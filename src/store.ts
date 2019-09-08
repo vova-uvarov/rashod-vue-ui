@@ -19,7 +19,7 @@ export default new Vuex.Store({
             filter: {
                 dateFrom: '',
                 dateTo: new Date().toISOString().substr(0, 10),
-                category: {},
+                categoryIds: [],
                 operationTypes: [],
                 accountId: null,
                 place: '',
