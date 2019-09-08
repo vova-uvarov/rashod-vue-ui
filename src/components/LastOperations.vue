@@ -14,7 +14,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="item in operations" :key="item.id">
+                    <tr v-for="item in operations" :key="item.id" :class="rowClass(item)">
                         <td>{{ item.operationDate | dateFormatter }}</td>
                         <td>{{ item.category.name }}</td>
                         <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
@@ -44,6 +44,7 @@
 </template>
 
 <script lang="ts">
+    import moment from "moment";
     import {Component, Prop, Vue} from "vue-property-decorator";
     import OperationUtils from "@/utils/OperationUtils";
     import EditOperationDialog from "@/components/EditOperationDialog.vue";
@@ -54,6 +55,11 @@
         methods: {
             getCostSign(item) {
                 return OperationUtils.getCostSign(item);
+            },
+            rowClass(item) {
+                if (moment(item.operationDate).format('YYYY-MM-DD')==moment(new Date()).format('YYYY-MM-DD')){
+                    return "nowOperation";
+                }
             }
         }
     })
@@ -102,5 +108,7 @@
 </script>
 
 <style>
-
+    .nowOperation {
+        background-color: aliceblue;
+    }
 </style>
