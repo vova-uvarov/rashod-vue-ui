@@ -135,7 +135,7 @@
                             <v-col offset="6" cols="6">
                                 <v-btn color="success" :block="true" v-on:click="createOperation">
                                     <span v-if="formMode==='CREATE'">Создать Операцию</span>
-                                    <span v-else-if="formMOde==='EDIT'">Обновить Операцию</span>
+                                    <span v-else-if="formMode==='EDIT'">Обновить Операцию</span>
                                     <span v-else>Разбить Операцию</span>
                                 </v-btn>
                             </v-col>
