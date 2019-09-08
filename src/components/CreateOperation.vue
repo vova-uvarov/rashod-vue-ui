@@ -159,8 +159,8 @@
             comment: "",
             plan: false,
             place: "",
-            category: {id: 2},
-            account: {id: 2},
+            category: {id: 32}, // todo переделать нормально
+            account: {id: 3}, // todo переделать нормально это жесткий хак
             accountToTransfer: {},
             cost: 0,
             shoppingList: undefined,
