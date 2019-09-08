@@ -21,7 +21,7 @@ export default new Vuex.Store({
                 dateTo: new Date().toISOString().substr(0, 10),
                 categoryIds: [],
                 operationTypes: [],
-                accountId: null,
+                accountIds: [],
                 place: '',
                 tag: '',
                 costFrom: null,
