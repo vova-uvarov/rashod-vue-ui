@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import AppParamService from '@/services/AppParamService';
 import PlaceService from '@/services/PlaceService';
 import AccountService from '@/services/AccountService';
 import OperationService from '@/services/OperationService';
@@ -41,6 +42,9 @@ export default new Vuex.Store({
         accounts: [],
         operationTypes: [],
         places: [],
+        appParams: [],
+        paramGroups: [],
+        paramKeys: [],
     },
     mutations: {
         initState: (state) => {
@@ -76,6 +80,15 @@ export default new Vuex.Store({
         },
         updatePlaces: (state, newValue) => {
             state.places = newValue;
+        },
+        updateAppParams: (state, newValue) => {
+            state.appParams = newValue;
+        },
+        updateParamGroups: (state, newValue) => {
+            state.paramGroups = newValue;
+        },
+        updateParamKeys: (state, newValue) => {
+            state.paramKeys = newValue;
         },
         updateShoppingItemsNames: (state, newValue: object[]) => {
             state.shoppingItemNames = newValue.map((item) => ({name: item}));
@@ -113,8 +126,20 @@ export default new Vuex.Store({
                 .then((places) => (context.commit('updatePlaces', places)));
         },
         loadPlans(context) {
-            OperationService.search({isPlan: true, size: 100000, sort: "operationDate"})
+            OperationService.search({isPlan: true, size: 100000, sort: 'operationDate'})
                 .then((data) => (context.commit('updatePlanOperations', data.content)));
+        },
+        loadParams(context) {
+            AppParamService.getAll()
+                .then((data) => (context.commit('updateAppParams', data)));
+        },
+        loadParamGroups(context) {
+            AppParamService.getGroups()
+                .then((data) => (context.commit('updateParamGroups', data)));
+        },
+        loadParamKeys(context) {
+            AppParamService.getKeys()
+                .then((data) => (context.commit('updateParamKeys', data)));
         },
     },
 });

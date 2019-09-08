@@ -131,7 +131,16 @@
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-group>
-
+                <v-list-item to="/params">
+                    <v-list-item-action>
+                        <v-icon>mdi-settings</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Параметры
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
 
@@ -177,6 +186,9 @@
             this.$store.dispatch("loadCategories");
             this.$store.dispatch("loadShoppingItems");
             this.$store.dispatch("loadPlaces");
+            this.$store.dispatch("loadParams");
+            this.$store.dispatch("loadParamGroups");
+            this.$store.dispatch("loadParamKeys");
         },
     }
 </script>
