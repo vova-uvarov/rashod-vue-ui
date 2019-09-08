@@ -55,7 +55,7 @@
 </template>
 <script lang="ts">
 
-    import {Component, Vue} from "vue-property-decorator";
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import EditOperationDialog from "@/components/EditOperationDialog.vue";
     import OperationService from "@/services/OperationService";
     import OperationUtils from "@/utils/OperationUtils";
@@ -90,12 +90,14 @@
     })
     export default class OperationsList extends Vue {
 
+        @Prop({default: []})
+        operations: object[];
+
         deleteOperation(id: string) {
             if (confirm("Вы действительно хотите удалить операцию?")) {
                 OperationService.delete(id)
                     .then((response) => {
                             this.$root.$emit("operationDeleted");
-                            this.$store.dispatch("reloadOperations");
                         }
                     );
             }
@@ -111,10 +113,6 @@
                 return "";
             }
             return shoppingList.map(val => (val.name)).toString();
-        }
-
-        get operations() {
-            return this.$store.state.operationsView.operations;
         }
 
         data() {
