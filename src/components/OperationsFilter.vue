@@ -52,13 +52,15 @@
             </v-col>
 
             <v-col cols="3">
-                <v-select
+                <v-combobox
                         :items="categories"
                         v-model="operationFilter.categoryIds"
                         :clearable="true"
                         multiple
+                        :search-input.sync="searchCategoryValue"
+                        @change="searchCategoryValue = ''"
                         label="Категория"
-                ></v-select>
+                ></v-combobox>
             </v-col>
 
             <v-col cols="3">
@@ -90,7 +92,6 @@
             </v-col>
 
             <v-col cols="3">
-
                 <v-combobox
                         v-model="operationFilter.place"
                         :items="places"
@@ -224,6 +225,7 @@
                 operationFilter: JSON.parse(JSON.stringify(this.$store.state.operationsView.filter)),
                 dateFromMenu: false,
                 dateToMenu: false,
+                searchCategoryValue: "",
             };
         }
 
