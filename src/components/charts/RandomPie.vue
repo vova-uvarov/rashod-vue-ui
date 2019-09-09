@@ -1,12 +1,12 @@
 <template>
     <div class="small">
         <PieChart :chart-data="datacollection"></PieChart>
-        <button @click="fillData()">Randomize</button>
     </div>
 </template>
 
 <script>
     import PieChart from './PieChart.js'
+    import AccountService from "@/services/AccountService";
 
     export default {
         components: {
@@ -14,29 +14,31 @@
         },
         data() {
             return {
+                balances: [],
                 datacollection: null
             }
         },
         mounted() {
-            this.fillData()
+            AccountService.loadBalances()
+                .then((balances) => {
+                    this.balances = balances;
+                    this.fillData()
+                });
         },
         methods: {
             fillData() {
                 this.datacollection = {
-                    datasets: [{ backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                        data: [this.getRandomInt(), 20, this.getRandomInt()]
+                    datasets: [{
+                        backgroundColor: this.balances.map((a) => (a.color)),
+                        data: this.balances.map((a) => (a.balance))
                     }],
 
 
-
                     // These labels appear in the legend and in the tooltips when hovering different arcs
-                    labels: [
-                        'Red',
-                        'Yellow',
-                        'Blue'
-                    ]
+                    labels: this.balances.map((a) => (a.accountName+":"+a.balance))
 
-                }
+
+            }
             },
             getRandomInt() {
                 return Math.floor(Math.random() * (150 - 5 + 1)) + 5
