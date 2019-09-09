@@ -1,9 +1,21 @@
 <template>
-    <v-container>
-        <h1>Статистика</h1>
-        <RandomPie/>
-        <RandomChart/>
+    <v-container fluid class="pa-2">
+
+        <v-row>
+            <v-col cols="6">
+                <v-card max-width="300">
+                    <RandomPie/>
+                </v-card>
+            </v-col>
+
+            <v-col cols="6">
+                <v-card max-width="300">
+                    <RandomChart/>
+                </v-card>
+            </v-col>
+        </v-row>
     </v-container>
+
 </template>
 <script lang="ts">
     import RandomChart from "../components/charts/RandomChart.vue";
@@ -12,9 +24,12 @@
 
     @Component({
         components: {
-            RandomChart,RandomPie
+            RandomChart, RandomPie
         }
     })
     export default class StatisticsVue extends Vue {
+
+
     }
 </script>
+

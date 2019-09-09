@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 
-export default class AccountService {
+export default class PlaceService {
 
     public static getPlaces(): Promise<AxiosResponse<Object>> {
         return axios
