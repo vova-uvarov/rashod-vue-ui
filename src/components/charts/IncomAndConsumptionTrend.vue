@@ -84,7 +84,7 @@
     @Component({
         components: {LineChart}
     })
-    export default class IncomAndConsumptionByMonth extends Vue {
+    export default class IncomAndConsumptionTrend extends Vue {
         mounted() {
             this.loadData();
         }
