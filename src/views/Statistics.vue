@@ -11,7 +11,7 @@
         <v-row>
 
             <v-col cols="12">
-                <IncomAndConsumptionByMonth/>
+                <IncomAndConsumptionTrend/>
             </v-col>
         </v-row>
 
@@ -19,13 +19,13 @@
 
 </template>
 <script lang="ts">
-    import IncomAndConsumptionByMonth from "../components/charts/IncomAndConsumptionByMonth.vue";
+    import IncomAndConsumptionTrend from "../components/charts/IncomAndConsumptionTrend.vue";
     import AccountBalancesPie from "../components/charts/AccountBalancesPie.vue";
     import {Component, Vue} from "vue-property-decorator";
 
     @Component({
         components: {
-            IncomAndConsumptionByMonth, AccountBalancesPie
+            IncomAndConsumptionTrend, AccountBalancesPie
         }
     })
     export default class StatisticsVue extends Vue {
