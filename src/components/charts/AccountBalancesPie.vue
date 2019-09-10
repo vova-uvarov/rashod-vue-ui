@@ -1,6 +1,6 @@
 <template>
     <div class="small">
-        <PieChart :chart-data="datacollection"></PieChart>
+        <PieChart :chart-data="datacollection" :options="options"></PieChart>
     </div>
 </template>
 
@@ -15,7 +15,20 @@
         data() {
             return {
                 balances: [],
-                datacollection: null
+                datacollection: null,
+                options: {
+                    title: {
+                        display: true,
+                        text: "Деньги по счетам"
+                    },
+                    legend:
+                        {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true
+                            }
+                        }
+                }
             }
         },
         mounted() {
@@ -35,10 +48,10 @@
 
 
                     // These labels appear in the legend and in the tooltips when hovering different arcs
-                    labels: this.balances.map((a) => (a.accountName+":"+a.balance))
+                    labels: this.balances.map((a) => (a.accountName + ":" + a.balance))
 
 
-            }
+                }
             },
             getRandomInt() {
                 return Math.floor(Math.random() * (150 - 5 + 1)) + 5
@@ -49,7 +62,7 @@
 
 <style>
     .small {
-        max-width: 600px;
-        margin: 150px auto;
+        max-width: 400px;
+        margin: 100px auto;
     }
 </style>
