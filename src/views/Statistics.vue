@@ -6,17 +6,11 @@
                     <AccountBalancesPie/>
                 </v-card>
             </v-col>
-            <!--            <v-col cols="8">-->
-            <!--                <v-card>-->
-            <!--                    <IncomAndConsumptionByMonth :raw-data="incomeConsumptionByLastYear"-->
-            <!--                                                title="Доход/Расход по месяцам в текущем году"/>-->
-            <!--                </v-card>-->
-            <!--            </v-col>-->
 
         </v-row>
         <v-row>
             <v-row>
-                <v-col cols="4">
+                <v-col cols="3">
                     <!--                todo нужно сделать компонент даты-->
                     <v-menu
                             v-model="dateFromMenu"
@@ -40,7 +34,7 @@
                                        @input="dateFromMenu = false"></v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="3">
                     <!--                todo нужно сделать компонент даты-->
                     <v-menu
                             v-model="dateToMenu"
@@ -64,7 +58,7 @@
                                        @input="dateToMenu = false"></v-date-picker>
                     </v-menu>
                 </v-col>
-                <v-col cols="4">
+                <v-col cols="3">
                     <v-combobox
                             :items="categories"
                             v-model="excludeCategoryIds"
@@ -74,6 +68,13 @@
                             @change="searchCategoryValue = ''"
                             label="Исключить категории"
                     ></v-combobox>
+                </v-col>
+                <v-col cols="3">
+                    <v-select
+                            :items="[{text: 'Месяц', value: 'MONTH'},{text: 'Год', value: 'YEAR'}]"
+                            v-model="groupBy"
+                            label="Группировка"
+                    ></v-select>
                 </v-col>
             </v-row>
             <v-col cols="12">
@@ -103,6 +104,11 @@
             this.loadData();
         }
 
+        @Watch("groupBy")
+        groupByChanged(value: string, oldValue: string) {
+            this.loadData();
+        }
+
         @Watch("dateFrom")
         dateFromChanged(value: string, oldValue: string) {
             this.loadData();
@@ -119,10 +125,11 @@
         }
 
         private loadData() {
-            StatisticsService.incomeConsumptionByMonth(
+            StatisticsService.incomeConsumptionByGroup(
                 this.dateFrom,
                 this.dateTo,
-                this.excludeCategoryIds
+                this.excludeCategoryIds,
+                this.groupBy,
             ).then((responseData) => {
                 this.incomeConsumptionByMonth = responseData;
             });
@@ -143,6 +150,7 @@
                 dateToMenu: false,
                 dateFrom: now.toISOString().substr(0, 10),
                 dateTo: new Date().toISOString().substr(0, 10),
+                groupBy: 'MONTH',
                 incomeConsumptionByMonth: {},
                 excludeCategoryIds: [],
                 searchCategoryValue: "",
