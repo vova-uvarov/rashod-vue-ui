@@ -185,7 +185,6 @@
                 dateFrom: now.toISOString().substr(0, 10),
                 dateTo: new Date().toISOString().substr(0, 10),
                 groupBy: 'MONTH',
-                incomeConsumptionByMonth: {},
                 excludeCategoryIds: [],
                 searchCategoryValue: "",
             };
