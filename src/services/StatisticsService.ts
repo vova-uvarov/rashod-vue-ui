@@ -2,6 +2,18 @@ import axios, {AxiosResponse} from 'axios';
 
 export default class StatisticsService {
 
+    public static incomesByCategory(): Promise<AxiosResponse<object>> {
+        return axios
+            .get('http://localhost:8092/api/statistics/incomesByCategory')
+            .then((response) => (response.data));
+    }
+
+    public static consumptionByCategory(): Promise<AxiosResponse<object>> {
+        return axios
+            .get('http://localhost:8092/api/statistics/consumptionByCategory')
+            .then((response) => (response.data));
+    }
+
     public static averageByDayInCurrMonth(excludeCategoryIds): Promise<AxiosResponse<object>> {
         if (excludeCategoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
             excludeCategoryIds = excludeCategoryIds.map((item) => (item.value)).join(',');
@@ -36,6 +48,4 @@ export default class StatisticsService {
             })
             .then((response) => (response.data));
     }
-
-
 }

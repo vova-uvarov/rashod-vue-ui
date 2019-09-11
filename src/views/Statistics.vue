@@ -26,19 +26,32 @@
             </v-col>
         </v-row>
 
+        <v-row>
+            <v-col cols="6">
+                <TotalConsumptionsPie/>
+            </v-col>
+            <v-col cols="6">
+                <TotalIncomesPie/>
+            </v-col>
+        </v-row>
+
+
     </v-container>
 
 </template>
 <script lang="ts">
     import IncomAndConsumptionTrend from "../components/charts/IncomAndConsumptionTrend.vue";
     import ConsumptionsByDate from "../components/charts/ConsumptionsByDate.vue";
+    import TotalConsumptionsPie from "../components/charts/TotalConsumptionsPie.vue";
+    import TotalIncomesPie from "../components/charts/TotalIncomesPie.vue";
     import AccountBalancesPie from "../components/charts/AccountBalancesPie.vue";
     import AverageByDayTrend from "../components/charts/AverageByDayTrend.vue";
     import {Component, Vue} from "vue-property-decorator";
 
     @Component({
         components: {
-            IncomAndConsumptionTrend, AccountBalancesPie, ConsumptionsByDate,AverageByDayTrend
+            IncomAndConsumptionTrend, AccountBalancesPie, ConsumptionsByDate,
+            AverageByDayTrend, TotalConsumptionsPie, TotalIncomesPie
         }
     })
     export default class StatisticsVue extends Vue {
