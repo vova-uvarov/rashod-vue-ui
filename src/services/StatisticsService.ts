@@ -2,15 +2,28 @@ import axios, {AxiosResponse} from 'axios';
 
 export default class StatisticsService {
 
-    public static incomesByCategory(): Promise<AxiosResponse<object>> {
+    public static categoryTrend(dateFrom, dateTo, categoryIds): Promise<AxiosResponse<object>> {
+        if (categoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+            categoryIds = categoryIds.map((item) => (item.value)).join(',');
+        }
+
         return axios
-            .get('http://localhost:8092/api/statistics/incomesByCategory')
+            .get('http://localhost:8092/api/statistics/categoryTrend', {
+                params: {
+                    from: dateFrom,
+                    to: dateTo,
+                    includeCategoryIds: categoryIds,
+                }
+            })
             .then((response) => (response.data));
     }
 
-    public static consumptionByCategory(): Promise<AxiosResponse<object>> {
+    public static sumsGroupByCategory(requestParams: object): Promise<AxiosResponse<object>> {
+        if (requestParams.operationTypes) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+            requestParams.operationTypes = requestParams.operationTypes.map((item) => (item)).join(',');
+        }
         return axios
-            .get('http://localhost:8092/api/statistics/consumptionByCategory')
+            .get('http://localhost:8092/api/statistics/sumsByCategory',{params: requestParams})
             .then((response) => (response.data));
     }
 

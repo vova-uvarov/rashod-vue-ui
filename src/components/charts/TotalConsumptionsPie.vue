@@ -33,7 +33,7 @@
         },
         mounted() {
 
-            StatisticsService.consumptionByCategory()
+            StatisticsService.sumsGroupByCategory({operationTypes:["CONSUMPTION"]})
                 .then((data) => {
                     this.consumptionsByCategory = data;
                     this.fillData()

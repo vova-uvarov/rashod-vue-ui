@@ -21,6 +21,7 @@
         </v-card>
 </template>
 
+
 <script lang="ts">
     import LineChart from "./LineChart.js";
     import {Component, Prop, Vue, Watch} from "vue-property-decorator";

@@ -33,7 +33,7 @@
         },
         mounted() {
 
-            StatisticsService.incomesByCategory()
+            StatisticsService.sumsGroupByCategory({operationTypes: ["INCOME"]})
                 .then((data) => {
                     this.incomesByCategory = data;
                     this.fillData()

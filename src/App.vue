@@ -98,18 +98,18 @@
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item to="/statistics">
+                    <v-list-item to="/statistics/categoryTrend">
                         <v-list-item-action>
                             <v-icon>mdi-chart-pie</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
                             <v-list-item-title>
-                                В среднем по годам
+                                Динамика в разрезе категорий
                             </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item to="/statistics">
+                    <v-list-item to="/statistics/2019">
                         <v-list-item-action>
                             <v-icon>mdi-chart-pie</v-icon>
                         </v-list-item-action>
@@ -120,16 +120,6 @@
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item to="/statistics">
-                        <v-list-item-action>
-                            <v-icon>mdi-chart-pie</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>
-                                2018
-                            </v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
                 </v-list-group>
                 <v-list-item to="/params">
                     <v-list-item-action>
