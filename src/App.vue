@@ -104,7 +104,7 @@
                         </v-list-item-action>
                         <v-list-item-content>
                             <v-list-item-title>
-                                Динамика в разрезе категорий
+                                Динамика
                             </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
