@@ -44,7 +44,7 @@
                 this.datacollection = {
                     datasets: [{
                         backgroundColor: this.incomesByCategory.map((a) => (this.getRandomColor())),
-                        data: this.incomesByCategory.map((a) => (a.sum))
+                        data: this.incomesByCategory.map((a) => (a.data[0]))
                     }],
 
 
