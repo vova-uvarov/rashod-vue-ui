@@ -10,6 +10,7 @@ export default class StatisticsService {
             .get('http://localhost:8092/api/statistics/averageByYearTrend', {
                 params: {
                     includeCategoryIds: categoryIds,
+                    operationTypes: 'CONSUMPTION'
                 }
             })
             .then((response) => (response.data));
