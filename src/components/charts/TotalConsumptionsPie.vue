@@ -33,7 +33,7 @@
         },
         mounted() {
 
-            StatisticsService.sumsGroupByCategory({operationTypes:["CONSUMPTION"]})
+            StatisticsService.sumsGroupByCategory({operationTypes: ["CONSUMPTION"]})
                 .then((data) => {
                     this.consumptionsByCategory = data;
                     this.fillData()
@@ -44,7 +44,7 @@
                 this.datacollection = {
                     datasets: [{
                         backgroundColor: this.consumptionsByCategory.map((a) => (this.getRandomColor())),
-                        data: this.consumptionsByCategory.map((a) => (a.sum))
+                        data: this.consumptionsByCategory.map((a) => (a.data[0])) // 0 для pie всегда один элемент
                     }],
 
 
