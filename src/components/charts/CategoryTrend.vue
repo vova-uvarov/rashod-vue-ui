@@ -128,7 +128,7 @@
         }
 
         get title() {
-            return "Динамика по категории: " + this.categoryIds.map((c) => (c.text)).join(",");
+            return "Динамика по категории в разрезе месяцев: " + this.categoryIds.map((c) => (c.text)).join(",");
         }
 
         get options() {
