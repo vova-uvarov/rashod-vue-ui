@@ -2,6 +2,18 @@ import axios, {AxiosResponse} from 'axios';
 
 export default class StatisticsService {
 
+    public static averageByYearTrend(categoryIds): Promise<AxiosResponse<object>> {
+        if (categoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+            categoryIds = categoryIds.map((item) => (item.value)).join(',');
+        }
+        return axios
+            .get('http://localhost:8092/api/statistics/averageByYearTrend', {
+                params: {
+                    includeCategoryIds: categoryIds,
+                }
+            })
+            .then((response) => (response.data));
+    }
     public static categoryTrend(dateFrom, dateTo, categoryIds): Promise<AxiosResponse<object>> {
         if (categoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
             categoryIds = categoryIds.map((item) => (item.value)).join(',');
