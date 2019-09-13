@@ -87,7 +87,7 @@
                     <template v-slot:activator>
                         <v-list-item-title>Статистика</v-list-item-title>
                     </template>
-                    <v-list-item to="/statistics">
+                    <v-list-item to="/statistics/common">
                         <v-list-item-action>
                             <v-icon>mdi-chart-pie</v-icon>
                         </v-list-item-action>
