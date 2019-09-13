@@ -28,7 +28,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/Operations.vue'),
     },
     {
-      path: '/statistics',
+      path: '/statistics/common',
       name: 'statistics',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
