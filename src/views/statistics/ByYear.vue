@@ -19,11 +19,16 @@
             </v-col>
         </v-row>
         <v-row>
-            <v-col cols="12">
+            <v-col cols="6">
                 <TotalConsumptionsPie operation-type="CONSUMPTION"
-                                      title="Расходы за: Январь"
-                                      :date-from="januaryData.from"
-                                      :date-to="januaryData.to"/>
+                                      title="Расходы в среднем за год"
+                                      :year="year"
+                                      sum-calculator-type="MONTH_AVERAGE"
+                />
+            </v-col>
+            <v-col cols="6">
+                <TotalConsumptionsPie operation-type="INCOME" title="Доходы в среднем за год"
+                                      :year="year" sum-calculator-type="MONTH_AVERAGE"/>
             </v-col>
         </v-row>
 

@@ -14,6 +14,9 @@
     })
     export default class TotalConsumptionPie extends Vue {
         @Prop()
+        sumCalculatorType: string;
+
+        @Prop()
         year: number;
 
         @Prop()
@@ -87,7 +90,8 @@
                 {
                     operationTypes: [this.operationType],
                     from: dateFrom,
-                    to: dateTo
+                    to: dateTo,
+                    calculatorType: this.sumCalculatorType
                 })
                 .then((data) => {
                     console.log("call then sumsGroupByCategory with from: " + dateFrom + " to: " + dateTo);
