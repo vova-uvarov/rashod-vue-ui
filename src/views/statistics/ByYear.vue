@@ -20,10 +20,12 @@
             </v-col>
         </v-row>
 
-        <v-row v-for="rowIndex in [0,1,2,3]">
+        <v-row v-for="rowIndex in rows">
             <v-col cols="4" v-for="colIndex in [0,1,2]" :key="colIndex">
+                {{monthNames[rowIndex*3+colIndex]}} = {{months[rowIndex*3+colIndex].from}}-{{months[rowIndex*3+colIndex].to}}
                 <TotalConsumptionsPie operation-type="CONSUMPTION" :title="'Расходы за: '+monthNames[rowIndex*3+colIndex] "
                                       :date-from="months[rowIndex*3+colIndex].from" :date-to="months[rowIndex*3+colIndex].to"/>
+
             </v-col>
         </v-row>
     </v-container>
@@ -44,6 +46,7 @@
             return ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"]
         }
         get months() {
+            console.log("get months");
             let months = [];
             for (let i = 0; i < 12; i++) {
                 months.push({
@@ -54,6 +57,9 @@
             return months;
         }
 
+        get rows(){
+            return [0,1,2,3];
+        }
         get years() {
             return [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012]; // todo Стоит этот список генерировать
         }
