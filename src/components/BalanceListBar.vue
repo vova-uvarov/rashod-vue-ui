@@ -14,6 +14,9 @@
                 color="primary"
                 outlined
         >
+            <span class="group pa-2">
+                <v-icon @click.stop="equalizationAccount(item)">mdi-wrench</v-icon>
+            </span>
             <b>{{item.accountName}}:</b> {{item.balance|moneyFormat}}
         </v-chip>
 
@@ -25,14 +28,20 @@
         >
             <b>{{item.accountName}}:</b> {{item.balance|moneyFormat}}
         </v-chip>
+        <EqualizationAccountBalanceDialog :accountBalance="accountBalance"
+                                          :visible="showEualizationDialog"
+                                          @close="showEualizationDialog=false"/>
     </v-toolbar>
 </template>
 
 <script lang="ts">
     import AccountService, {Balance} from "@/services/AccountService";
+    import EqualizationAccountBalanceDialog from "@/components/EqualizationAccountBalanceDialog";
     import {Component, Vue} from "vue-property-decorator";
 
-    @Component
+    @Component({
+        components: {EqualizationAccountBalanceDialog}
+    })
     export default class BalanceListBar extends Vue {
         created() {
             this.loadBalances();
@@ -55,12 +64,19 @@
                 });
         }
 
+        equalizationAccount(selectedAccountBalance) {
+            this.accountBalance = selectedAccountBalance;
+            this.showEualizationDialog = true;
+        }
+
         data() {
 
-            let newVar: { totalBalance: number, balances: Balance[], balancesGoalByCurrency: any[] } = {
+            let newVar: { totalBalance: number, balances: Balance[], balancesGoalByCurrency: any[], showEualizationDialog: boolean, accountBalance: any } = {
                 totalBalance: 0,
                 balances: [],
                 balancesGoalByCurrency: [],
+                showEualizationDialog: false,
+                accountBalance: {}
             };
             return newVar;
         }
