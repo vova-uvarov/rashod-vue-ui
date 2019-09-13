@@ -1,7 +1,5 @@
 <template>
     <div class="small">
-        dateFrom={{dateFrom}} <br/>
-        dateTo={{dateTo}}<br/>
         <PieChart :chart-data="datacollection" :options="options"></PieChart>
     </div>
 </template>
@@ -56,6 +54,16 @@
             this.loadData();
         }
 
+        @Watch("dateFrom")
+        dateFromChanged(value: string, oldValue: string) {
+            this.loadData();
+        }
+
+        @Watch("dateTo")
+        dateToChaged(value: string, oldValue: string) {
+            this.loadData();
+        }
+
         mounted() {
             this.loadData();
         }
@@ -74,6 +82,7 @@
                     dateTo = this.dateTo;
                 }
             }
+            console.log("call sumsGroupByCategory with from: " + dateFrom + " to: " + dateTo);
             StatisticsService.sumsGroupByCategory(
                 {
                     operationTypes: [this.operationType],
@@ -81,17 +90,13 @@
                     to: dateTo
                 })
                 .then((data) => {
+                    console.log("call then sumsGroupByCategory with from: " + dateFrom + " to: " + dateTo);
                     this.consumptionsByCategory = data;
                     this.fillData();
                 });
         }
 
         fillData() {
-        // |     property 'datasets' -> object with constructor 'Array'
-        //     |     index 0 -> object with constructor 'Object'
-        //     |     ...
-        // |     property 'config' -> object with constructor 'Object'
-        //     --- property 'data' closes the circle"
             this.datacollection = {
                 datasets: [{
                     backgroundColor: this.consumptionsByCategory.map((a) => (this.getRandomColor())),
