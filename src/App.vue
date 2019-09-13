@@ -109,13 +109,13 @@
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item to="/statistics/2019">
+                    <v-list-item to="/statistics/byYear">
                         <v-list-item-action>
                             <v-icon>mdi-chart-pie</v-icon>
                         </v-list-item-action>
                         <v-list-item-content>
                             <v-list-item-title>
-                                2019
+                                По годам
                             </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
