@@ -2,8 +2,6 @@
     <div class="small">
         dateFrom={{dateFrom}} <br/>
         dateTo={{dateTo}}<br/>
-        consumptionsByCategory={{consumptionsByCategory}}<br/>
-        datacollection={{datacollection}}
         <PieChart :chart-data="datacollection" :options="options"></PieChart>
     </div>
 </template>
@@ -35,7 +33,7 @@
 
         data() {
             return {
-                balances: [],
+                consumptionsByCategory: [],
                 datacollection: {},
                 options: {
                     title: {
