@@ -1,6 +1,5 @@
 <template>
     <v-container fluid class="pa-2">
-        months = {{months}}
         <v-row>
             <v-col cols="12">
                 <v-select
@@ -19,13 +18,21 @@
                 <TotalConsumptionsPie operation-type="INCOME" title="Доходы за год" :year="year"/>
             </v-col>
         </v-row>
+        <v-row>
+            <v-col cols="12">
+                <TotalConsumptionsPie operation-type="CONSUMPTION"
+                                      title="Расходы за: Январь"
+                                      :date-from="januaryData.from"
+                                      :date-to="januaryData.to"/>
+            </v-col>
+        </v-row>
 
         <v-row v-for="rowIndex in rows">
             <v-col cols="4" v-for="colIndex in [0,1,2]" :key="colIndex">
-                {{monthNames[rowIndex*3+colIndex]}} = {{months[rowIndex*3+colIndex].from}}-{{months[rowIndex*3+colIndex].to}}
-                <TotalConsumptionsPie operation-type="CONSUMPTION" :title="'Расходы за: '+monthNames[rowIndex*3+colIndex] "
-                                      :date-from="months[rowIndex*3+colIndex].from" :date-to="months[rowIndex*3+colIndex].to"/>
-
+                <TotalConsumptionsPie operation-type="CONSUMPTION"
+                                      :title="'Расходы за: '+monthNames[rowIndex*3+colIndex] "
+                                      :date-from="months[rowIndex*3+colIndex].from"
+                                      :date-to="months[rowIndex*3+colIndex].to"/>
             </v-col>
         </v-row>
     </v-container>
@@ -43,8 +50,16 @@
     export default class StatisticsVue extends Vue {
 
         get monthNames() {
-            return ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"]
+            return ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
         }
+
+        get januaryData() {
+            return {
+                from: new Date(this.year, 1, 1, 3, 0, 0).toISOString().substr(0, 10), // todo тут надо с часовыми поясами разобраться
+                to: new Date(this.year, 2, 0, 23, 59, 59).toISOString().substr(0, 10), // todo тут надо с часовыми поясами разобраться
+            }
+        }
+
         get months() {
             console.log("get months");
             let months = [];
@@ -57,9 +72,10 @@
             return months;
         }
 
-        get rows(){
-            return [0,1,2,3];
+        get rows() {
+            return [0, 1, 2, 3];
         }
+
         get years() {
             return [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012]; // todo Стоит этот список генерировать
         }
