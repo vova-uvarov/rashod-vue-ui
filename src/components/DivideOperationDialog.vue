@@ -6,7 +6,8 @@
                 v-model="showDialog"
         >
             <ShortOperationInfoBar :operation="operation"/>
-            <CreateOperation formMode="DIVIDE" :operation="operation" v-if="!loading"/>
+            <CreateOperation formMode="DIVIDE" :operation="operation" v-if="!loading"
+                             @successfull="showDialog=false"/>
             <span v-else>Идет загрузка...</span>
         </v-dialog>
     </v-row>

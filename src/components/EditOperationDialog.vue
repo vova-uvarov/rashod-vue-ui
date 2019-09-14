@@ -5,7 +5,8 @@
                 max-width="790"
                 v-model="showDialog"
         >
-            <CreateOperation formMode="EDIT" :operation="operation" v-if="!loading"/>
+            <CreateOperation formMode="EDIT" :operation="operation" v-if="!loading"
+                             @successfull="showDialog=false"/>
             <span v-else>Идет загрузка...</span>
         </v-dialog>
     </v-row>
