@@ -59,7 +59,7 @@
                         <v-list-item-title>Счета</v-list-item-title>
                     </template>
 
-                    <v-list-item to="/accounts">
+                    <v-list-item to="/accounts/common">
                         <v-list-item-action>
                             <v-icon>mdi-account-details</v-icon>
                         </v-list-item-action>
@@ -70,7 +70,7 @@
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item to="/accounts">
+                    <v-list-item to="/accounts/goal">
                         <v-list-item-action>
                             <v-icon>mdi-account-details</v-icon>
                         </v-list-item-action>
@@ -81,7 +81,7 @@
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item to="/accounts">
+                    <v-list-item to="/accounts/debt">
                         <v-list-item-action>
                             <v-icon>mdi-account-details</v-icon>
                         </v-list-item-action>
