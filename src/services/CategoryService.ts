@@ -12,4 +12,9 @@ export default class CategoryService {
         return axios
             .delete('http://localhost:8092/api/categories/' + categoryId);
     }
+
+    public static save(category: any): Promise<AxiosResponse<object>> {
+        return axios
+            .post('http://localhost:8092/api/categories/', category);
+    }
 }

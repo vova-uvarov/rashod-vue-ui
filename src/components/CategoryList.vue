@@ -9,6 +9,7 @@
                     <th class="text-left">Дата создания</th>
                     <th class="text-left">Название</th>
                     <th class="text-left">Описание</th>
+                    <th class="text-left"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -22,11 +23,16 @@
                     <td>{{ item.insTime | dateFormatter}}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.description }}</td>
-
+                    <td style="white-space: nowrap; width: 1%">
+                        <v-btn class="mx-2" fab dark small color="primary" @click.stop="editCategory(item)">
+                            <v-icon>mdi-file-document-edit</v-icon>
+                        </v-btn>
+                    </td>
                 </tr>
                 </tbody>
             </v-simple-table>
         </v-col>
+        <EditCategoryDialog :category="categoryForEdit" :visible="showEditDialog" @close="showEditDialog=false"/>
     </v-row>
 </template>
 
@@ -34,12 +40,20 @@
     import {Component, Vue} from "vue-property-decorator";
     import CategoryService from "@/services/CategoryService";
     import OperationService from "@/services/OperationService";
+    import EditCategoryDialog from "@/components/EditCategoryDialog.vue";
 
-    @Component
+    @Component({
+        components: {EditCategoryDialog}
+    })
     export default class CategoryList extends Vue {
         created() {
             // `this` указывает на экземпляр vm
             this.$store.dispatch("loadCategories");
+        }
+
+        editCategory(category: any) {
+            this.categoryForEdit = category;
+            this.showEditDialog = true;
         }
 
         deleteCategory(id: string) {
@@ -63,6 +77,13 @@
 
         get categories() {
             return this.$store.state.categories;
+        }
+
+        data() {
+            return {
+                showEditDialog: false,
+                categoryForEdit: {}
+            };
         }
     }
 </script>
