@@ -1,5 +1,5 @@
 <template>
-    <div class="accounts">
+    <div class="categories">
         <CategoryList/>
     </div>
 </template>
@@ -13,6 +13,6 @@
             CategoryList
         }
     })
-    export default class AccountsView extends Vue {
+    export default class CategoriesView extends Vue {
     }
 </script>
