@@ -20,6 +20,12 @@ export default class AccountService {
             .then((response) => (response.data.content));
     }
 
+    public static loadGoalBalances(): Promise<AxiosResponse<Balance>> {
+        return axios
+            .get('http://localhost:8092/api/accounts/balances/goal')
+            .then((response) => (response.data));
+    }
+
     public static loadBalances(): Promise<AxiosResponse<Balance>> {
         return axios
             .get('http://localhost:8092/api/accounts/balances')
