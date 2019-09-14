@@ -70,6 +70,8 @@
                         :clearable="true"
                         multiple
                         label="Счет"
+                        :search-input.sync="searchAccountValue"
+                        @change="searchAccountValue = ''"
                 ></v-combobox>
             </v-col>
         </v-row>
@@ -226,6 +228,7 @@
                 dateFromMenu: false,
                 dateToMenu: false,
                 searchCategoryValue: "",
+                searchAccountValue: "",
             };
         }
 
