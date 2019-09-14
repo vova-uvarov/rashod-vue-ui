@@ -41,16 +41,26 @@
                                 :disabled="true"
                         ></v-switch>
                     </td>
-                    <td>
+
+                    <td style="white-space: nowrap; width: 1%">
                         <v-btn class="mx-2" fab dark small color="primary" @click.stop="editOperation(item.id)">
                             <v-icon>mdi-file-document-edit</v-icon>
                         </v-btn>
+
+
+                        <v-btn class="mx-2" fab dark small color="primary" @click.stop="divideOperation(item.id)">
+                            <v-icon>mdi-call-split</v-icon>
+                        </v-btn>
                     </td>
                 </tr>
+
                 </tbody>
             </v-simple-table>
         </v-col>
         <EditOperationDialog :operationId="operationId" :visible="showEditDialog" @close="showEditDialog=false"/>
+        <DivideOperationDialog :parentOperationId="operationId"
+                               :visible="showDivideDialog"
+                               @close="showDivideDialog=false"/>
     </v-row>
 </template>
 <script lang="ts">
@@ -59,9 +69,10 @@
     import EditOperationDialog from "@/components/EditOperationDialog.vue";
     import OperationService from "@/services/OperationService";
     import OperationUtils from "@/utils/OperationUtils";
+    import DivideOperationDialog from "@/components/DivideOperationDialog.vue";
 
     @Component({
-        components: {EditOperationDialog},
+        components: {EditOperationDialog, DivideOperationDialog},
         methods: {
             getCostSign(item) {
                 return OperationUtils.getCostSign(item);
@@ -69,14 +80,14 @@
             rowStyle(item, index) {
                 let mainClass = "";
                 if (item.operationType == "CONSUMPTION") {
-                     mainClass = "consumptionRow";
+                    mainClass = "consumptionRow";
                 }
 
-                if (item.operationType=='TRANSFER'){
+                if (item.operationType == "TRANSFER") {
                     mainClass = "transfer";
                 }
 
-                if (item.operationType=='INCOME'){
+                if (item.operationType == "INCOME") {
                     mainClass = "income";
                 }
 
@@ -103,6 +114,11 @@
             }
         }
 
+        divideOperation(selectOperationId) {
+            this.operationId = selectOperationId;
+            this.showDivideDialog = true;
+        }
+
         editOperation(selectOperationId) {
             this.operationId = selectOperationId;
             this.showEditDialog = true;
@@ -118,7 +134,8 @@
         data() {
             return {
                 operationId: null,
-                showEditDialog: false
+                showEditDialog: false,
+                showDivideDialog: false
             };
         }
 
