@@ -44,4 +44,18 @@ export default class AccountService {
             .then((response) => (response.data));
     }
 
+    public static get(accountId: string): Promise<AxiosResponse<object>> {
+        return axios
+            .get('http://localhost:8092/api/accounts/' + accountId)
+            .then((response) => {
+                    return response.data;
+                },
+            );
+    }
+
+    public static create(account: object): Promise<AxiosResponse<object>> {
+        return axios
+            .post('http://localhost:8092/api/accounts', account)
+            .then((response) => (response.data));
+    }
 }
