@@ -10,6 +10,8 @@
                 item-text="name"
                 item-value="name"
                 return-object
+                :search-input.sync="searchValue"
+                @change="searchValue = ''"
         >
             <template v-slot:selection="data">
                 <v-chip
@@ -66,7 +68,8 @@
 
         data() {
             return {
-                selectedItemsInner: this.selectedItems
+                selectedItemsInner: this.selectedItems,
+                searchValue: ""
             };
         }
 
