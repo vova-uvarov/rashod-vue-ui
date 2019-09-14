@@ -4,7 +4,7 @@
             <v-simple-table :dense="true">
                 <thead>
                 <tr>
-                    <th class="text-left">Действия</th>
+                    <th class="text-left"></th>
                     <th class="text-left">Дата</th>
                     <th class="text-left">Счет</th>
                     <th class="text-left">На Счет</th>

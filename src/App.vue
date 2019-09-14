@@ -28,6 +28,7 @@
                     </v-list-item-content>
                 </v-list-item>
 
+<!--                todo похоже на подраздел в операциях-->
                 <v-list-item to="/plans">
                     <v-list-item-action>
                         <v-icon>mdi-finance</v-icon>
@@ -35,6 +36,17 @@
                     <v-list-item-content>
                         <v-list-item-title>
                             План
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item to="/categories">
+                    <v-list-item-action>
+                        <v-icon>mdi-format-list-bulleted-type</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            Категория
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
