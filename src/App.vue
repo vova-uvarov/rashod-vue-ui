@@ -191,6 +191,9 @@
             this.$store.dispatch("loadParams");
             this.$store.dispatch("loadParamGroups");
             this.$store.dispatch("loadParamKeys");
+            this.$store.dispatch("loadAccountTypes");
+            this.$store.dispatch("loadCurrencies");
+            this.$store.dispatch("loadAccountStatuses");
         },
     }
 </script>

@@ -14,6 +14,11 @@
                     <th class="text-left">Статус</th>
                     <th class="text-left">Валюта</th>
                     <th class="text-left">Учитывать в балансе?</th>
+                    <th class="text-left">
+                        <v-btn class="mx-2" fab dark small color="primary" @click="addAccount(item.id)">
+                            <v-icon dark>mdi-plus</v-icon>
+                        </v-btn>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,25 +45,41 @@
                                 :disabled="true"
                         ></v-switch>
                     </td>
+                    <td style="white-space: nowrap; width: 1%">
+                        <v-btn class="mx-2" fab dark small color="primary" @click.stop="editAccount(item.id)">
+                            <v-icon>mdi-file-document-edit</v-icon>
+                        </v-btn>
+                    </td>
                 </tr>
                 </tbody>
             </v-simple-table>
         </v-col>
+        <EditAccountDialog :accountId="accountId" :visible="showEditDialog" @close="showEditDialog=false"/>
     </v-row>
 </template>
 
 <script lang="ts">
+    import EditAccountDialog from "@/components/account/EditAccountDialog.vue";
     import {Component, Vue} from "vue-property-decorator";
 
-    @Component
+    @Component({
+        components: {EditAccountDialog}
+    })
     export default class AccountList extends Vue {
-        created() {
-            // `this` указывает на экземпляр vm
-            this.$store.dispatch("loadAccounts");
-        }
-
         get accounts() {
             return this.$store.state.accounts;
+        }
+
+        editAccount(accountID) {
+            this.accountId = accountID;
+            this.showEditDialog = true;
+        }
+
+        data() {
+            return {
+                showEditDialog: false,
+                accountId: null,
+            };
         }
     }
 </script>

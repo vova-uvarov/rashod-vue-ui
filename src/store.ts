@@ -45,6 +45,10 @@ export default new Vuex.Store({
         appParams: [],
         paramGroups: [],
         paramKeys: [],
+        accountTypes: [],
+        currencies: [],
+        accountStatuses: [],
+
     },
     mutations: {
         initState: (state) => {
@@ -93,6 +97,15 @@ export default new Vuex.Store({
         updateShoppingItemsNames: (state, newValue: object[]) => {
             state.shoppingItemNames = newValue.map((item) => ({name: item}));
         },
+        updateAccountTypes: (state, newValue) => {
+            state.accountTypes = newValue;
+        },
+        updateCurrencies: (state, newValue) => {
+            state.currencies = newValue;
+        },
+        updateAccountStatuses: (state, newValue) => {
+            state.accountStatuses = newValue;
+        },
     },
     actions: {
         reloadOperations(context) {
@@ -140,6 +153,18 @@ export default new Vuex.Store({
         loadParamKeys(context) {
             AppParamService.getKeys()
                 .then((data) => (context.commit('updateParamKeys', data)));
+        },
+        loadAccountTypes(context) {
+            DictionaryService.getAccountTypes()
+                .then((data) => (context.commit('updateAccountTypes', data)));
+        },
+        loadCurrencies(context) {
+            DictionaryService.getCurrencies()
+                .then((data) => (context.commit('updateCurrencies', data)));
+        },
+        loadAccountStatuses(context) {
+            DictionaryService.getAccountStatuses()
+                .then((data) => (context.commit('updateAccountStatuses', data)));
         },
     },
 });
