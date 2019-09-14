@@ -8,7 +8,7 @@ export default class OperationService {
         }
 
         if (requestParams.accountIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
-            requestParams.accountIds = requestParams.accountIds.join(',');
+            requestParams.accountIds = requestParams.accountIds.map((item) => (item.value)).join(',');
         }
 
         if (requestParams.operationTypes) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
@@ -31,6 +31,8 @@ export default class OperationService {
 
     public static create(operation: object,
                          countRepeat: number): Promise<AxiosResponse<object>> {
+        delete operation.category.name;
+        delete operation.account.name;
         const createRequest = {
             operation,
             countRepeat,

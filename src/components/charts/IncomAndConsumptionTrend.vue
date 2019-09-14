@@ -62,6 +62,7 @@
                         ></v-combobox>
                     </v-col>
                     <v-col cols="3">
+<!--                        todo список группировок думаю нужно сделать справочником на бэке-->
                         <v-select
                                 :items="[{text: 'Месяц', value: 'MONTH'},{text: 'Год', value: 'YEAR'}]"
                                 v-model="groupBy"
