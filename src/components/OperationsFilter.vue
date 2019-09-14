@@ -64,13 +64,13 @@
             </v-col>
 
             <v-col cols="3">
-                <v-select
+                <v-combobox
                         :items="accounts"
                         v-model="operationFilter.accountIds"
                         :clearable="true"
                         multiple
                         label="Счет"
-                ></v-select>
+                ></v-combobox>
             </v-col>
         </v-row>
 

@@ -28,11 +28,13 @@
 
                         <v-row>
                             <v-col cols="6">
-                                <v-select
+                                <v-combobox
                                         :items="categories"
-                                        v-model="operation.category.id"
+                                        v-model="operation.category"
+                                        item-value="id"
+                                        item-text="name"
                                         label="Категория"
-                                ></v-select>
+                                ></v-combobox>
                             </v-col>
                             <v-col cols="6">
                                 <v-text-field
@@ -46,11 +48,13 @@
 
                         <v-row>
                             <v-col cols="6">
-                                <v-select
+                                <v-combobox
                                         :items="accounts"
-                                        v-model="operation.account.id"
+                                        v-model="operation.account"
                                         label="Со счета"
-                                ></v-select>
+                                        item-value="id"
+                                        item-text="name"
+                                ></v-combobox>
                             </v-col>
                             <v-col cols="6">
                                 <v-select v-if="operation.operationType==='TRANSFER'"
@@ -69,9 +73,9 @@
                         <v-row>
                             <v-col cols="6">
                                 <v-combobox
-                                          v-model="operation.place"
-                                          :items="places"
-                                          label="Место"
+                                        v-model="operation.place"
+                                        :items="places"
+                                        label="Место"
                                 ></v-combobox>
                             </v-col>
 
@@ -159,8 +163,8 @@
             comment: "",
             plan: false,
             place: "",
-            category: {id: 32}, // todo переделать нормально
-            account: {id: 3}, // todo переделать нормально это жесткий хак
+            category: {name: "Продукты", id: 32}, // todo переделать нормально
+            account: {id: 3, name: "Тинькофф"}, // todo переделать нормально это жесткий хак
             accountToTransfer: {},
             cost: 0,
             shoppingList: undefined,
@@ -215,17 +219,11 @@
         }
 
         get categories() {
-            return this.$store.state.categories.map(val => ({
-                text: val.name,
-                value: val.id
-            }));
+            return this.$store.state.categories;
         }
 
         get accounts() {
-            return this.$store.state.accounts.map(val => ({
-                text: val.name,
-                value: val.id
-            }));
+            return this.$store.state.accounts;
         }
 
         get repeatCounts() {
