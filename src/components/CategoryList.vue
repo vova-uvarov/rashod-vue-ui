@@ -1,0 +1,68 @@
+<template>
+    <v-row justify="center" align="start">
+        <v-col cols="12">
+            <v-simple-table>
+                <thead>
+                <tr>
+                    <th class="text-left"></th>
+                    <th class="text-left">ID</th>
+                    <th class="text-left">Дата создания</th>
+                    <th class="text-left">Название</th>
+                    <th class="text-left">Описание</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="item in categories" :key="item.id">
+                    <td>
+                        <v-btn class="mx-2" fab dark small color="primary" @click="deleteCategory(item.id)">
+                            <v-icon dark>mdi-minus</v-icon>
+                        </v-btn>
+                    </td>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.insTime | dateFormatter}}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+
+                </tr>
+                </tbody>
+            </v-simple-table>
+        </v-col>
+    </v-row>
+</template>
+
+<script lang="ts">
+    import {Component, Vue} from "vue-property-decorator";
+    import CategoryService from "@/services/CategoryService";
+    import OperationService from "@/services/OperationService";
+
+    @Component
+    export default class CategoryList extends Vue {
+        created() {
+            // `this` указывает на экземпляр vm
+            this.$store.dispatch("loadCategories");
+        }
+
+        deleteCategory(id: string) {
+            if (confirm("Вы действительно хотите удалить операцию?")) {
+                OperationService.search({categoryIds: [{value: id}]})
+                    .then((data) => {
+                        if (data.content.length > 0) {
+                            alert("Нельзя удалить категорию к которой привязаны операции");
+                        } else {
+                            CategoryService.delete(id)
+                                .then((response) => {
+                                        alert("Категория успешно удалена");
+                                        this.$store.dispatch("loadCategories");
+                                    }
+                                );
+                        }
+                    });
+
+            }
+        }
+
+        get categories() {
+            return this.$store.state.categories;
+        }
+    }
+</script>
