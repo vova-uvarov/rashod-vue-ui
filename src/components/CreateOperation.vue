@@ -137,10 +137,19 @@
 
                         </v-row>
                         <v-row>
-                            <v-col offset="6" cols="6">
+                            <v-col cols="6" v-if="formMode==='EDIT'">
+                                <v-btn color="error" :block="true" v-on:click="deleteOperation">
+                                    Удалить
+                                </v-btn>
+                            </v-col>
+                            <v-col cols="6" v-if="formMode==='EDIT'">
+                                <v-btn color="success" :block="true" v-on:click="createOperation">
+                                    Обновить Операцию
+                                </v-btn>
+                            </v-col>
+                            <v-col offset="6" cols="6" v-else>
                                 <v-btn color="success" :block="true" v-on:click="createOperation">
                                     <span v-if="formMode==='CREATE'">Создать Операцию</span>
-                                    <span v-else-if="formMode==='EDIT'">Обновить Операцию</span>
                                     <span v-else>Разбить Операцию</span>
                                 </v-btn>
                             </v-col>
@@ -189,6 +198,17 @@
 
         get shoppingItems() {
             return this.$store.state.shoppingItemNames;
+        }
+
+        deleteOperation() {
+            if (confirm("Вы действительно хотите удалить операцию?")) {
+                OperationService.delete(this.operation.id)
+                    .then((response) => {
+                        alert("Операция успешно удалена: " + this.operation.id);
+                        this.$root.$emit("operationCreated"); // todo какжется нужно просто одно событие operationChaged
+                        this.$emit("successfull");
+                    });
+            }
         }
 
         createOperation() {
