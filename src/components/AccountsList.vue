@@ -15,7 +15,7 @@
                     <th class="text-left">Валюта</th>
                     <th class="text-left">Учитывать в балансе?</th>
                     <th class="text-left">
-                        <v-btn class="mx-2" fab dark small color="primary" @click="addAccount(item.id)">
+                        <v-btn class="mx-2" fab dark small color="primary" @click="addAccount">
                             <v-icon dark>mdi-plus</v-icon>
                         </v-btn>
                     </th>
@@ -55,21 +55,26 @@
             </v-simple-table>
         </v-col>
         <EditAccountDialog :accountId="accountId" :visible="showEditDialog" @close="showEditDialog=false"/>
+        <CreateAccountDialog :visible="showCreateDialog" @close="showCreateDialog=false"/>
     </v-row>
 </template>
 
 <script lang="ts">
     import EditAccountDialog from "@/components/account/EditAccountDialog.vue";
+    import CreateAccountDialog from "@/components/account/CreateAccountDialog.vue";
     import {Component, Vue} from "vue-property-decorator";
 
     @Component({
-        components: {EditAccountDialog}
+        components: {EditAccountDialog, CreateAccountDialog}
     })
     export default class AccountList extends Vue {
         get accounts() {
             return this.$store.state.accounts;
         }
 
+        addAccount(){
+            this.showCreateDialog = true;
+        }
         editAccount(accountID) {
             this.accountId = accountID;
             this.showEditDialog = true;
@@ -78,6 +83,7 @@
         data() {
             return {
                 showEditDialog: false,
+                showCreateDialog: false,
                 accountId: null,
             };
         }
