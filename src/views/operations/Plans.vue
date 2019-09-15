@@ -29,7 +29,7 @@
             this.$store.dispatch("loadPlans");
         }
 
-        operations(categoryName: string) {
+        operations(categoryName: any) {
             console.log("categoryName=" + categoryName);
             return this.$store.state.operationPlans.operations.filter((op: any) => (op.category.name == categoryName));
         }
