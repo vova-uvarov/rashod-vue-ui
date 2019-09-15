@@ -57,38 +57,38 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import EditParamDialog from "@/components/params/EditParamDialog.vue";
-    import AppParamService from "@/services/AppParamService";
+import {Component, Vue} from 'vue-property-decorator';
+import EditParamDialog from '@/components/params/EditParamDialog.vue';
+import AppParamService from '@/services/AppParamService';
 
-    @Component({
-        components: {EditParamDialog},
-    })
-    export default class AppParamsList extends Vue {
+@Component({
+    components: {EditParamDialog},
+})
+export default class AppParamsList extends Vue {
 
-        get appParams() {
-            return this.$store.state.appParams;
-        }
-
-        closeDialog() {
-            this.showEditDialog = false;
-            this.$store.dispatch("loadParams");
-        }
-
-        deleteParam(id: string) {
-            AppParamService.delete(id)
-                .then((response) => {
-                    alert("Параметр успешно удален");
-                });
-            this.$store.dispatch("loadParams");
-        }
-
-        editParam(id: string) {
-            this.paramId = id;
-            this.showEditDialog = true;
-        }
-
-        paramId = '';
-        showEditDialog = false;
+    get appParams() {
+        return this.$store.state.appParams;
     }
+
+    public paramId = '';
+    public showEditDialog = false;
+
+    public closeDialog() {
+        this.showEditDialog = false;
+        this.$store.dispatch('loadParams');
+    }
+
+    public deleteParam(id: string) {
+        AppParamService.delete(id)
+            .then((response) => {
+                alert('Параметр успешно удален');
+            });
+        this.$store.dispatch('loadParams');
+    }
+
+    public editParam(id: string) {
+        this.paramId = id;
+        this.showEditDialog = true;
+    }
+}
 </script>

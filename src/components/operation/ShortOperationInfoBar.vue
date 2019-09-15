@@ -4,12 +4,11 @@
     </v-toolbar>
 </template>
 <script lang="ts">
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
-    import {Component, Prop, Vue} from "vue-property-decorator";
-
-    @Component
-    export default class ShowOperationInfoBar extends Vue {
-        @Prop()
-        operation!: object;
-    }
+@Component
+export default class ShowOperationInfoBar extends Vue {
+    @Prop()
+    public operation!: object;
+}
 </script>

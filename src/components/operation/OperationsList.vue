@@ -64,77 +64,76 @@
     </v-row>
 </template>
 <script lang="ts">
+import {Component, Prop, Vue} from 'vue-property-decorator';
+import EditOperationDialog from '@/components/operation/EditOperationDialog.vue';
+import OperationService from '@/services/OperationService';
+import OperationUtils from '@/utils/OperationUtils';
+import DivideOperationDialog from '@/components/operation/DivideOperationDialog.vue';
 
-    import {Component, Prop, Vue} from "vue-property-decorator";
-    import EditOperationDialog from "@/components/operation/EditOperationDialog.vue";
-    import OperationService from "@/services/OperationService";
-    import OperationUtils from "@/utils/OperationUtils";
-    import DivideOperationDialog from "@/components/operation/DivideOperationDialog.vue";
-
-    @Component({
-        components: {EditOperationDialog, DivideOperationDialog},
-        methods: {
-            getCostSign(item) {
-                return OperationUtils.getCostSign(item);
-            },
-            rowStyle(item, index) {
-                let mainClass = "";
-                if (item.operationType == "CONSUMPTION") {
-                    mainClass = "consumptionRow";
-                }
-
-                if (item.operationType == "TRANSFER") {
-                    mainClass = "transfer";
-                }
-
-                if (item.operationType == "INCOME") {
-                    mainClass = "income";
-                }
-
-                if (index % 2 == 0) {
-                    return mainClass + " odd";
-                } else {
-                    return mainClass + " even";
-                }
+@Component({
+    components: {EditOperationDialog, DivideOperationDialog},
+    methods: {
+        getCostSign(item) {
+            return OperationUtils.getCostSign(item);
+        },
+        rowStyle(item, index) {
+            let mainClass = '';
+            if (item.operationType == 'CONSUMPTION') {
+                mainClass = 'consumptionRow';
             }
-        }
-    })
-    export default class OperationsList extends Vue {
 
-        @Prop({default: []})
-        operations!: object[];
-
-        deleteOperation(id: string) {
-            if (confirm("Вы действительно хотите удалить операцию?")) {
-                OperationService.delete(id)
-                    .then((response) => {
-                            this.$root.$emit("operationDeleted");
-                        }
-                    );
+            if (item.operationType == 'TRANSFER') {
+                mainClass = 'transfer';
             }
-        }
 
-        divideOperation(selectOperationId: any) {
-            this.operationId = selectOperationId;
-            this.showDivideDialog = true;
-        }
-
-        editOperation(selectOperationId: any) {
-            this.operationId = selectOperationId;
-            this.showEditDialog = true;
-        }
-
-        shoppingListFormatter(shoppingList: Array<any>) {
-            if (!shoppingList) {
-                return "";
+            if (item.operationType == 'INCOME') {
+                mainClass = 'income';
             }
-            return shoppingList.map(val => (val.name)).toString();
-        }
 
-        operationId = null;
-        showEditDialog = false;
-        showDivideDialog = false;
+            if (index % 2 == 0) {
+                return mainClass + ' odd';
+            } else {
+                return mainClass + ' even';
+            }
+        },
+    },
+})
+export default class OperationsList extends Vue {
+
+    @Prop({default: []})
+    public operations!: object[];
+
+    public operationId = null;
+    public showEditDialog = false;
+    public showDivideDialog = false;
+
+    public deleteOperation(id: string) {
+        if (confirm('Вы действительно хотите удалить операцию?')) {
+            OperationService.delete(id)
+                .then((response) => {
+                        this.$root.$emit('operationDeleted');
+                    },
+                );
+        }
     }
+
+    public divideOperation(selectOperationId: any) {
+        this.operationId = selectOperationId;
+        this.showDivideDialog = true;
+    }
+
+    public editOperation(selectOperationId: any) {
+        this.operationId = selectOperationId;
+        this.showEditDialog = true;
+    }
+
+    public shoppingListFormatter(shoppingList: any[]) {
+        if (!shoppingList) {
+            return '';
+        }
+        return shoppingList.map((val) => (val.name)).toString();
+    }
+}
 </script>
 
 <style>

@@ -78,133 +78,133 @@
 </template>
 
 <script lang="ts">
-    import LineChart from "./js/LineChart.js";
-    import {Component, Vue, Watch} from "vue-property-decorator";
-    import StatisticsService from "@/services/StatisticsService";
+import LineChart from './js/LineChart.js';
+import {Component, Vue, Watch} from 'vue-property-decorator';
+import StatisticsService from '@/services/StatisticsService';
 
-    @Component({
-        components: {LineChart}
-    })
-    export default class IncomAndConsumptionTrend extends Vue {
-        mounted() {
-            this.loadData();
+@Component({
+    components: {LineChart},
+})
+export default class IncomAndConsumptionTrend extends Vue {
+
+
+    get categories() {
+        return this.$store.state.categories.map((val: any) => ({
+            text: val.name,
+            value: val.id,
+        }));
+    }
+
+    get datacollection() {
+        return {
+            // labels: this.rawData.labels,
+            labels: this.extractLabels(this.rawData.labels),
+            datasets: this.extractDatasets(this.rawData.datasets),
+        };
+    }
+
+    get options() {
+        return {
+            maintainAspectRatio: false, aspectRatio: 1,
+            title: {
+                display: true,
+                text: 'Доход/Расход динамика',
+            },
+            legend:
+                {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                    },
+                },
+        };
+    }
+
+    private static dateFromInitValue() {
+        const now = new Date();
+        now.setDate(now.getDate() - 365);
+        return now;
+    }
+
+    public rawData: any = {};
+    public dateFromMenu = false;
+    public dateToMenu = false;
+    public dateFrom = IncomAndConsumptionTrend.dateFromInitValue().toISOString().substr(0, 10);
+    public dateTo = new Date().toISOString().substr(0, 10);
+    public groupBy = 'MONTH';
+    public excludeCategoryIds = [];
+    public searchCategoryValue = '';
+    public mounted() {
+        this.loadData();
+    }
+
+    @Watch('groupBy')
+    public groupByChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    @Watch('dateFrom')
+    public dateFromChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    @Watch('dateTo')
+    public dateToChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    @Watch('excludeCategoryIds')
+    public excludeCategoryIdsChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    public extractLabels(labels: any) {
+        if (labels) {
+            return labels;
         }
+        return [];
+    }
 
-        @Watch("groupBy")
-        groupByChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
 
-        @Watch("dateFrom")
-        dateFromChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
-
-        @Watch("dateTo")
-        dateToChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
-
-        @Watch("excludeCategoryIds")
-        excludeCategoryIdsChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
-
-        private loadData() {
-            StatisticsService.incomeConsumptionByGroup(
-                this.dateFrom,
-                this.dateTo,
-                this.excludeCategoryIds,
-                this.groupBy,
-            ).then((responseData) => {
-                this.rawData = responseData;
+    public extractDatasets(datasets: any) {
+        if (datasets) {
+            return datasets.map((item: any) => {
+                return {
+                    lineTension: 0,
+                    label: item.name,
+                    fill: false,
+                    borderColor: this.getColorByDataSetName(item.name),
+                    data: item.data,
+                };
             });
         }
-
-
-        get categories() {
-            return this.$store.state.categories.map((val: any) => ({
-                text: val.name,
-                value: val.id
-            }));
-        }
-
-        get datacollection() {
-            return {
-                // labels: this.rawData.labels,
-                labels: this.extractLabels(this.rawData.labels),
-                datasets: this.extractDatasets(this.rawData.datasets)
-            };
-        }
-
-        get options() {
-            return {
-                maintainAspectRatio: false, aspectRatio: 1,
-                title: {
-                    display: true,
-                    text: "Доход/Расход динамика"
-                },
-                legend:
-                    {
-                        position: "bottom",
-                        labels: {
-                            usePointStyle: true
-                        }
-                    }
-            };
-        }
-
-        extractLabels(labels: any) {
-            if (labels) {
-                return labels;
-            }
-            return [];
-        }
-
-
-        extractDatasets(datasets: any) {
-            if (datasets) {
-                return datasets.map((item: any) => {
-                    return {
-                        lineTension: 0,
-                        label: item.name,
-                        fill: false,
-                        borderColor: this.getColorByDataSetName(item.name),
-                        data: item.data
-                    };
-                });
-            }
-            return [];
-        }
-
-        rawData: any = {};
-        dateFromMenu = false;
-        dateToMenu = false;
-        dateFrom = IncomAndConsumptionTrend.dateFromInitValue().toISOString().substr(0, 10);
-        dateTo = new Date().toISOString().substr(0, 10);
-        groupBy = "MONTH";
-        excludeCategoryIds = [];
-        searchCategoryValue = "";
-
-        private static dateFromInitValue() {
-            const now = new Date();
-            now.setDate(now.getDate() - 365);
-            return now;
-        }
-
-
-        getColorByDataSetName(dataSetName: string) {
-            if (dataSetName === "Доход") {
-                return "green";
-            }
-            if (dataSetName === "Расход") {
-                return "red";
-            }
-            return "black";
-        }
-
-
+        return [];
     }
+
+
+    public getColorByDataSetName(dataSetName: string) {
+        if (dataSetName === 'Доход') {
+            return 'green';
+        }
+        if (dataSetName === 'Расход') {
+            return 'red';
+        }
+        return 'black';
+    }
+
+    private loadData() {
+        StatisticsService.incomeConsumptionByGroup(
+            this.dateFrom,
+            this.dateTo,
+            this.excludeCategoryIds,
+            this.groupBy,
+        ).then((responseData) => {
+            this.rawData = responseData;
+        });
+    }
+
+
+}
 </script>
 
 <style>

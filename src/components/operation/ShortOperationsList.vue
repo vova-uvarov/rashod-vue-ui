@@ -44,63 +44,63 @@
 </template>
 
 <script lang="ts">
-    import moment from "moment";
-    import {Component, Prop, Vue} from "vue-property-decorator";
-    import OperationUtils from "@/utils/OperationUtils";
-    import EditOperationDialog from "@/components/operation/EditOperationDialog.vue";
-    import DivideOperationDialog from "@/components/operation/DivideOperationDialog.vue";
+import moment from 'moment';
+import {Component, Prop, Vue} from 'vue-property-decorator';
+import OperationUtils from '@/utils/OperationUtils';
+import EditOperationDialog from '@/components/operation/EditOperationDialog.vue';
+import DivideOperationDialog from '@/components/operation/DivideOperationDialog.vue';
 
-    @Component({
-        components: {EditOperationDialog, DivideOperationDialog},
-        methods: {
-            getCostSign(item) {
-                return OperationUtils.getCostSign(item);
-            },
-            rowClass(item) {
-                if (moment(item.operationDate).format("YYYY-MM-DD") == moment(new Date()).format("YYYY-MM-DD")) {
-                    return "nowOperation";
-                }
+@Component({
+    components: {EditOperationDialog, DivideOperationDialog},
+    methods: {
+        getCostSign(item) {
+            return OperationUtils.getCostSign(item);
+        },
+        rowClass(item) {
+            if (moment(item.operationDate).format('YYYY-MM-DD') == moment(new Date()).format('YYYY-MM-DD')) {
+                return 'nowOperation';
             }
-        }
+        },
+    },
+})
+export default class ShortOperationsList extends Vue {
+    @Prop({
+        default() {
+            return [];
+        },
     })
-    export default class ShortOperationsList extends Vue {
-        @Prop({
-            default: function() {
-                return [];
-            }
-        })
-        operations!: Array<Object>;
+    public operations!: Object[];
 
-        @Prop({default: "Операции"})
-        title!: string;
+    @Prop({default: 'Операции'})
+    public title!: string;
 
-        @Prop({default: "white"})
-        cardColor!: string;
+    @Prop({default: 'white'})
+    public cardColor!: string;
 
-        divideOperation(selectOperationId: any) {
-            this.operationId = selectOperationId;
-            this.showDivideDialog = true;
-        }
+    public operationId = null;
+    public showEditDialog = false;
+    public showDivideDialog = false;
 
-        editOperation(selectOperationId: any) {
-            this.operationId = selectOperationId;
-            this.showEditDialog = true;
-        }
-
-        operationId = null;
-        showEditDialog = false;
-        showDivideDialog = false;
-
-
-        //todo Копипаста из LastOpeartions
-        //todo Копипаста из LastOpeartions
-        shoppingListFormatter(shoppingList: any) {
-            if (!shoppingList) {
-                return "";
-            }
-            return shoppingList.map((val: any) => (val.name)).toString();
-        }
+    public divideOperation(selectOperationId: any) {
+        this.operationId = selectOperationId;
+        this.showDivideDialog = true;
     }
+
+    public editOperation(selectOperationId: any) {
+        this.operationId = selectOperationId;
+        this.showEditDialog = true;
+    }
+
+
+    // todo Копипаста из LastOpeartions
+    // todo Копипаста из LastOpeartions
+    public shoppingListFormatter(shoppingList: any) {
+        if (!shoppingList) {
+            return '';
+        }
+        return shoppingList.map((val: any) => (val.name)).toString();
+    }
+}
 </script>
 
 <style>

@@ -28,96 +28,96 @@
 
 
 <script lang="ts">
-    import LineChart from "./js/LineChart.js";
-    import {Component, Vue, Watch} from "vue-property-decorator";
-    import StatisticsService from "@/services/StatisticsService";
+import LineChart from './js/LineChart.js';
+import {Component, Vue, Watch} from 'vue-property-decorator';
+import StatisticsService from '@/services/StatisticsService';
 
-    @Component({
-        components: {LineChart}
-    })
-    export default class CategoryYearTrend extends Vue {
-        mounted() {
-            this.loadData();
-        }
-
-        @Watch("categoryIds")
-        categoryIdsChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
-
-        private loadData() {
-            StatisticsService.averageByYearTrend(this.categoryIds)
-                .then((responseData) => {
-                    this.rawData = responseData;
-                });
-        }
+@Component({
+    components: {LineChart},
+})
+export default class CategoryYearTrend extends Vue {
 
 
-        get categories() {
-            return this.$store.state.categories.map((val: any) => ({
-                text: val.name,
-                value: val.id
-            }));
-        }
-
-        get datacollection() {
-            return {
-                // labels: this.rawData.labels,
-                labels: this.extractLabels(this.rawData.labels),
-                datasets: this.extractDatasets(this.rawData.datasets)
-            };
-        }
-
-        get title() {
-            return "Динамика по категории: " + this.categoryIds.map((c) => (c.text)).join(",");
-        }
-
-        get options() {
-            return {
-                maintainAspectRatio: false, aspectRatio: 1,
-                legend:
-                    {
-                        position: "bottom",
-                        labels: {
-                            usePointStyle: true
-                        }
-                    }
-            };
-        }
-
-        extractLabels(labels: any) {
-            if (labels) {
-                return labels;
-            }
-            return [];
-        }
-
-
-        extractDatasets(datasets: any) {
-            if (datasets) {
-                return datasets.map((item: any) => {
-                    return {
-                        lineTension: 0,
-                        label: item.name,
-                        fill: false,
-                        borderColor: this.getRandomColor(),
-                        data: item.data
-                    };
-                });
-            }
-            return [];
-        }
-
-        rawData: any = {};
-        categoryIds = [{text: "Продукты", value: 32}]; // todo
-        searchCategoryValue = "";
-
-        getRandomColor() {
-
-            return "blue";
-        }
-
+    get categories() {
+        return this.$store.state.categories.map((val: any) => ({
+            text: val.name,
+            value: val.id,
+        }));
     }
+
+    get datacollection() {
+        return {
+            // labels: this.rawData.labels,
+            labels: this.extractLabels(this.rawData.labels),
+            datasets: this.extractDatasets(this.rawData.datasets),
+        };
+    }
+
+    get title() {
+        return 'Динамика по категории: ' + this.categoryIds.map((c) => (c.text)).join(',');
+    }
+
+    get options() {
+        return {
+            maintainAspectRatio: false, aspectRatio: 1,
+            legend:
+                {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                    },
+                },
+        };
+    }
+
+    public rawData: any = {};
+    public categoryIds = [{text: 'Продукты', value: 32}]; // todo
+    public searchCategoryValue = '';
+    public mounted() {
+        this.loadData();
+    }
+
+    @Watch('categoryIds')
+    public categoryIdsChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    public extractLabels(labels: any) {
+        if (labels) {
+            return labels;
+        }
+        return [];
+    }
+
+
+    public extractDatasets(datasets: any) {
+        if (datasets) {
+            return datasets.map((item: any) => {
+                return {
+                    lineTension: 0,
+                    label: item.name,
+                    fill: false,
+                    borderColor: this.getRandomColor(),
+                    data: item.data,
+                };
+            });
+        }
+        return [];
+    }
+
+    public getRandomColor() {
+
+        return 'blue';
+    }
+
+    private loadData() {
+        StatisticsService.averageByYearTrend(this.categoryIds)
+            .then((responseData) => {
+                this.rawData = responseData;
+            });
+    }
+
+}
 </script>
 
 <style>

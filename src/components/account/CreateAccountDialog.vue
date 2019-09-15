@@ -12,28 +12,27 @@
     </v-row>
 </template>
 <script lang="ts">
+import {Component, Prop, Vue} from 'vue-property-decorator';
+import AccountForm from '@/components/account/AccountForm.vue';
 
-    import {Component, Prop, Vue} from "vue-property-decorator";
-    import AccountForm from "@/components/account/AccountForm.vue";
+@Component({
+    components: {AccountForm},
+})
+export default class CreateAccountDialog extends Vue {
 
-    @Component({
-        components: {AccountForm}
-    })
-    export default class CreateAccountDialog extends Vue {
+    @Prop()
+    public visible!: string;
 
-        @Prop()
-        visible!: string;
-
-        get showDialog() {
-            return this.visible;
-        }
-
-        set showDialog(value) {
-            if (!value) {
-                this.$emit("close");
-            }
-        }
-
-        loading = false;
+    get showDialog() {
+        return this.visible;
     }
+
+    set showDialog(value) {
+        if (!value) {
+            this.$emit('close');
+        }
+    }
+
+    public loading = false;
+}
 </script>

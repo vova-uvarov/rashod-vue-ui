@@ -24,42 +24,42 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import OperationsList from "@/components/operation/OperationsList.vue";
-    import OperationsFilter from "@/components/operation/OperationsFilter.vue";
+import {Component, Vue} from 'vue-property-decorator';
+import OperationsList from '@/components/operation/OperationsList.vue';
+import OperationsFilter from '@/components/operation/OperationsFilter.vue';
 
-    @Component({
-        components: {
-            OperationsFilter,
-            OperationsList,
-        }
-    })
-    export default class OperationsView extends Vue {
-        created() {
-            this.$store.dispatch("reloadOperations");
-        }
-
-        get operations() {
-            return this.$store.state.operationsView.operations;
-        }
-
-        get page() {
-            return this.$store.state.operationsView.currentPage;
-        }
-
-        set page(value) {
-            this.$store.commit("setOperationViewCurrentPage", value);
-            this.$store.dispatch("reloadOperations");
-        }
-
-        get length() {
-            return this.$store.state.operationsView.totalPages;
-        }
-
-        mounted() {
-            this.$root.$on("operationDeleted", () => {
-                this.$store.dispatch("reloadOperations");
-            });
-        }
+@Component({
+    components: {
+        OperationsFilter,
+        OperationsList,
+    },
+})
+export default class OperationsView extends Vue {
+    public created() {
+        this.$store.dispatch('reloadOperations');
     }
+
+    get operations() {
+        return this.$store.state.operationsView.operations;
+    }
+
+    get page() {
+        return this.$store.state.operationsView.currentPage;
+    }
+
+    set page(value) {
+        this.$store.commit('setOperationViewCurrentPage', value);
+        this.$store.dispatch('reloadOperations');
+    }
+
+    get length() {
+        return this.$store.state.operationsView.totalPages;
+    }
+
+    public mounted() {
+        this.$root.$on('operationDeleted', () => {
+            this.$store.dispatch('reloadOperations');
+        });
+    }
+}
 </script>

@@ -44,39 +44,39 @@
 
 </template>
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import TotalConsumptionsPie from "@/components/charts/TotalConsumptionsPie.vue";
+import {Component, Vue} from 'vue-property-decorator';
+import TotalConsumptionsPie from '@/components/charts/TotalConsumptionsPie.vue';
 
-    @Component({
-        components: {
-            TotalConsumptionsPie
+@Component({
+    components: {
+        TotalConsumptionsPie,
+    },
+})
+export default class StatisticByYear extends Vue {
+    get months() {
+        console.log('get months');
+        const months = [];
+        for (let i = 0; i < 12; i++) {
+            months.push({
+                // todo тут надо с часовыми поясами разобраться
+                from: new Date(this.year, i, 1, 3, 0, 0).toISOString().substr(0, 10),
+                // todo тут надо с часовыми поясами разобраться
+                to: new Date(this.year, i + 1, 0, 23, 59, 59).toISOString().substr(0, 10),
+            });
         }
-    })
-    export default class StatisticByYear extends Vue {
-        get months() {
-            console.log("get months");
-            const months = [];
-            for (let i = 0; i < 12; i++) {
-                months.push({
-                    // todo тут надо с часовыми поясами разобраться
-                    from: new Date(this.year, i, 1, 3, 0, 0).toISOString().substr(0, 10),
-                    // todo тут надо с часовыми поясами разобраться
-                    to: new Date(this.year, i + 1, 0, 23, 59, 59).toISOString().substr(0, 10),
-                });
-            }
-            return months;
-        }
-
-        get rows() {
-            return [0, 1, 2, 3];
-        }
-
-        get years() {
-            return [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012]; // todo Стоит этот список генерировать
-        }
-
-        public year = 2019;
-        public monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+        return months;
     }
+
+    get rows() {
+        return [0, 1, 2, 3];
+    }
+
+    get years() {
+        return [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012]; // todo Стоит этот список генерировать
+    }
+
+    public year = 2019;
+    public monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+}
 </script>
 

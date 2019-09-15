@@ -34,33 +34,33 @@
     </div>
 </template>
 <script lang="ts">
-    import {Component, Prop, PropSync, Vue} from "vue-property-decorator";
+import {Component, Prop, PropSync, Vue} from 'vue-property-decorator';
 
-    @Component
-    export default class SelectShoppingItems extends Vue {
-        @Prop({
-            default: function() {
-                return [];
-            }
-        })
-        items!: object[];
+@Component
+export default class SelectShoppingItems extends Vue {
+    @Prop({
+        default() {
+            return [];
+        },
+    })
+    public items!: object[];
 
-        @PropSync("selectedItems", {
-            default: function() {
-                return [];
-            }
-        })
-        selectedItemsInner!: object[];
+    @PropSync('selectedItems', {
+        default() {
+            return [];
+        },
+    })
+    public selectedItemsInner!: object[];
 
-        remove(item: any) {
-            const index = this.selectedItemsInner.indexOf(item);
-            if (index >= 0) {
-                this.selectedItemsInner.splice(index, 1);
-            }
+    public searchValue = '';
+
+    public remove(item: any) {
+        const index = this.selectedItemsInner.indexOf(item);
+        if (index >= 0) {
+            this.selectedItemsInner.splice(index, 1);
         }
-
-        searchValue = "";
-
     }
+
+}
 </script>
 }

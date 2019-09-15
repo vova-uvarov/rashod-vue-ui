@@ -37,51 +37,50 @@
     </v-row>
 </template>
 <script lang="ts">
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import AccountService from '@/services/AccountService';
+import CategoryService from '@/services/CategoryService';
 
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import AccountService from "@/services/AccountService";
-    import CategoryService from "@/services/CategoryService";
+@Component
+export default class EditCategoryDialog extends Vue {
 
-    @Component
-    export default class EditCategoryDialog extends Vue {
-
-        @Prop({default: "CREATE"})
-        formMode!: string;
-
-        @Prop({default: {}})
-        category!: object;
-
-        @Prop()
-        visible!: string;
-
-        get showDialog() {
-            return this.visible;
-        }
-
-
-        set showDialog(value) {
-            if (!value) {
-                this.$emit("close");
-            }
-        }
-
-        @Watch("category")
-        accountIdChanged(value: string, oldValue: string) {
-            if (value) {
-                this.categoryInner = JSON.parse(JSON.stringify(value));
-            }
-        }
-
-        updateCategory() {
-            CategoryService.save(this.categoryInner)
-                .then((data) => {
-                    alert("Категория успешно сохранена");
-                    this.$store.dispatch("loadCategories");
-                    this.$emit("close");
-                });
-        }
-
-        loading = false;
-        categoryInner: any = {};
+    get showDialog() {
+        return this.visible;
     }
+
+
+    set showDialog(value) {
+        if (!value) {
+            this.$emit('close');
+        }
+    }
+
+    @Prop({default: 'CREATE'})
+    public formMode!: string;
+
+    @Prop({default: {}})
+    public category!: object;
+
+    @Prop()
+    public visible!: string;
+
+    public loading = false;
+    public categoryInner: any = {};
+
+    @Watch('category')
+    public accountIdChanged(value: string, oldValue: string) {
+        if (value) {
+            this.categoryInner = JSON.parse(JSON.stringify(value));
+        }
+    }
+
+    public updateCategory() {
+        CategoryService.save(this.categoryInner)
+            .then((data) => {
+                alert('Категория успешно сохранена');
+                this.$store.dispatch('loadCategories');
+                this.$emit('close');
+            });
+    }
+}
 </script>
