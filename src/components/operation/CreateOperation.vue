@@ -187,7 +187,7 @@
     export default class CreateOperation extends Vue {
 
         @Prop({default: "CREATE"})
-        formMode: string;
+        formMode!: string;
 
         @Prop({default: defaultOperation})
         operation: any;
@@ -213,7 +213,7 @@
 
         createOperation() {
             OperationService.create(this.operation, this.countRepeat)
-                .then((response) => {
+                .then((response: any) => {
                         this.operation = defaultOperation();
                         // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
                         this.showShoppingItem = false;
@@ -274,13 +274,9 @@
             return "#F6FFEA";
         }
 
-        data() {
-            return {
-                countRepeat: 1,
-                operationDateMenu: false,
-                showShoppingItem: true,
-            };
-        }
+        countRepeat = 1;
+        operationDateMenu = false;
+        showShoppingItem = true;
 
     }
 </script>

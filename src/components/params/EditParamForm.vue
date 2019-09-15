@@ -35,7 +35,7 @@
                         </v-row>
 
                         <v-row>
-<!--                            Date dateValue;-->
+                            <!--                            Date dateValue;-->
                             <v-col cols="6">
                                 <v-text-field
                                         label="Строковое значение"
@@ -118,9 +118,10 @@
         @Prop({default: {}})
         appParam: any;
 
-        get boolValues(){
-            return [true, false]
+        get boolValues() {
+            return [true, false];
         }
+
         get paramGroups() {
             return this.$store.state.paramGroups;
         }
@@ -135,17 +136,12 @@
 
         editParam() {
             AppParamService.save(this.appParam)
-                .then((response) => {
+                .then((response: any) => {
                         alert("Параметр успешно обновлен: " + response.id);
                     }
                 );
         }
 
-        data() {
-            return {
-                paramDateValueMenu: false
-            };
-        }
-
+        paramDateValueMenu = false;
     }
 </script>

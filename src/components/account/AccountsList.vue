@@ -72,20 +72,17 @@
             return this.$store.state.accounts;
         }
 
-        addAccount(){
+        addAccount() {
             this.showCreateDialog = true;
         }
-        editAccount(accountID) {
+
+        editAccount(accountID: any) {
             this.accountId = accountID;
             this.showEditDialog = true;
         }
 
-        data() {
-            return {
-                showEditDialog: false,
-                showCreateDialog: false,
-                accountId: null,
-            };
-        }
+        showEditDialog = false;
+        showCreateDialog = false;
+        accountId = null;
     }
 </script>

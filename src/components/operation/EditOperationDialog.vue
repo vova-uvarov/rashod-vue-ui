@@ -23,10 +23,10 @@
     export default class EditOperationDialog extends Vue {
 
         @Prop()
-        operationId: string;
+        operationId: string | undefined;
 
         @Prop()
-        visible: string;
+        visible!: string;
 
         get showDialog() {
             return this.visible;
@@ -46,14 +46,10 @@
                         this.loading = false;
                         this.operation = data;
                     }
-                )
+                );
         }
 
-        data() {
-            return {
-                loading: false,
-                operation: {}
-            };
-        }
+        loading = false;
+        operation: any = {};
     }
 </script>

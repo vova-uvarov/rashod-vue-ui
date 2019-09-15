@@ -75,8 +75,7 @@
             this.$store.dispatch("loadParams");
         }
 
-
-        deleteParam(id) {
+        deleteParam(id: string) {
             AppParamService.delete(id)
                 .then((response) => {
                     alert("Параметр успешно удален");
@@ -84,17 +83,12 @@
             this.$store.dispatch("loadParams");
         }
 
-        editParam(id) {
+        editParam(id: string) {
             this.paramId = id;
             this.showEditDialog = true;
         }
 
-        data() {
-            return {
-                paramId: null,
-                showEditDialog: false,
-            };
-        }
-
+        paramId = '';
+        showEditDialog = false;
     }
 </script>

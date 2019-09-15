@@ -8,13 +8,13 @@ export interface Balance {
 
 export default class AccountService {
 
-    public static equalization(accountId: number, actualBalance: number): Promise<AxiosResponse<object>> {
+    public static equalization(accountId: number, actualBalance: number): Promise<AxiosResponse<any>> {
         return axios
             .patch('http://localhost:8092/api/accounts/' + accountId + '/equalization', {actualBalance})
             .then((response) => (response));
     }
 
-    public static getAllAccounts(): Promise<AxiosResponse<object>> {
+    public static getAllAccounts(): Promise<AxiosResponse<any>> {
         return axios
             .get('http://localhost:8092/api/accounts?size=100')
             .then((response) => (response.data.content));
@@ -44,7 +44,7 @@ export default class AccountService {
             .then((response) => (response.data));
     }
 
-    public static get(accountId: string): Promise<AxiosResponse<object>> {
+    public static get(accountId: string): Promise<AxiosResponse<any>> {
         return axios
             .get('http://localhost:8092/api/accounts/' + accountId)
             .then((response) => {
@@ -53,7 +53,7 @@ export default class AccountService {
             );
     }
 
-    public static create(account: object): Promise<AxiosResponse<object>> {
+    public static create(account: any): Promise<AxiosResponse<any>> {
         return axios
             .post('http://localhost:8092/api/accounts', account)
             .then((response) => (response.data));

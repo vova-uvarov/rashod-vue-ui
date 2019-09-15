@@ -176,7 +176,7 @@
         }
 
         get accounts() {
-            return this.$store.state.accounts.map(val => ({
+            return this.$store.state.accounts.map((val: any) => ({
                 text: val.name,
                 value: val.id
             }));
@@ -184,7 +184,7 @@
 
         get operationTypes() {
             //todo сделать справочником в БД по хорошему
-            return this.$store.state.operationTypes.map((val) => {
+            return this.$store.state.operationTypes.map((val: any) => {
                 if (val === "CONSUMPTION") {
                     return {
                         text: "Расход",
@@ -208,7 +208,7 @@
         }
 
         get categories() {
-            return this.$store.state.categories.map(val => ({
+            return this.$store.state.categories.map((val: any) => ({
                 text: val.name,
                 value: val.id
             }));
@@ -219,18 +219,11 @@
             this.$store.dispatch("reloadOperations");
         }
 
-        data() {
-            let now = new Date();
-            now.setDate(now.getDate() - 30);
-            let dateFrom = now.toISOString().substr(0, 10);
-            return {
-                operationFilter: JSON.parse(JSON.stringify(this.$store.state.operationsView.filter)),
-                dateFromMenu: false,
-                dateToMenu: false,
-                searchCategoryValue: "",
-                searchAccountValue: "",
-            };
-        }
 
+        operationFilter = JSON.parse(JSON.stringify(this.$store.state.operationsView.filter));
+        dateFromMenu = false;
+        dateToMenu = false;
+        searchCategoryValue = "";
+        searchAccountValue = "";
     }
 </script>

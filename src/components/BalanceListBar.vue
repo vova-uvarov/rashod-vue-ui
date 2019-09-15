@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-    import AccountService, {Balance} from "@/services/AccountService";
+    import AccountService from "@/services/AccountService";
     import EqualizationAccountBalanceDialog from "@/components/account/EqualizationAccountBalanceDialog.vue";
     import {Component, Vue} from "vue-property-decorator";
 
@@ -43,45 +43,9 @@
         components: {EqualizationAccountBalanceDialog}
     })
     export default class BalanceListBar extends Vue {
-        created() {
-            this.loadBalances();
-        }
-
-        private loadBalances() {
-            AccountService.loadBalances()
-                .then((balances) => {
-                    this.balances = balances;
-                });
-
-            AccountService.totalBalance()
-                .then((balance) => {
-                    this.totalBalance = balance;
-                });
-
-            AccountService.balancesByCurrency()
-                .then((balances) => {
-                    this.balancesGoalByCurrency = balances;
-                });
-        }
-
-        equalizationAccount(selectedAccountBalance) {
-            this.accountBalance = selectedAccountBalance;
-            this.showEualizationDialog = true;
-        }
-
-        data() {
-
-            let newVar: { totalBalance: number, balances: Balance[], balancesGoalByCurrency: any[], showEualizationDialog: boolean, accountBalance: any } = {
-                totalBalance: 0,
-                balances: [],
-                balancesGoalByCurrency: [],
-                showEualizationDialog: false,
-                accountBalance: {}
-            };
-            return newVar;
-        }
-
         mounted() {
+            this.loadBalances();
+
             this.$root.$on("operationCreated", () => {
                 this.loadBalances();
             });
@@ -90,5 +54,33 @@
                 this.loadBalances();
             });
         }
+
+        private loadBalances() {
+            AccountService.loadBalances()
+                .then((balances: any) => {
+                    this.balances = balances;
+                });
+
+            AccountService.totalBalance()
+                .then((balance: any) => {
+                    this.totalBalance = balance;
+                });
+
+            AccountService.balancesByCurrency()
+                .then((balances: any) => {
+                    this.balancesGoalByCurrency = balances;
+                });
+        }
+
+        equalizationAccount(selectedAccountBalance: any) {
+            this.accountBalance = selectedAccountBalance;
+            this.showEualizationDialog = true;
+        }
+
+        totalBalance = 0;
+        balances = [];
+        balancesGoalByCurrency = [];
+        showEualizationDialog = false;
+        accountBalance = {};
     }
 </script>

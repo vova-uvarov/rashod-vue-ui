@@ -1,6 +1,6 @@
 export default class OperationUtils {
 
-    public static getCostSign(operation: object): string {
+    public static getCostSign(operation: any): string {
 
         if (operation.operationType === 'INCOME') {
             return '+';

@@ -22,10 +22,10 @@
     export default class EditParamDialog extends Vue {
 
         @Prop()
-        appParamId: string;
+        appParamId: string | undefined;
 
         @Prop()
-        visible: string;
+        visible!: string;
 
         get showDialog() {
             return this.visible;
@@ -45,14 +45,10 @@
                         this.loading = false;
                         this.appParam = data;
                     }
-                )
+                );
         }
 
-        data() {
-            return {
-                loading: false,
-                appParam: {}
-            };
-        }
+        loading = false;
+        appParam: any = {};
     }
 </script>

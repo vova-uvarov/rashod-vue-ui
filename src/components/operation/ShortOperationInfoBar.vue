@@ -10,6 +10,6 @@
     @Component
     export default class ShowOperationInfoBar extends Vue {
         @Prop()
-        operation: object;
+        operation!: object;
     }
 </script>

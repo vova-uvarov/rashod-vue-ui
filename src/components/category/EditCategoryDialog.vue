@@ -46,13 +46,13 @@
     export default class EditCategoryDialog extends Vue {
 
         @Prop({default: "CREATE"})
-        formMode: string;
+        formMode!: string;
 
         @Prop({default: {}})
-        category: object;
+        category!: object;
 
         @Prop()
-        visible: string;
+        visible!: string;
 
         get showDialog() {
             return this.visible;
@@ -81,11 +81,7 @@
                 });
         }
 
-        data() {
-            return {
-                loading: false,
-                categoryInner: {}
-            };
-        }
+        loading = false;
+        categoryInner: any = {};
     }
 </script>

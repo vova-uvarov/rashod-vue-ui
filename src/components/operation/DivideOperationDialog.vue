@@ -25,10 +25,10 @@
     export default class DivideOperationDialog extends Vue {
 
         @Prop()
-        parentOperationId: string;
+        parentOperationId!: string;
 
         @Prop()
-        visible: string;
+        visible!: string;
 
         get showDialog() {
             return this.visible;
@@ -50,14 +50,10 @@
                         this.operation.id = null;
                         this.operation.parentId = value;
                     }
-                )
+                );
         }
 
-        data() {
-            return {
-                loading: false,
-                operation: {}
-            };
-        }
+        loading = false;
+        operation: any = {};
     }
 </script>

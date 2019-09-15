@@ -113,7 +113,7 @@
 
 
         get categories() {
-            return this.$store.state.categories.map(val => ({
+            return this.$store.state.categories.map((val: any) => ({
                 text: val.name,
                 value: val.id
             }));
@@ -144,7 +144,7 @@
             };
         }
 
-        extractLabels(labels) {
+        extractLabels(labels: any) {
             if (labels) {
                 return labels;
             }
@@ -152,9 +152,9 @@
         }
 
 
-        extractDatasets(datasets) {
+        extractDatasets(datasets: any) {
             if (datasets) {
-                return datasets.map((item) => {
+                return datasets.map((item: any) => {
                     return {
                         lineTension: 0,
                         label: item.name,
@@ -167,46 +167,42 @@
             return [];
         }
 
-        data() {
-            return {
-                dateToMenu: false,
-                dateFromMenu: false,
-                dateFrom: null,
-                dateTo: null,
-                rawData: {},
-                categoryIds: [{text: "Продукты", value: 32}], // todo
-                searchCategoryValue: "",
-            };
-        }
+        dateToMenu = false;
+        dateFromMenu = false;
+        dateFrom = null;
+        dateTo = null;
+        rawData: any = {};
+        categoryIds = [{text: "Продукты", value: 32}]; // todo
+        searchCategoryValue = "";
 
         getRandomColor(year: number) {
-            console.log("year="+year);
-            if (year==2012){
-                return "#CD6155"
+            console.log("year=" + year);
+            if (year == 2012) {
+                return "#CD6155";
             }
-            if (year==2013){
-                return "#9B59B6"
+            if (year == 2013) {
+                return "#9B59B6";
             }
-            if (year==2014){
-                return "#AED6F1"
+            if (year == 2014) {
+                return "#AED6F1";
             }
-            if (year==2015){
-                return "#A2D9CE"
+            if (year == 2015) {
+                return "#A2D9CE";
             }
-            if (year==2016){
-                return "#F7DC6F"
+            if (year == 2016) {
+                return "#F7DC6F";
             }
-            if (year==2017){
-                return "AQUA"
+            if (year == 2017) {
+                return "AQUA";
             }
-            if (year==2018){
-                return "PURPLE"
+            if (year == 2018) {
+                return "PURPLE";
             }
-            if (year==2019){
-                return "OLIVE"
+            if (year == 2019) {
+                return "OLIVE";
             }
-            if (year==2020){
-                return "YELLOW"
+            if (year == 2020) {
+                return "YELLOW";
             }
             var letters = "0123456789ABCDEF";
             var color = "#";

@@ -36,8 +36,9 @@
                 </tbody>
             </v-simple-table>
         </v-col>
-        <EditCategoryDialog formMode="EDIT" :category="categoryForEdit" :visible="showEditDialog" @close="showEditDialog=false"/>
-        <EditCategoryDialog formMode="CREATE"  :visible="showCreateDialog" @close="showCreateDialog=false"/>
+        <EditCategoryDialog formMode="EDIT" :category="categoryForEdit" :visible="showEditDialog"
+                            @close="showEditDialog=false"/>
+        <EditCategoryDialog formMode="CREATE" :visible="showCreateDialog" @close="showCreateDialog=false"/>
     </v-row>
 </template>
 
@@ -52,13 +53,13 @@
     })
     export default class CategoryList extends Vue {
         created() {
-            // `this` указывает на экземпляр vm
             this.$store.dispatch("loadCategories");
         }
 
         createCategory() {
             this.showCreateDialog = true;
         }
+
         editCategory(category: any) {
             this.categoryForEdit = category;
             this.showEditDialog = true;
@@ -67,7 +68,7 @@
         deleteCategory(id: string) {
             if (confirm("Вы действительно хотите удалить операцию?")) {
                 OperationService.search({categoryIds: [{value: id}]})
-                    .then((data) => {
+                    .then((data: any) => {
                         if (data.content.length > 0) {
                             alert("Нельзя удалить категорию к которой привязаны операции");
                         } else {
@@ -87,12 +88,8 @@
             return this.$store.state.categories;
         }
 
-        data() {
-            return {
-                showEditDialog: false,
-                showCreateDialog: false,
-                categoryForEdit: {}
-            };
-        }
+        showEditDialog = false;
+        showCreateDialog = false;
+        categoryForEdit = {};
     }
 </script>

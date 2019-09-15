@@ -119,7 +119,7 @@
             round: false,
             isBalance: true,
             status: "ACTIVE",
-            currency: "RUN"
+            currency: "RUB"
         };
 
     }
@@ -130,14 +130,14 @@
     export default class AccountForm extends Vue {
 
         @Prop({default: "CREATE"})
-        formMode: string;
+        formMode!: string;
 
         @Prop({default: defaultAccount})
         account: any;
 
         storeAccount() {
             AccountService.create(this.account)
-                .then((response) => {
+                .then((response: any) => {
                         this.account = defaultAccount();
 
                         alert("Счет успешно создан: " + response.id);
@@ -167,13 +167,5 @@
         get accountStatuses() {
             return this.$store.state.accountStatuses;
         }
-
-
-        data() {
-            return {
-                countRepeat: 1
-            };
-        }
-
     }
 </script>
