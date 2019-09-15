@@ -25,8 +25,8 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import OperationsList from "@/components/OperationsList.vue";
-    import OperationsFilter from "@/components/OperationsFilter.vue"; // @ is an alias to /src
+    import OperationsList from "@/components/operation/OperationsList.vue";
+    import OperationsFilter from "@/components/operation/OperationsFilter.vue"; // @ is an alias to /src
 
     @Component({
         components: {

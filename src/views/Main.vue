@@ -28,8 +28,8 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import CreateOperation from "../components/CreateOperation.vue"; // @ is an alias to /src
-    import LastOperations from "../components/LastOperations.vue"; // @ is an alias to /src
+    import CreateOperation from "../components/operation/CreateOperation.vue"; // @ is an alias to /src
+    import LastOperations from "../components/operation/LastOperations.vue"; // @ is an alias to /src
     import OperationService from '../services/OperationService';
 
     @Component({
