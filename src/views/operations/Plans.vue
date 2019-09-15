@@ -37,7 +37,6 @@ export default class PlansView extends Vue {
     }
 
     public operations(categoryName: any) {
-        console.log('categoryName=' + categoryName);
         return this.$store.state.operationPlans.operations.filter((op: any) => (op.category.name == categoryName));
     }
 

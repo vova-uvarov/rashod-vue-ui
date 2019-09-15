@@ -104,7 +104,6 @@ export default class TotalConsumptionPie extends Vue {
                 dateTo = this.dateTo;
             }
         }
-        console.log('call sumsGroupByCategory with from: ' + dateFrom + ' to: ' + dateTo);
         StatisticsService.sumsGroupByCategory(
             {
                 operationTypes: [this.operationType],
@@ -113,7 +112,6 @@ export default class TotalConsumptionPie extends Vue {
                 calculatorType: this.sumCalculatorType,
             })
             .then((data: any) => {
-                console.log('call then sumsGroupByCategory with from: ' + dateFrom + ' to: ' + dateTo);
                 this.consumptionsByCategory = data;
                 this.fillData();
             });

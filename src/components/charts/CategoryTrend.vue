@@ -169,7 +169,6 @@ export default class CategoryTrend extends Vue {
     }
 
     public getRandomColor(year: number) {
-        console.log('year=' + year);
         if (year == 2012) {
             return '#CD6155';
         }
