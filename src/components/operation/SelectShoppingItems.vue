@@ -34,7 +34,7 @@
     </div>
 </template>
 <script lang="ts">
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
+    import {Component, Prop, PropSync, Vue} from "vue-property-decorator";
 
     @Component
     export default class SelectShoppingItems extends Vue {
@@ -45,19 +45,12 @@
         })
         items!: object[];
 
-        @Prop({
+        @PropSync("selectedItems", {
             default: function() {
                 return [];
             }
         })
-        selectedItems!: object[];
-
-        @Watch("selectedItemsInner")
-        selectedItemsInnerChanged(value: string[], oldValue: string[]) {
-            if (value != undefined) {
-                this.$emit("update:selectedItems", value);
-            }
-        }
+        selectedItemsInner!: object[];
 
         remove(item: any) {
             const index = this.selectedItemsInner.indexOf(item);
@@ -66,7 +59,6 @@
             }
         }
 
-        selectedItemsInner = this.selectedItems;
         searchValue = "";
 
     }
