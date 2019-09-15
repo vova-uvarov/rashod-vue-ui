@@ -6,7 +6,8 @@
                 v-model="showDialog"
         >
             <v-card>
-                <v-card-title>Редактирование категории: {{category.name}}</v-card-title>
+                <v-card-title v-if="formMode==='EDIT'">Редактирование категории: {{category.name}}</v-card-title>
+                <v-card-title v-else>Создать категорию</v-card-title>
                 <v-container>
                     <v-row>
                         <v-col cols="6">
@@ -17,14 +18,17 @@
                         </v-col>
                         <v-col cols="6">
                             <v-text-field
-                                    label="Поисание"
+                                    label="Описание"
                                     v-model="categoryInner.description"
                             ></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col cols="12">
+                        <v-col cols="12" v-if="formMode==='EDIT'">
                             <v-btn color="success" :block="true" v-on:click="updateCategory">Обновить</v-btn>
+                        </v-col>
+                        <v-col cols="12" v-else>
+                            <v-btn color="success" :block="true" v-on:click="updateCategory">Создать</v-btn>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -40,6 +44,9 @@
 
     @Component
     export default class EditCategoryDialog extends Vue {
+
+        @Prop({default: "CREATE"})
+        formMode: string;
 
         @Prop({default: {}})
         category: object;
@@ -77,7 +84,7 @@
         data() {
             return {
                 loading: false,
-                categoryInner: null
+                categoryInner: {}
             };
         }
     }

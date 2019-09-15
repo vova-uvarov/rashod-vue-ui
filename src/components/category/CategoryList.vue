@@ -9,7 +9,11 @@
                     <th class="text-left">Дата создания</th>
                     <th class="text-left">Название</th>
                     <th class="text-left">Описание</th>
-                    <th class="text-left"></th>
+                    <th class="text-left">
+                        <v-btn class="mx-2" fab dark small color="primary" @click="createCategory">
+                            <v-icon dark>mdi-plus</v-icon>
+                        </v-btn>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,7 +36,8 @@
                 </tbody>
             </v-simple-table>
         </v-col>
-        <EditCategoryDialog :category="categoryForEdit" :visible="showEditDialog" @close="showEditDialog=false"/>
+        <EditCategoryDialog formMode="EDIT" :category="categoryForEdit" :visible="showEditDialog" @close="showEditDialog=false"/>
+        <EditCategoryDialog formMode="CREATE"  :visible="showCreateDialog" @close="showCreateDialog=false"/>
     </v-row>
 </template>
 
@@ -40,7 +45,7 @@
     import {Component, Vue} from "vue-property-decorator";
     import CategoryService from "@/services/CategoryService";
     import OperationService from "@/services/OperationService";
-    import EditCategoryDialog from "@/components/EditCategoryDialog.vue";
+    import EditCategoryDialog from "@/components/category/EditCategoryDialog.vue";
 
     @Component({
         components: {EditCategoryDialog}
@@ -51,6 +56,9 @@
             this.$store.dispatch("loadCategories");
         }
 
+        createCategory() {
+            this.showCreateDialog = true;
+        }
         editCategory(category: any) {
             this.categoryForEdit = category;
             this.showEditDialog = true;
@@ -82,6 +90,7 @@
         data() {
             return {
                 showEditDialog: false,
+                showCreateDialog: false,
                 categoryForEdit: {}
             };
         }
