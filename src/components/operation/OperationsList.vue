@@ -78,19 +78,19 @@ import DivideOperationDialog from '@/components/operation/DivideOperationDialog.
         },
         rowStyle(item, index) {
             let mainClass = '';
-            if (item.operationType == 'CONSUMPTION') {
+            if (item.operationType === 'CONSUMPTION') {
                 mainClass = 'consumptionRow';
             }
 
-            if (item.operationType == 'TRANSFER') {
+            if (item.operationType === 'TRANSFER') {
                 mainClass = 'transfer';
             }
 
-            if (item.operationType == 'INCOME') {
+            if (item.operationType === 'INCOME') {
                 mainClass = 'income';
             }
 
-            if (index % 2 == 0) {
+            if (index % 2 === 0) {
                 return mainClass + ' odd';
             } else {
                 return mainClass + ' even';
