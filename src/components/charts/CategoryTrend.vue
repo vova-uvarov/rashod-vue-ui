@@ -169,31 +169,31 @@ export default class CategoryTrend extends Vue {
     }
 
     public getRandomColor(year: number) {
-        if (year == 2012) {
+        if (year === 2012) {
             return '#CD6155';
         }
-        if (year == 2013) {
+        if (year === 2013) {
             return '#9B59B6';
         }
-        if (year == 2014) {
+        if (year === 2014) {
             return '#AED6F1';
         }
-        if (year == 2015) {
+        if (year === 2015) {
             return '#A2D9CE';
         }
-        if (year == 2016) {
+        if (year === 2016) {
             return '#F7DC6F';
         }
-        if (year == 2017) {
+        if (year === 2017) {
             return 'AQUA';
         }
-        if (year == 2018) {
+        if (year === 2018) {
             return 'PURPLE';
         }
-        if (year == 2019) {
+        if (year === 2019) {
             return 'OLIVE';
         }
-        if (year == 2020) {
+        if (year === 2020) {
             return 'YELLOW';
         }
         const letters = '0123456789ABCDEF';

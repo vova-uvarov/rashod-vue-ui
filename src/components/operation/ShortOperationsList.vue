@@ -57,7 +57,7 @@ import DivideOperationDialog from '@/components/operation/DivideOperationDialog.
             return OperationUtils.getCostSign(item);
         },
         rowClass(item) {
-            if (moment(item.operationDate).format('YYYY-MM-DD') == moment(new Date()).format('YYYY-MM-DD')) {
+            if (moment(item.operationDate).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) {
                 return 'nowOperation';
             }
         },
@@ -69,7 +69,7 @@ export default class ShortOperationsList extends Vue {
             return [];
         },
     })
-    public operations!: Object[];
+    public operations!: object[];
 
     @Prop({default: 'Операции'})
     public title!: string;

@@ -219,22 +219,22 @@ export default class CreateOperationForm extends Vue {
     }
 
     get cardName() {
-        if (this.operationInner.operationType == 'CONSUMPTION') {
+        if (this.operationInner.operationType === 'CONSUMPTION') {
             return 'Расход';
         }
 
-        if (this.operationInner.operationType == 'TRANSFER') {
+        if (this.operationInner.operationType === 'TRANSFER') {
             return 'Перевод';
         }
         return 'Доход';
     }
 
     get cardColor() {
-        if (this.operationInner.operationType == 'CONSUMPTION') {
+        if (this.operationInner.operationType === 'CONSUMPTION') {
             return '#FFF8F8';
         }
 
-        if (this.operationInner.operationType == 'TRANSFER') {
+        if (this.operationInner.operationType === 'TRANSFER') {
             return '#FBFFD8';
         }
         return '#F6FFEA';

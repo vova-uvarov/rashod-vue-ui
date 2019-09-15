@@ -181,7 +181,7 @@ export default class IncomAndConsumptionTrend extends Vue {
 
     public extractDatasets(datasets: any) {
         if (datasets) {
-            return datasets.filter((item: any) => (item.name == 'Расход'))
+            return datasets.filter((item: any) => (item.name === 'Расход'))
                 .map((item: any) => {
                     return {
                         lineTension: 0,
