@@ -184,7 +184,7 @@
     @Component({
         components: {SelectShoppingItems}
     })
-    export default class CreateOperation extends Vue {
+    export default class CreateOperationForm extends Vue {
 
         @Prop({default: "CREATE"})
         formMode!: string;

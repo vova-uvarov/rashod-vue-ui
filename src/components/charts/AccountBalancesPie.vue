@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import PieChart from './PieChart.js'
+    import PieChart from './js/PieChart.js'
     import AccountService from "@/services/AccountService";
 
     export default {

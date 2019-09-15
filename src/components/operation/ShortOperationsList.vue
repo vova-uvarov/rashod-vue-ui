@@ -63,7 +63,7 @@
             }
         }
     })
-    export default class AccountList extends Vue {
+    export default class ShortOperationsList extends Vue {
         @Prop({
             default: function() {
                 return [];

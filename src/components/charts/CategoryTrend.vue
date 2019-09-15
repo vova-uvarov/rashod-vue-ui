@@ -76,7 +76,7 @@
 
 
 <script lang="ts">
-    import LineChart from "./LineChart.js";
+    import LineChart from "./js/LineChart.js";
     import {Component, Prop, Vue, Watch} from "vue-property-decorator";
     import StatisticsService from "@/services/StatisticsService";
 
