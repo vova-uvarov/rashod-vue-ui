@@ -4,7 +4,7 @@
             <v-card :raised="true" :color="cardColor">
                 <v-card-title>
                     <v-col> {{cardTitle}}</v-col>
-                    <v-radio-group v-model="operation.operationType" :column="false">
+                    <v-radio-group v-model="operationInner.operationType" :column="false">
                         <v-radio
                                 key="CONSUMPTION"
                                 label="Расход"
@@ -30,7 +30,7 @@
                             <v-col cols="6">
                                 <v-combobox
                                         :items="categories"
-                                        v-model="operation.category"
+                                        v-model="operationInner.category"
                                         item-value="id"
                                         item-text="name"
                                         label="Категория"
@@ -40,7 +40,7 @@
                                 <v-text-field
                                         type="number"
                                         label="Сумма"
-                                        v-model="operation.cost"
+                                        v-model="operationInner.cost"
                                 ></v-text-field>
                             </v-col>
 
@@ -50,21 +50,21 @@
                             <v-col cols="6">
                                 <v-combobox
                                         :items="accounts"
-                                        v-model="operation.account"
+                                        v-model="operationInner.account"
                                         label="Со счета"
                                         item-value="id"
                                         item-text="name"
                                 ></v-combobox>
                             </v-col>
                             <v-col cols="6">
-                                <v-select v-if="operation.operationType==='TRANSFER'"
+                                <v-select v-if="operationInner.operationType==='TRANSFER'"
                                           :items="accounts"
-                                          v-model="operation.accountToTransfer.id"
+                                          v-model="operationInner.accountToTransfer.id"
                                           label="На счет"
                                 ></v-select>
 
-                                <SelectShoppingItems v-if="operation.operationType!=='TRANSFER' && showShoppingItem"
-                                                     :selectedItems.sync="operation.shoppingList"
+                                <SelectShoppingItems v-if="operationInner.operationType!=='TRANSFER' && showShoppingItem"
+                                                     :selectedItems.sync="operationInner.shoppingList"
                                                      :items="shoppingItems"/>
 
                             </v-col>
@@ -73,7 +73,7 @@
                         <v-row>
                             <v-col cols="6">
                                 <v-combobox
-                                        v-model="operation.place"
+                                        v-model="operationInner.place"
                                         :items="places"
                                         label="Место"
                                 ></v-combobox>
@@ -90,7 +90,7 @@
                         <v-row>
                             <v-col cols="12">
                                 <v-text-field
-                                        v-model="operation.comment"
+                                        v-model="operationInner.comment"
                                         label="Комментарий"
                                 ></v-text-field>
                             </v-col>
@@ -108,14 +108,14 @@
                                 >
                                     <template v-slot:activator="{ on }">
                                         <v-text-field
-                                                v-model="operation.operationDate"
+                                                v-model="operationInner.operationDate"
                                                 label="Дата"
                                                 prepend-icon="event"
                                                 readonly
                                                 v-on="on"
                                         ></v-text-field>
                                     </template>
-                                    <v-date-picker v-model="operation.operationDate"
+                                    <v-date-picker v-model="operationInner.operationDate"
                                                    @input="operationDateMenu = false"></v-date-picker>
                                 </v-menu>
                             </v-col>
@@ -130,7 +130,7 @@
 
                             <v-col cols="3">
                                 <v-switch
-                                        v-model="operation.plan"
+                                        v-model="operationInner.plan"
                                         label="План?"
                                 ></v-switch>
                             </v-col>
@@ -162,7 +162,7 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from "vue-property-decorator";
+    import {Component, Prop, PropSync, Vue} from "vue-property-decorator";
     import OperationService from "@/services/OperationService";
     import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
 
@@ -189,8 +189,8 @@
         @Prop({default: "CREATE"})
         formMode!: string;
 
-        @Prop({default: defaultOperation})
-        operation: any;
+        @PropSync("operation", {default: defaultOperation})
+        operationInner: any;
 
         get places() {
             return this.$store.state.places;
@@ -202,9 +202,9 @@
 
         deleteOperation() {
             if (confirm("Вы действительно хотите удалить операцию?")) {
-                OperationService.delete(this.operation.id)
+                OperationService.delete(this.operationInner.id)
                     .then((response) => {
-                        alert("Операция успешно удалена: " + this.operation.id);
+                        alert("Операция успешно удалена: " + this.operationInner.id);
                         this.$root.$emit("operationCreated"); // todo какжется нужно просто одно событие operationChaged
                         this.$emit("successfull");
                     });
@@ -212,9 +212,9 @@
         }
 
         createOperation() {
-            OperationService.create(this.operation, this.countRepeat)
+            OperationService.create(this.operationInner, this.countRepeat)
                 .then((response: any) => {
-                        this.operation = defaultOperation();
+                        this.operationInner = defaultOperation();
                         // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
                         this.showShoppingItem = false;
                         this.$nextTick().then(() => (this.showShoppingItem = true));
@@ -252,23 +252,22 @@
         }
 
         get cardName() {
-            if (this.operation.operationType == "CONSUMPTION") {
+            if (this.operationInner.operationType == "CONSUMPTION") {
                 return "Расход";
             }
 
-            if (this.operation.operationType == "TRANSFER") {
+            if (this.operationInner.operationType == "TRANSFER") {
                 return "Перевод";
             }
             return "Доход";
         }
 
         get cardColor() {
-            console.log("operation=" + this.operation.operationType);
-            if (this.operation.operationType == "CONSUMPTION") {
+            if (this.operationInner.operationType == "CONSUMPTION") {
                 return "#FFF8F8";
             }
 
-            if (this.operation.operationType == "TRANSFER") {
+            if (this.operationInner.operationType == "TRANSFER") {
                 return "#FBFFD8";
             }
             return "#F6FFEA";

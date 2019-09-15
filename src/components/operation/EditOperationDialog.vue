@@ -1,6 +1,5 @@
 <template>
     <v-row justify="center">
-
         <v-dialog
                 max-width="790"
                 v-model="showDialog"
