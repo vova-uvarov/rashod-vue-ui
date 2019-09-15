@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import AccountsList from '../../components/account/AccountsList.vue';
+    import AccountsList from '@/components/account/AccountsList.vue';
 
     @Component({
         components: {
