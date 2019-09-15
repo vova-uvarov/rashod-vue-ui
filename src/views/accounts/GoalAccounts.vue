@@ -5,13 +5,10 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
-    import GoalAccountsList from '../../components/account/GoalAccountsList.vue'; // @ is an alias to /src
+    import {Component, Vue} from "vue-property-decorator";
+    import GoalAccountsList from "@/components/account/GoalAccountsList.vue";
 
-    @Component({
-        components: {
-            GoalAccountsList
-        }
-    })
-    export default class AccountsView extends Vue { }
+    @Component({components: {GoalAccountsList}})
+    export default class AccountsView extends Vue {
+    }
 </script>

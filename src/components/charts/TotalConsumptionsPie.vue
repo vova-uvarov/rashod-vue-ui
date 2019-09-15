@@ -14,10 +14,10 @@
     })
     export default class TotalConsumptionPie extends Vue {
         @Prop()
-        sumCalculatorType: string;
+        sumCalculatorType!: string;
 
         @Prop()
-        year: number;
+        year: number | undefined;
 
         @Prop()
         dateFrom: any;
@@ -26,31 +26,26 @@
         dateTo: any;
 
         @Prop()
-        operationType: string;
+        operationType!: string;
 
         @Prop()
-        title: string;
+        title!: string;
 
-
-        data() {
-            return {
-                consumptionsByCategory: [],
-                datacollection: {},
-                options: {
-                    title: {
-                        display: true,
-                        text: this.title
-                    },
-                    legend:
-                        {
-                            position: "bottom",
-                            labels: {
-                                usePointStyle: true
-                            }
-                        }
+        consumptionsByCategory = [];
+        datacollection = {};
+        options: any = {
+            title: {
+                display: true,
+                text: this.title
+            },
+            legend:
+                {
+                    position: "bottom",
+                    labels: {
+                        usePointStyle: true
+                    }
                 }
-            };
-        }
+        };
 
         @Watch("year")
         yearChanged(value: string, oldValue: string) {
@@ -72,8 +67,8 @@
         }
 
         private loadData() {
-            let dateFrom = null;
-            let dateTo = null;
+            let dateFrom: any = null;
+            let dateTo: any = null;
             if (this.year) {
                 dateFrom = this.year + "-01-01"; // todo стремная штука
                 dateTo = this.year + "-12-31";// todo стремная штука
@@ -93,7 +88,7 @@
                     to: dateTo,
                     calculatorType: this.sumCalculatorType
                 })
-                .then((data) => {
+                .then((data: any) => {
                     console.log("call then sumsGroupByCategory with from: " + dateFrom + " to: " + dateTo);
                     this.consumptionsByCategory = data;
                     this.fillData();
@@ -104,12 +99,12 @@
             this.datacollection = {
                 datasets: [{
                     backgroundColor: this.consumptionsByCategory.map((a) => (this.getRandomColor())),
-                    data: this.consumptionsByCategory.map((a) => (a.data[0])) // 0 для pie всегда один элемент
+                    data: this.consumptionsByCategory.map((a: any) => (a.data[0])) // 0 для pie всегда один элемент
                 }],
 
 
                 // These labels appear in the legend and in the tooltips when hovering different arcs
-                labels: this.consumptionsByCategory.map((a) => (a.name))
+                labels: this.consumptionsByCategory.map((a: any) => (a.name))
 
 
             };

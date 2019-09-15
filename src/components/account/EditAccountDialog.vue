@@ -6,7 +6,7 @@
                 v-model="showDialog"
         >
             <AccountForm formMode="EDIT" :account="account" v-if="!loading"
-                             @successfull="showDialog=false"/>
+                         @successfull="showDialog=false"/>
             <span v-else>Идет загрузка...</span>
         </v-dialog>
     </v-row>
@@ -23,10 +23,10 @@
     export default class EditAccountDialog extends Vue {
 
         @Prop()
-        accountId: string;
+        accountId: string | undefined;
 
         @Prop()
-        visible: string;
+        visible!: string;
 
         get showDialog() {
             return this.visible;
@@ -46,14 +46,10 @@
                         this.loading = false;
                         this.account = data;
                     }
-                )
+                );
         }
 
-        data() {
-            return {
-                loading: false,
-                account: {}
-            };
-        }
+        loading = false;
+        account = {};
     }
 </script>

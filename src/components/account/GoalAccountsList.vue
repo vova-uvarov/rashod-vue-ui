@@ -8,7 +8,8 @@
                         height="25"
                 >
                     <template v-slot="{ value }">
-                        <strong>{{item.accountName}}: {{item.balance|moneyFormat}} из {{item.goalCost|moneyFormat}}</strong>
+                        <strong>{{item.accountName}}: {{item.balance|moneyFormat}} из
+                            {{item.goalCost|moneyFormat}}</strong>
                     </template>
                 </v-progress-linear>
             </v-col>
@@ -24,15 +25,11 @@
     export default class AccountList extends Vue {
         mounted() {
             AccountService.loadGoalBalances()
-                .then((data) => {
+                .then((data:any) => {
                     this.balances = data;
                 });
         }
 
-        data() {
-            return {
-                balances: []
-            };
-        }
+        balances = [];
     }
 </script>

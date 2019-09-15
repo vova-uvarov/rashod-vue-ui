@@ -28,9 +28,9 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import CreateOperation from "../components/operation/CreateOperation.vue"; // @ is an alias to /src
-    import LastOperations from "../components/operation/LastOperations.vue"; // @ is an alias to /src
-    import OperationService from '../services/OperationService';
+    import CreateOperation from "../components/operation/CreateOperation.vue";
+    import LastOperations from "../components/operation/LastOperations.vue";
+    import OperationService from "../services/OperationService";
 
     @Component({
         components: {
@@ -39,49 +39,42 @@
         }
     })
     export default class Main extends Vue {
-        created() {
+        mounted() {
             this.loadData();
+            this.$root.$on("operationCreated", () => {
+                this.loadData();
+            });
+
+            this.$root.$on("operationDeleted", () => {
+                this.loadData();
+            });
         }
 
         private loadData() {
             OperationService.search({
-                operationTypes: ['CONSUMPTION'],
+                operationTypes: ["CONSUMPTION"],
                 isPlan: false,
-            }).then((data) => {
-                this.lastConsumptionOperations = data.content
+            }).then((data: any) => {
+                this.lastConsumptionOperations = data.content;
             });
 
             OperationService.search({
-                operationTypes: ['INCOME','TRANSFER'],
+                operationTypes: ["INCOME", "TRANSFER"],
                 isPlan: false,
-            }).then((data) => {
-                this.lastTransferAndIncomeOperations = data.content
+            }).then((data: any) => {
+                this.lastTransferAndIncomeOperations = data.content;
             });
 
             OperationService.search({
                 isPlan: true,
-                sort: 'operationDate'
-            }).then((data) => {
-                this.lastPlansOperations = data.content
+                sort: "operationDate"
+            }).then((data: any) => {
+                this.lastPlansOperations = data.content;
             });
         }
 
-        mounted() {
-            this.$root.$on('operationCreated', () => {
-                this.loadData();
-            });
-
-            this.$root.$on('operationDeleted', () => {
-                this.loadData();
-            })
-        }
-
-        data() {
-            return {
-                lastConsumptionOperations: [],
-                lastTransferAndIncomeOperations: [],
-                lastPlansOperations: [],
-            };
-        }
+        lastConsumptionOperations = [];
+        lastTransferAndIncomeOperations = [];
+        lastPlansOperations = [];
     }
 </script>

@@ -1,31 +1,31 @@
 <template>
-        <v-card>
-            <v-card-title>
-                <v-row>
-                    <v-col cols="12">
-                        <v-combobox
-                                :items="categories"
-                                v-model="excludeCategoryIds"
-                                :clearable="true"
-                                multiple
-                                :search-input.sync="searchCategoryValue"
-                                @change="searchCategoryValue = ''"
-                                label="Исключить категории"
-                        ></v-combobox>
-                    </v-col>
-                </v-row>
-            </v-card-title>
+    <v-card>
+        <v-card-title>
+            <v-row>
+                <v-col cols="12">
+                    <v-combobox
+                            :items="categories"
+                            v-model="excludeCategoryIds"
+                            :clearable="true"
+                            multiple
+                            :search-input.sync="searchCategoryValue"
+                            @change="searchCategoryValue = ''"
+                            label="Исключить категории"
+                    ></v-combobox>
+                </v-col>
+            </v-row>
+        </v-card-title>
 
-            <line-chart :chart-data="datacollection"
-                        :options="options"></line-chart>
-        </v-card>
+        <line-chart :chart-data="datacollection"
+                    :options="options"></line-chart>
+    </v-card>
 </template>
 
 
 <script lang="ts">
     import LineChart from "./LineChart.js";
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import StatisticsService from '@/services/StatisticsService';
+    import {Component, Vue, Watch} from "vue-property-decorator";
+    import StatisticsService from "@/services/StatisticsService";
 
     @Component({
         components: {LineChart}
@@ -34,7 +34,6 @@
         mounted() {
             this.loadData();
         }
-
 
         @Watch("excludeCategoryIds")
         excludeCategoryIdsChanged(value: string, oldValue: string) {
@@ -51,14 +50,14 @@
 
 
         get categories() {
-            return this.$store.state.categories.map(val => ({
+            return this.$store.state.categories.map((val: any) => ({
                 text: val.name,
                 value: val.id
             }));
         }
+
         get datacollection() {
             return {
-                // labels: this.rawData.labels,
                 labels: this.extractLabels(this.rawData.labels),
                 datasets: this.extractDatasets(this.rawData.datasets)
             };
@@ -81,7 +80,7 @@
             };
         }
 
-        extractLabels(labels) {
+        extractLabels(labels: any) {
             if (labels) {
                 return labels;
             }
@@ -89,14 +88,14 @@
         }
 
 
-        extractDatasets(datasets) {
+        extractDatasets(datasets: any) {
             if (datasets) {
-                return datasets.map((item) => {
+                return datasets.map((item: any) => {
                     return {
                         lineTension: 0,
                         label: item.name,
                         fill: false,
-                        borderColor: 'green',
+                        borderColor: "green",
                         data: item.data
                     };
                 });
@@ -104,15 +103,9 @@
             return [];
         }
 
-        data() {
-            const now = new Date();
-            now.setDate(now.getDate() - 365);
-            return {
-                rawData: {},
-                excludeCategoryIds: [{text: "ИП",value: 15}],
-                searchCategoryValue: "",
-            };
-        }
+        rawData = {};
+        excludeCategoryIds = [{text: "ИП", value: 15}];
+        searchCategoryValue = "";
 
     }
 </script>

@@ -17,7 +17,7 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import OperationsList from "../../components/operation/OperationsList.vue"; // @ is an alias to /src
+    import OperationsList from "../../components/operation/OperationsList.vue";
 
     @Component({
         components: {
@@ -31,11 +31,11 @@
 
         operations(categoryName: string) {
             console.log("categoryName=" + categoryName);
-            return this.$store.state.operationPlans.operations.filter((op)=>(op.category.name==categoryName));
+            return this.$store.state.operationPlans.operations.filter((op: any) => (op.category.name == categoryName));
         }
 
         get itemTabs() {
-            let categoryNames = this.$store.state.operationPlans.operations.map((op) => (op.category.name));
+            let categoryNames = this.$store.state.operationPlans.operations.map((op: any) => (op.category.name));
             return Array.from(new Set(categoryNames)); // this is distinct
         }
 
@@ -45,10 +45,6 @@
             });
         }
 
-        data() {
-            return {
-                tab: null
-            };
-        }
+        tab = null;
     }
 </script>

@@ -13,18 +13,13 @@
     import CategoryTrend from "@/components/charts/CategoryTrend.vue";
     import CategoryYearTrend from "@/components/charts/CategoryYearTrend.vue";
     import {Component, Vue} from "vue-property-decorator";
-    import StatisticsService from "@/services/StatisticsService";
 
     @Component({
         components: {
             CategoryTrend, CategoryYearTrend
         }
     })
-    export default class StatisticsVue extends Vue {
-
-        mounted() {
-            StatisticsService.categoryTrend(this.dateFrom, this.dateTo, this.categoryIds)
-        }
+    export default class CategoryTrendView extends Vue {
     }
 </script>
 

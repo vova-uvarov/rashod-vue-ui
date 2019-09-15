@@ -57,7 +57,7 @@
                 return OperationUtils.getCostSign(item);
             },
             rowClass(item) {
-                if (moment(item.operationDate).format('YYYY-MM-DD')==moment(new Date()).format('YYYY-MM-DD')){
+                if (moment(item.operationDate).format("YYYY-MM-DD") == moment(new Date()).format("YYYY-MM-DD")) {
                     return "nowOperation";
                 }
             }
@@ -69,40 +69,36 @@
                 return [];
             }
         })
-        operations: Array<Object>;
+        operations!: Array<Object>;
 
         @Prop({default: "Операции"})
-        title: string;
+        title!: string;
 
         @Prop({default: "white"})
-        cardColor: string;
+        cardColor!: string;
 
-        divideOperation(selectOperationId) {
+        divideOperation(selectOperationId: any) {
             this.operationId = selectOperationId;
             this.showDivideDialog = true;
         }
 
-        editOperation(selectOperationId) {
+        editOperation(selectOperationId: any) {
             this.operationId = selectOperationId;
             this.showEditDialog = true;
         }
 
+        operationId = null;
+        showEditDialog = false;
+        showDivideDialog = false;
 
-        data() {
-            return {
-                operationId: null,
-                showEditDialog: false,
-                showDivideDialog: false
-            };
-        }
 
         //todo Копипаста из LastOpeartions
         //todo Копипаста из LastOpeartions
-        shoppingListFormatter(shoppingList) {
+        shoppingListFormatter(shoppingList: any) {
             if (!shoppingList) {
                 return "";
             }
-            return shoppingList.map(val => (val.name)).toString();
+            return shoppingList.map((val: any) => (val.name)).toString();
         }
     }
 </script>

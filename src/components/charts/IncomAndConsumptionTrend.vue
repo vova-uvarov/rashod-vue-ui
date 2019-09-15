@@ -1,86 +1,86 @@
 <template>
-        <v-card>
-            <v-card-title>
-                <v-row>
-                    <v-col cols="3">
-                        <!--                todo нужно сделать компонент даты-->
-                        <v-menu
-                                v-model="dateFromMenu"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                transition="scale-transition"
-                                offset-y
-                                full-width
-                                min-width="290px"
-                        >
-                            <template v-slot:activator="{ on }">
-                                <v-text-field
-                                        v-model="dateFrom"
-                                        label="Дата C"
-                                        prepend-icon="event"
-                                        readonly
-                                        v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker v-model="dateFrom"
-                                           @input="dateFromMenu = false"></v-date-picker>
-                        </v-menu>
-                    </v-col>
-                    <v-col cols="3">
-                        <!--                todo нужно сделать компонент даты-->
-                        <v-menu
-                                v-model="dateToMenu"
-                                :close-on-content-click="false"
-                                :nudge-right="40"
-                                transition="scale-transition"
-                                offset-y
-                                full-width
-                                min-width="290px"
-                        >
-                            <template v-slot:activator="{ on }">
-                                <v-text-field
-                                        v-model="dateTo"
-                                        label="Дата По"
-                                        prepend-icon="event"
-                                        readonly
-                                        v-on="on"
-                                ></v-text-field>
-                            </template>
-                            <v-date-picker v-model="dateTo"
-                                           @input="dateToMenu = false"></v-date-picker>
-                        </v-menu>
-                    </v-col>
-                    <v-col cols="3">
-                        <v-combobox
-                                :items="categories"
-                                v-model="excludeCategoryIds"
-                                :clearable="true"
-                                multiple
-                                :search-input.sync="searchCategoryValue"
-                                @change="searchCategoryValue = ''"
-                                label="Исключить категории"
-                        ></v-combobox>
-                    </v-col>
-                    <v-col cols="3">
-<!--                        todo список группировок думаю нужно сделать справочником на бэке-->
-                        <v-select
-                                :items="[{text: 'Месяц', value: 'MONTH'},{text: 'Год', value: 'YEAR'}]"
-                                v-model="groupBy"
-                                label="Группировка"
-                        ></v-select>
-                    </v-col>
-                </v-row>
-            </v-card-title>
+    <v-card>
+        <v-card-title>
+            <v-row>
+                <v-col cols="3">
+                    <!--                todo нужно сделать компонент даты-->
+                    <v-menu
+                            v-model="dateFromMenu"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            transition="scale-transition"
+                            offset-y
+                            full-width
+                            min-width="290px"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field
+                                    v-model="dateFrom"
+                                    label="Дата C"
+                                    prepend-icon="event"
+                                    readonly
+                                    v-on="on"
+                            ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="dateFrom"
+                                       @input="dateFromMenu = false"></v-date-picker>
+                    </v-menu>
+                </v-col>
+                <v-col cols="3">
+                    <!--                todo нужно сделать компонент даты-->
+                    <v-menu
+                            v-model="dateToMenu"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            transition="scale-transition"
+                            offset-y
+                            full-width
+                            min-width="290px"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field
+                                    v-model="dateTo"
+                                    label="Дата По"
+                                    prepend-icon="event"
+                                    readonly
+                                    v-on="on"
+                            ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="dateTo"
+                                       @input="dateToMenu = false"></v-date-picker>
+                    </v-menu>
+                </v-col>
+                <v-col cols="3">
+                    <v-combobox
+                            :items="categories"
+                            v-model="excludeCategoryIds"
+                            :clearable="true"
+                            multiple
+                            :search-input.sync="searchCategoryValue"
+                            @change="searchCategoryValue = ''"
+                            label="Исключить категории"
+                    ></v-combobox>
+                </v-col>
+                <v-col cols="3">
+                    <!--                        todo список группировок думаю нужно сделать справочником на бэке-->
+                    <v-select
+                            :items="[{text: 'Месяц', value: 'MONTH'},{text: 'Год', value: 'YEAR'}]"
+                            v-model="groupBy"
+                            label="Группировка"
+                    ></v-select>
+                </v-col>
+            </v-row>
+        </v-card-title>
 
-            <line-chart :chart-data="datacollection"
-                        :options="options"></line-chart>
-        </v-card>
+        <line-chart :chart-data="datacollection"
+                    :options="options"></line-chart>
+    </v-card>
 </template>
 
 <script lang="ts">
     import LineChart from "./LineChart.js";
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import StatisticsService from '@/services/StatisticsService';
+    import {Component, Vue, Watch} from "vue-property-decorator";
+    import StatisticsService from "@/services/StatisticsService";
 
     @Component({
         components: {LineChart}
@@ -123,11 +123,12 @@
 
 
         get categories() {
-            return this.$store.state.categories.map(val => ({
+            return this.$store.state.categories.map((val: any) => ({
                 text: val.name,
                 value: val.id
             }));
         }
+
         get datacollection() {
             return {
                 // labels: this.rawData.labels,
@@ -153,7 +154,7 @@
             };
         }
 
-        extractLabels(labels) {
+        extractLabels(labels: any) {
             if (labels) {
                 return labels;
             }
@@ -161,9 +162,9 @@
         }
 
 
-        extractDatasets(datasets) {
+        extractDatasets(datasets: any) {
             if (datasets) {
-                return datasets.map((item) => {
+                return datasets.map((item: any) => {
                     return {
                         lineTension: 0,
                         label: item.name,
@@ -176,23 +177,23 @@
             return [];
         }
 
-        data() {
+        rawData: any = {};
+        dateFromMenu = false;
+        dateToMenu = false;
+        dateFrom = IncomAndConsumptionTrend.dateFromInitValue();
+        dateTo = new Date().toISOString().substr(0, 10);
+        groupBy = "MONTH";
+        excludeCategoryIds = [];
+        searchCategoryValue = "";
+
+        private static dateFromInitValue() {
             const now = new Date();
             now.setDate(now.getDate() - 365);
-            return {
-                rawData: {},
-                dateFromMenu: false,
-                dateToMenu: false,
-                dateFrom: now.toISOString().substr(0, 10),
-                dateTo: new Date().toISOString().substr(0, 10),
-                groupBy: 'MONTH',
-                excludeCategoryIds: [],
-                searchCategoryValue: "",
-            };
+            return now;
         }
 
 
-        getColorByDataSetName(dataSetName) {
+        getColorByDataSetName(dataSetName: string) {
             if (dataSetName === "Доход") {
                 return "green";
             }

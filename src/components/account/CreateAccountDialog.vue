@@ -6,16 +6,15 @@
                 v-model="showDialog"
         >
             <AccountForm formMode="CREATE" v-if="!loading"
-                             @successfull="showDialog=false"/>
+                         @successfull="showDialog=false"/>
             <span v-else>Идет загрузка...</span>
         </v-dialog>
     </v-row>
 </template>
 <script lang="ts">
 
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import AccountForm from "@/components/account/AccountForm.vue";
-    import AccountService from "@/services/AccountService";
 
     @Component({
         components: {AccountForm}
@@ -23,7 +22,7 @@
     export default class CreateAccountDialog extends Vue {
 
         @Prop()
-        visible: string;
+        visible!: string;
 
         get showDialog() {
             return this.visible;
@@ -35,10 +34,6 @@
             }
         }
 
-        data() {
-            return {
-                loading: false,
-            };
-        }
+        loading = false;
     }
 </script>

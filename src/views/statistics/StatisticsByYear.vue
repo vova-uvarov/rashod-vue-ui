@@ -52,19 +52,7 @@
             TotalConsumptionsPie
         }
     })
-    export default class StatisticsVue extends Vue {
-
-        get monthNames() {
-            return ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"]
-        }
-
-        get januaryData() {
-            return {
-                from: new Date(this.year, 1, 1, 3, 0, 0).toISOString().substr(0, 10), // todo тут надо с часовыми поясами разобраться
-                to: new Date(this.year, 2, 0, 23, 59, 59).toISOString().substr(0, 10), // todo тут надо с часовыми поясами разобраться
-            }
-        }
-
+    export default class StatisticByYear extends Vue {
         get months() {
             console.log("get months");
             let months = [];
@@ -85,11 +73,8 @@
             return [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012]; // todo Стоит этот список генерировать
         }
 
-        data() {
-            return {
-                year: 2019 // todo нужн брать текущий год
-            };
-        }
+        year = 2019;
+        monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
     }
 </script>
 

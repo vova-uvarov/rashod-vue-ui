@@ -34,10 +34,10 @@
     export default class EqualizationAccountBalanceDialog extends Vue {
 
         @Prop()
-        accountBalance: object;
+        accountBalance!: any;
 
         @Prop()
-        visible: string;
+        visible!: string;
 
         get showDialog() {
             return this.visible;
@@ -50,7 +50,7 @@
         }
 
         @Watch("accountBalance")
-        accountIdChanged(value: string, oldValue: string) {
+        accountIdChanged(value: any, oldValue: any) {
             this.actualBalance = value.balance;
         }
 
@@ -63,12 +63,7 @@
                 });
         }
 
-        data() {
-            return {
-                loading: false,
-                account: {},
-                actualBalance: null
-            };
-        }
+        account = {};
+        actualBalance = 0;
     }
 </script>

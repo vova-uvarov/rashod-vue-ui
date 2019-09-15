@@ -43,14 +43,14 @@
                 return [];
             }
         })
-        items;
+        items!: object[];
 
         @Prop({
             default: function() {
                 return [];
             }
         })
-        selectedItems: object[];
+        selectedItems!: object[];
 
         @Watch("selectedItemsInner")
         selectedItemsInnerChanged(value: string[], oldValue: string[]) {
@@ -59,19 +59,15 @@
             }
         }
 
-        remove(item) {
+        remove(item: any) {
             const index = this.selectedItemsInner.indexOf(item);
             if (index >= 0) {
                 this.selectedItemsInner.splice(index, 1);
             }
         }
 
-        data() {
-            return {
-                selectedItemsInner: this.selectedItems,
-                searchValue: ""
-            };
-        }
+        selectedItemsInner = this.selectedItems;
+        searchValue = "";
 
     }
 </script>

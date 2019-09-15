@@ -94,8 +94,8 @@ export default new Vuex.Store({
         updateParamKeys: (state, newValue) => {
             state.paramKeys = newValue;
         },
-        updateShoppingItemsNames: (state, newValue: object[]) => {
-            state.shoppingItemNames = newValue.map((item) => ({name: item}));
+        updateShoppingItemsNames: (state, newValue) => {
+            state.shoppingItemNames = newValue.map((item: any) => ({name: item}));
         },
         updateAccountTypes: (state, newValue) => {
             state.accountTypes = newValue;
@@ -140,7 +140,7 @@ export default new Vuex.Store({
         },
         loadPlans(context) {
             OperationService.search({isPlan: true, size: 100000, sort: 'operationDate'})
-                .then((data) => (context.commit('updatePlanOperations', data.content)));
+                .then((data: any) => (context.commit('updatePlanOperations', data.content)));
         },
         loadParams(context) {
             AppParamService.getAll()

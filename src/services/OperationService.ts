@@ -2,13 +2,13 @@ import axios, {AxiosResponse} from 'axios';
 
 export default class OperationService {
 
-    public static search(requestParams: object): Promise<AxiosResponse<object>> {
+    public static search(requestParams: any): Promise<AxiosResponse<any>> {
         if (requestParams.categoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
-            requestParams.categoryIds = requestParams.categoryIds.map((item) => (item.value)).join(',');
+            requestParams.categoryIds = requestParams.categoryIds.map((item: any) => (item.value)).join(',');
         }
 
         if (requestParams.accountIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
-            requestParams.accountIds = requestParams.accountIds.map((item) => (item.value)).join(',');
+            requestParams.accountIds = requestParams.accountIds.map((item: any) => (item.value)).join(',');
         }
 
         if (requestParams.operationTypes) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
@@ -16,7 +16,7 @@ export default class OperationService {
         }
 
         if (requestParams.shoppingList) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
-            requestParams.shoppingList = requestParams.shoppingList.map((item) => (item.name)).join(',');
+            requestParams.shoppingList = requestParams.shoppingList.map((item: any) => (item.name)).join(',');
         }
         return axios.get('http://localhost:8092/api/operations/search', {params: requestParams})
             .then((response) => {
@@ -24,13 +24,13 @@ export default class OperationService {
             });
     }
 
-    public static delete(operationId: string): Promise<AxiosResponse<object>> {
+    public static delete(operationId: string): Promise<AxiosResponse<any>> {
         return axios
             .delete('http://localhost:8092/api/operations/' + operationId);
     }
 
-    public static create(operation: object,
-                         countRepeat: number): Promise<AxiosResponse<object>> {
+    public static create(operation: any,
+                         countRepeat: number): Promise<AxiosResponse<any>> {
         delete operation.category.name;
         delete operation.account.name;
         const createRequest = {
@@ -43,7 +43,7 @@ export default class OperationService {
             .then((response) => (response.data));
     }
 
-    public static get(operationId: string): Promise<AxiosResponse<object>> {
+    public static get(operationId: string): Promise<AxiosResponse<any>> {
         return axios
             .get('http://localhost:8092/api/operations/' + operationId)
             .then((response) => {

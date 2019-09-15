@@ -29,7 +29,7 @@
 
 <script lang="ts">
     import LineChart from "./LineChart.js";
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
+    import {Component, Vue, Watch} from "vue-property-decorator";
     import StatisticsService from "@/services/StatisticsService";
 
     @Component({
@@ -54,7 +54,7 @@
 
 
         get categories() {
-            return this.$store.state.categories.map(val => ({
+            return this.$store.state.categories.map((val: any) => ({
                 text: val.name,
                 value: val.id
             }));
@@ -85,7 +85,7 @@
             };
         }
 
-        extractLabels(labels) {
+        extractLabels(labels: any) {
             if (labels) {
                 return labels;
             }
@@ -93,9 +93,9 @@
         }
 
 
-        extractDatasets(datasets) {
+        extractDatasets(datasets: any) {
             if (datasets) {
-                return datasets.map((item) => {
+                return datasets.map((item: any) => {
                     return {
                         lineTension: 0,
                         label: item.name,
@@ -108,13 +108,9 @@
             return [];
         }
 
-        data() {
-            return {
-                rawData: {},
-                categoryIds: [{text: "Продукты", value: 32}], // todo
-                searchCategoryValue: "",
-            };
-        }
+        rawData: any = {};
+        categoryIds = [{text: "Продукты", value: 32}]; // todo
+        searchCategoryValue = "";
 
         getRandomColor() {
 

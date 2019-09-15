@@ -102,7 +102,7 @@
     export default class OperationsList extends Vue {
 
         @Prop({default: []})
-        operations: object[];
+        operations!: object[];
 
         deleteOperation(id: string) {
             if (confirm("Вы действительно хотите удалить операцию?")) {
@@ -114,12 +114,12 @@
             }
         }
 
-        divideOperation(selectOperationId) {
+        divideOperation(selectOperationId: any) {
             this.operationId = selectOperationId;
             this.showDivideDialog = true;
         }
 
-        editOperation(selectOperationId) {
+        editOperation(selectOperationId: any) {
             this.operationId = selectOperationId;
             this.showEditDialog = true;
         }
@@ -131,14 +131,9 @@
             return shoppingList.map(val => (val.name)).toString();
         }
 
-        data() {
-            return {
-                operationId: null,
-                showEditDialog: false,
-                showDivideDialog: false
-            };
-        }
-
+        operationId = null;
+        showEditDialog = false;
+        showDivideDialog = false;
     }
 </script>
 

@@ -133,7 +133,7 @@
 
 
         get categories() {
-            return this.$store.state.categories.map(val => ({
+            return this.$store.state.categories.map((val:any) => ({
                 text: val.name,
                 value: val.id
             }));
@@ -164,7 +164,7 @@
             };
         }
 
-        extractLabels(labels) {
+        extractLabels(labels: any) {
             if (labels) {
                 return labels;
             }
@@ -172,16 +172,16 @@
         }
 
 
-        extractDatasets(datasets) {
+        extractDatasets(datasets: any) {
             if (datasets) {
-                return datasets.filter((item) => (item.name == "Расход"))
-                    .map((item) => {
+                return datasets.filter((item: any) => (item.name == "Расход"))
+                    .map((item: any) => {
                         return {
                             lineTension: 0,
                             label: item.name,
                             fill: false,
                             borderColor: this.getColorByDataSetName(item.name),
-                            backgroundColor: item.data.map((d) => {
+                            backgroundColor: item.data.map((d: any) => {
                                 if (d < 1000) {
                                     return "green";
                                 }
@@ -215,7 +215,7 @@
         }
 
 
-        getColorByDataSetName(dataSetName) {
+        getColorByDataSetName(dataSetName: any) {
             if (dataSetName === "Доход") {
                 return "green";
             }

@@ -35,7 +35,6 @@
             </v-col>
         </v-row>
 
-
     </v-container>
 
 </template>
@@ -53,9 +52,7 @@
             AverageByDayTrend, TotalConsumptionsPie
         }
     })
-    export default class StatisticsVue extends Vue {
-
-
+    export default class StatisticsViwe extends Vue {
     }
 </script>
 
