@@ -105,7 +105,7 @@
 
 <script lang="ts">
     import {Component, Prop, Vue} from "vue-property-decorator";
-    import SelectShoppingItems from "@/components/SelectShoppingItems.vue";
+    import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
     import AccountService from "@/services/AccountService";
 
     //todo понять как нормально инициализировать значение для параметра

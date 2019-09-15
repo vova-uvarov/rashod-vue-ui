@@ -153,7 +153,7 @@
 <script lang="ts">
 
     import {Component, Vue} from "vue-property-decorator";
-    import SelectShoppingItems from "@/components/SelectShoppingItems.vue";
+    import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
 
     @Component({
         components: {SelectShoppingItems},

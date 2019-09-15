@@ -47,8 +47,8 @@
     import moment from "moment";
     import {Component, Prop, Vue} from "vue-property-decorator";
     import OperationUtils from "@/utils/OperationUtils";
-    import EditOperationDialog from "@/components/EditOperationDialog.vue";
-    import DivideOperationDialog from "@/components/DivideOperationDialog.vue";
+    import EditOperationDialog from "@/components/operation/EditOperationDialog.vue";
+    import DivideOperationDialog from "@/components/operation/DivideOperationDialog.vue";
 
     @Component({
         components: {EditOperationDialog, DivideOperationDialog},

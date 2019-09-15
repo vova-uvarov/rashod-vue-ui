@@ -164,7 +164,7 @@
 <script lang="ts">
     import {Component, Prop, Vue} from "vue-property-decorator";
     import OperationService from "@/services/OperationService";
-    import SelectShoppingItems from "@/components/SelectShoppingItems.vue";
+    import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
 
     function defaultOperation() {
         return {

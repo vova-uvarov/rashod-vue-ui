@@ -5,8 +5,7 @@
                 max-width="790"
                 v-model="showDialog"
         >
-            <ShortOperationInfoBar :operation="operation"/>
-            <CreateOperation formMode="DIVIDE" :operation="operation" v-if="!loading"
+            <CreateOperation formMode="EDIT" :operation="operation" v-if="!loading"
                              @successfull="showDialog=false"/>
             <span v-else>Идет загрузка...</span>
         </v-dialog>
@@ -15,17 +14,16 @@
 <script lang="ts">
 
     import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import CreateOperation from "@/components/CreateOperation.vue";
-    import ShortOperationInfoBar from "@/components/ShortOperationInfoBar.vue";
+    import CreateOperation from "@/components/operation/CreateOperation.vue";
     import OperationService from "@/services/OperationService";
 
     @Component({
-        components: {CreateOperation, ShortOperationInfoBar}
+        components: {CreateOperation}
     })
-    export default class DivideOperationDialog extends Vue {
+    export default class EditOperationDialog extends Vue {
 
         @Prop()
-        parentOperationId: string;
+        operationId: string;
 
         @Prop()
         visible: string;
@@ -40,15 +38,13 @@
             }
         }
 
-        @Watch("parentOperationId")
+        @Watch("operationId")
         operationIdChanged(value: string, oldValue: string) {
             this.loading = true;
             OperationService.get(value)
                 .then((data) => {
                         this.loading = false;
                         this.operation = data;
-                        this.operation.id = null;
-                        this.operation.parentId = value;
                     }
                 )
         }

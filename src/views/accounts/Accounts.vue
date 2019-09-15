@@ -1,16 +1,16 @@
 <template>
     <div class="accounts">
-        <GoalAccountsList/>
+        <AccountsList/>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import GoalAccountsList from '../components/GoalAccountsList.vue'; // @ is an alias to /src
+    import AccountsList from '../../components/account/AccountsList.vue'; // @ is an alias to /src
 
     @Component({
         components: {
-            GoalAccountsList
+            AccountsList
         }
     })
     export default class AccountsView extends Vue { }

@@ -25,7 +25,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Accounts.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './views/accounts/Accounts.vue'),
     },
     {
       path: '/accounts/goal',
@@ -33,7 +33,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/GoalAccounts.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './views/accounts/GoalAccounts.vue'),
     },
     {
       path: '/operations',
@@ -41,7 +41,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Operations.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './views/operations/Operations.vue'),
     },
     {
       path: '/statistics/common',
@@ -49,7 +49,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Statistics.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './views/statistics/Statistics.vue'),
     },
     {
       path: '/statistics/categoryTrend',
@@ -73,7 +73,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Plans.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './views/operations/Plans.vue'),
     },
     {
       path: '/params',

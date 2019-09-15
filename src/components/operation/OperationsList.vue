@@ -66,10 +66,10 @@
 <script lang="ts">
 
     import {Component, Prop, Vue} from "vue-property-decorator";
-    import EditOperationDialog from "@/components/EditOperationDialog.vue";
+    import EditOperationDialog from "@/components/operation/EditOperationDialog.vue";
     import OperationService from "@/services/OperationService";
     import OperationUtils from "@/utils/OperationUtils";
-    import DivideOperationDialog from "@/components/DivideOperationDialog.vue";
+    import DivideOperationDialog from "@/components/operation/DivideOperationDialog.vue";
 
     @Component({
         components: {EditOperationDialog, DivideOperationDialog},

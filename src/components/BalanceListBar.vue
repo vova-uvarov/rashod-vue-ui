@@ -36,7 +36,7 @@
 
 <script lang="ts">
     import AccountService, {Balance} from "@/services/AccountService";
-    import EqualizationAccountBalanceDialog from "@/components/EqualizationAccountBalanceDialog";
+    import EqualizationAccountBalanceDialog from "@/components/account/EqualizationAccountBalanceDialog.vue";
     import {Component, Vue} from "vue-property-decorator";
 
     @Component({
