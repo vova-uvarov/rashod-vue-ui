@@ -28,9 +28,9 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import CreateOperationFrom from "../components/operation/CreateOperationFormForm.vue";
-    import ShortOperationsList from "../components/operation/ShortOperationsList.vue";
-    import OperationService from "../services/OperationService";
+    import CreateOperationFrom from "@/components/operation/CreateOperationForm.vue";
+    import ShortOperationsList from "@/components/operation/ShortOperationsList.vue";
+    import OperationService from "@/services/OperationService";
 
     @Component({
         components: {

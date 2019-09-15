@@ -17,7 +17,7 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import OperationsList from "../../components/operation/OperationsList.vue";
+    import OperationsList from "@/components/operation/OperationsList.vue";
 
     @Component({
         components: {

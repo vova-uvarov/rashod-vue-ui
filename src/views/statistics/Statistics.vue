@@ -39,11 +39,11 @@
 
 </template>
 <script lang="ts">
-    import IncomAndConsumptionTrend from "../../components/charts/IncomAndConsumptionTrend.vue";
-    import ConsumptionsByDate from "../../components/charts/ConsumptionsByDate.vue";
-    import TotalConsumptionsPie from "../../components/charts/TotalConsumptionsPie.vue";
-    import AccountBalancesPie from "../../components/charts/AccountBalancesPie.vue";
-    import AverageByDayTrend from "../../components/charts/AverageByDayTrend.vue";
+    import IncomAndConsumptionTrend from "@/components/charts/IncomAndConsumptionTrend.vue";
+    import ConsumptionsByDate from "@/components/charts/ConsumptionsByDate.vue";
+    import TotalConsumptionsPie from "@/components/charts/TotalConsumptionsPie.vue";
+    import AccountBalancesPie from "@/components/charts/AccountBalancesPie.vue";
+    import AverageByDayTrend from "@/components/charts/AverageByDayTrend.vue";
     import {Component, Vue} from "vue-property-decorator";
 
     @Component({
