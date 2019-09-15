@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-    import PieChart from "./PieChart.js";
+    import PieChart from "./js/PieChart.js";
     import StatisticsService from "@/services/StatisticsService";
     import {Component, Prop, Vue, Watch} from "vue-property-decorator";
 

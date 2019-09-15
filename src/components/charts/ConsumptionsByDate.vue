@@ -89,7 +89,7 @@
 </template>
 
 <script lang="ts">
-    import BarChart from "./BarChart.js";
+    import BarChart from "./js/BarChart.js";
     import {Component, Prop, Vue, Watch} from "vue-property-decorator";
     import StatisticsService from "@/services/StatisticsService";
 

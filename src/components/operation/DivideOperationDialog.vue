@@ -15,7 +15,7 @@
 <script lang="ts">
 
     import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import CreateOperation from "@/components/operation/CreateOperation.vue";
+    import CreateOperation from "@/components/operation/CreateOperationFormForm.vue";
     import ShortOperationInfoBar from "@/components/operation/ShortOperationInfoBar.vue";
     import OperationService from "@/services/OperationService";
 

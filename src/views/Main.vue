@@ -2,10 +2,10 @@
     <div class="home">
         <v-row>
             <v-col cols="6">
-                <CreateOperation/>
+                <CreateOperationFrom/>
             </v-col>
             <v-col cols="6">
-                <LastOperations title="Расходы"
+                <ShortOperationsList title="Расходы"
                                 card-color="green"
                                 :operations="lastConsumptionOperations"
                 />
@@ -13,12 +13,12 @@
         </v-row>
         <v-row>
             <v-col cols="6">
-                <LastOperations title="Доходы/Переводы"
+                <ShortOperationsList title="Доходы/Переводы"
                                 card-color="yellow"
                                 :operations="lastTransferAndIncomeOperations"/>
             </v-col>
             <v-col cols="6">
-                <LastOperations title="Планируемые"
+                <ShortOperationsList title="Планируемые"
                                 card-color="white"
                                 :operations="lastPlansOperations"/>
             </v-col>
@@ -28,14 +28,14 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import CreateOperation from "../components/operation/CreateOperation.vue";
-    import LastOperations from "../components/operation/LastOperations.vue";
+    import CreateOperationFrom from "../components/operation/CreateOperationFormForm.vue";
+    import ShortOperationsList from "../components/operation/ShortOperationsList.vue";
     import OperationService from "../services/OperationService";
 
     @Component({
         components: {
-            CreateOperation,
-            LastOperations,
+            CreateOperationFrom,
+            ShortOperationsList,
         }
     })
     export default class Main extends Vue {
