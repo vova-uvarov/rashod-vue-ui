@@ -33,7 +33,8 @@ export default class StatisticsService {
     }
 
     public static sumsGroupByCategory(requestParams: any): Promise<AxiosResponse<any>> {
-        if (requestParams.operationTypes) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+        // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+        if (requestParams.operationTypes) {
             requestParams.operationTypes = requestParams.operationTypes.map((item: any) => (item)).join(',');
         }
         return axios
@@ -42,7 +43,8 @@ export default class StatisticsService {
     }
 
     public static averageByDayInCurrMonth(excludeCategoryIds: any): Promise<AxiosResponse<any>> {
-        if (excludeCategoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+        // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+        if (excludeCategoryIds) {
             excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value)).join(',');
         }
         return axios
@@ -60,8 +62,12 @@ export default class StatisticsService {
             .then((response) => (response.data));
     }
 
-    public static incomeConsumptionByGroup(dateFrom: any, dateTo: any, excludeCategoryIds: any, groupBy: any): Promise<AxiosResponse<any>> {
-        if (excludeCategoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+    public static incomeConsumptionByGroup(dateFrom: any,
+                                           dateTo: any,
+                                           excludeCategoryIds: any,
+                                           groupBy: any): Promise<AxiosResponse<any>> {
+        // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+        if (excludeCategoryIds) {
             excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value)).join(',');
         }
         return axios
@@ -69,8 +75,8 @@ export default class StatisticsService {
                 params: {
                     from: dateFrom,
                     to: dateTo,
-                    excludeCategoryIds: excludeCategoryIds,
-                    groupBy: groupBy,
+                    excludeCategoryIds,
+                    groupBy,
                 },
             })
             .then((response) => (response.data));

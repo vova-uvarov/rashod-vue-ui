@@ -133,7 +133,7 @@
 
 
         get categories() {
-            return this.$store.state.categories.map((val:any) => ({
+            return this.$store.state.categories.map((val: any) => ({
                 text: val.name,
                 value: val.id
             }));
@@ -197,23 +197,23 @@
             return [];
         }
 
-        data() {
+        monthPlan = {};
+        rawData: any = {};
+        dateFromMenu = false;
+        dateToMenu = false;
+        dateFrom = IncomAndConsumptionTrend.fromDateInitValue();
+        dateTo = new Date().toISOString().substr(0, 10);
+        groupBy = "DAY";
+        incomeConsumptionByMonth = {};
+        excludeCategoryIds = [{"text": "ИП", "value": 15}]; // todo
+        searchCategoryValue = "";
+
+
+        private static fromDateInitValue() {
             const now = new Date();
             now.setDate(now.getDate() - 31);
-            return {
-                monthPlan: {},
-                rawData: {},
-                dateFromMenu: false,
-                dateToMenu: false,
-                dateFrom: now.toISOString().substr(0, 10),
-                dateTo: new Date().toISOString().substr(0, 10),
-                groupBy: "DAY",
-                incomeConsumptionByMonth: {},
-                excludeCategoryIds: [{"text": "ИП", "value": 15}], // todo
-                searchCategoryValue: "",
-            };
+            return now;
         }
-
 
         getColorByDataSetName(dataSetName: any) {
             if (dataSetName === "Доход") {

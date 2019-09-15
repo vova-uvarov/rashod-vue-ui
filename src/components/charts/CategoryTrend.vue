@@ -83,7 +83,7 @@
     @Component({
         components: {LineChart}
     })
-    export default class AverageByDayTrend extends Vue {
+    export default class CategoryTrend extends Vue {
         mounted() {
             this.loadData();
         }
@@ -204,9 +204,9 @@
             if (year == 2020) {
                 return "YELLOW";
             }
-            var letters = "0123456789ABCDEF";
-            var color = "#";
-            for (var i = 0; i < 6; i++) {
+            let letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
                 color += letters[Math.floor(Math.random() * 16)];
             }
             return color;

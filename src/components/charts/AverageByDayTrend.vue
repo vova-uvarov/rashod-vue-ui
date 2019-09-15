@@ -103,7 +103,7 @@
             return [];
         }
 
-        rawData = {};
+        rawData: any = {};
         excludeCategoryIds = [{text: "ИП", value: 15}];
         searchCategoryValue = "";
 
