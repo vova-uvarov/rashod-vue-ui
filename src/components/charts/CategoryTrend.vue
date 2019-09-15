@@ -76,143 +76,143 @@
 
 
 <script lang="ts">
-    import LineChart from "./js/LineChart.js";
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import StatisticsService from "@/services/StatisticsService";
+import LineChart from './js/LineChart.js';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import StatisticsService from '@/services/StatisticsService';
 
-    @Component({
-        components: {LineChart}
-    })
-    export default class CategoryTrend extends Vue {
-        mounted() {
-            this.loadData();
-        }
+@Component({
+    components: {LineChart},
+})
+export default class CategoryTrend extends Vue {
 
 
-        @Watch("dateFrom")
-        dateFromChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
-
-        @Watch("dateTO")
-        dateToChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
-
-        @Watch("categoryIds")
-        categoryIdsChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
-
-        private loadData() {
-            StatisticsService.categoryTrend(this.dateFrom, this.dateTo, this.categoryIds)
-                .then((responseData) => {
-                    this.rawData = responseData;
-                });
-        }
-
-
-        get categories() {
-            return this.$store.state.categories.map((val: any) => ({
-                text: val.name,
-                value: val.id
-            }));
-        }
-
-        get datacollection() {
-            return {
-                // labels: this.rawData.labels,
-                labels: this.extractLabels(this.rawData.labels),
-                datasets: this.extractDatasets(this.rawData.datasets)
-            };
-        }
-
-        get title() {
-            return "Динамика по категории в разрезе месяцев: " + this.categoryIds.map((c) => (c.text)).join(",");
-        }
-
-        get options() {
-            return {
-                maintainAspectRatio: false, aspectRatio: 1,
-                legend:
-                    {
-                        position: "bottom",
-                        labels: {
-                            usePointStyle: true
-                        }
-                    }
-            };
-        }
-
-        extractLabels(labels: any) {
-            if (labels) {
-                return labels;
-            }
-            return [];
-        }
-
-
-        extractDatasets(datasets: any) {
-            if (datasets) {
-                return datasets.map((item: any) => {
-                    return {
-                        lineTension: 0,
-                        label: item.name,
-                        fill: false,
-                        borderColor: this.getRandomColor(item.name),
-                        data: item.data
-                    };
-                });
-            }
-            return [];
-        }
-
-        dateToMenu = false;
-        dateFromMenu = false;
-        dateFrom = null;
-        dateTo = null;
-        rawData: any = {};
-        categoryIds = [{text: "Продукты", value: 32}]; // todo
-        searchCategoryValue = "";
-
-        getRandomColor(year: number) {
-            console.log("year=" + year);
-            if (year == 2012) {
-                return "#CD6155";
-            }
-            if (year == 2013) {
-                return "#9B59B6";
-            }
-            if (year == 2014) {
-                return "#AED6F1";
-            }
-            if (year == 2015) {
-                return "#A2D9CE";
-            }
-            if (year == 2016) {
-                return "#F7DC6F";
-            }
-            if (year == 2017) {
-                return "AQUA";
-            }
-            if (year == 2018) {
-                return "PURPLE";
-            }
-            if (year == 2019) {
-                return "OLIVE";
-            }
-            if (year == 2020) {
-                return "YELLOW";
-            }
-            let letters = "0123456789ABCDEF";
-            let color = "#";
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
+    get categories() {
+        return this.$store.state.categories.map((val: any) => ({
+            text: val.name,
+            value: val.id,
+        }));
     }
+
+    get datacollection() {
+        return {
+            // labels: this.rawData.labels,
+            labels: this.extractLabels(this.rawData.labels),
+            datasets: this.extractDatasets(this.rawData.datasets),
+        };
+    }
+
+    get title() {
+        return 'Динамика по категории в разрезе месяцев: ' + this.categoryIds.map((c) => (c.text)).join(',');
+    }
+
+    get options() {
+        return {
+            maintainAspectRatio: false, aspectRatio: 1,
+            legend:
+                {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                    },
+                },
+        };
+    }
+
+    public dateToMenu = false;
+    public dateFromMenu = false;
+    public dateFrom = null;
+    public dateTo = null;
+    public rawData: any = {};
+    public categoryIds = [{text: 'Продукты', value: 32}]; // todo
+    public searchCategoryValue = '';
+    public mounted() {
+        this.loadData();
+    }
+
+
+    @Watch('dateFrom')
+    public dateFromChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    @Watch('dateTO')
+    public dateToChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    @Watch('categoryIds')
+    public categoryIdsChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    public extractLabels(labels: any) {
+        if (labels) {
+            return labels;
+        }
+        return [];
+    }
+
+
+    public extractDatasets(datasets: any) {
+        if (datasets) {
+            return datasets.map((item: any) => {
+                return {
+                    lineTension: 0,
+                    label: item.name,
+                    fill: false,
+                    borderColor: this.getRandomColor(item.name),
+                    data: item.data,
+                };
+            });
+        }
+        return [];
+    }
+
+    public getRandomColor(year: number) {
+        console.log('year=' + year);
+        if (year == 2012) {
+            return '#CD6155';
+        }
+        if (year == 2013) {
+            return '#9B59B6';
+        }
+        if (year == 2014) {
+            return '#AED6F1';
+        }
+        if (year == 2015) {
+            return '#A2D9CE';
+        }
+        if (year == 2016) {
+            return '#F7DC6F';
+        }
+        if (year == 2017) {
+            return 'AQUA';
+        }
+        if (year == 2018) {
+            return 'PURPLE';
+        }
+        if (year == 2019) {
+            return 'OLIVE';
+        }
+        if (year == 2020) {
+            return 'YELLOW';
+        }
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    private loadData() {
+        StatisticsService.categoryTrend(this.dateFrom, this.dateTo, this.categoryIds)
+            .then((responseData) => {
+                this.rawData = responseData;
+            });
+    }
+
+}
 </script>
 
 <style>

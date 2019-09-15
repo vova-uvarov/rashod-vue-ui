@@ -16,35 +16,35 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import OperationsList from "@/components/operation/OperationsList.vue";
+import {Component, Vue} from 'vue-property-decorator';
+import OperationsList from '@/components/operation/OperationsList.vue';
 
-    @Component({
-        components: {
-            OperationsList
-        }
-    })
-    export default class PlansView extends Vue {
-        created() {
-            this.$store.dispatch("loadPlans");
-        }
+@Component({
+    components: {
+        OperationsList,
+    },
+})
+export default class PlansView extends Vue {
 
-        operations(categoryName: any) {
-            console.log("categoryName=" + categoryName);
-            return this.$store.state.operationPlans.operations.filter((op: any) => (op.category.name == categoryName));
-        }
-
-        get itemTabs() {
-            let categoryNames = this.$store.state.operationPlans.operations.map((op: any) => (op.category.name));
-            return Array.from(new Set(categoryNames)); // this is distinct
-        }
-
-        mounted() {
-            this.$root.$on("operationDeleted", () => {
-                this.$store.dispatch("loadPlans");
-            });
-        }
-
-        tab = null;
+    get itemTabs() {
+        const categoryNames = this.$store.state.operationPlans.operations.map((op: any) => (op.category.name));
+        return Array.from(new Set(categoryNames)); // this is distinct
     }
+
+    public tab = null;
+    public created() {
+        this.$store.dispatch('loadPlans');
+    }
+
+    public operations(categoryName: any) {
+        console.log('categoryName=' + categoryName);
+        return this.$store.state.operationPlans.operations.filter((op: any) => (op.category.name == categoryName));
+    }
+
+    public mounted() {
+        this.$root.$on('operationDeleted', () => {
+            this.$store.dispatch('loadPlans');
+        });
+    }
+}
 </script>

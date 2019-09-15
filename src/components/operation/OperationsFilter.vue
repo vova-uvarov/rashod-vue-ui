@@ -151,79 +151,78 @@
     </v-container>
 </template>
 <script lang="ts">
+import {Component, Vue} from 'vue-property-decorator';
+import SelectShoppingItems from '@/components/operation/SelectShoppingItems.vue';
 
-    import {Component, Vue} from "vue-property-decorator";
-    import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
+@Component({
+    components: {SelectShoppingItems},
+    computed: {
+        places: {
+            get() {
+                return this.$store.state.places;
+            },
+        },
+    },
+})
+export default class OperationsFilter extends Vue {
 
-    @Component({
-        components: {SelectShoppingItems},
-        computed: {
-            places: {
-                get() {
-                    return this.$store.state.places;
-                }
-            }
-        }
-    })
-    export default class OperationsFilter extends Vue {
-
-        get shoppingItems() {
-            return this.$store.state.shoppingItemNames;
-        }
-
-        get countsPerPage() {
-            return [5, 10, 20, 50, 100];
-        }
-
-        get accounts() {
-            return this.$store.state.accounts.map((val: any) => ({
-                text: val.name,
-                value: val.id
-            }));
-        }
-
-        get operationTypes() {
-            //todo сделать справочником в БД по хорошему
-            return this.$store.state.operationTypes.map((val: any) => {
-                if (val === "CONSUMPTION") {
-                    return {
-                        text: "Расход",
-                        value: val
-                    };
-                }
-                if (val === "INCOME") {
-                    return {
-                        text: "Доход",
-                        value: val
-                    };
-                }
-
-                if (val === "TRANSFER") {
-                    return {
-                        text: "Перевод",
-                        value: val
-                    };
-                }
-            });
-        }
-
-        get categories() {
-            return this.$store.state.categories.map((val: any) => ({
-                text: val.name,
-                value: val.id
-            }));
-        }
-
-        applyFilter() {
-            this.$store.commit("updateOperationsFilter", this.operationFilter);
-            this.$store.dispatch("reloadOperations");
-        }
-
-
-        operationFilter = JSON.parse(JSON.stringify(this.$store.state.operationsView.filter));
-        dateFromMenu = false;
-        dateToMenu = false;
-        searchCategoryValue = "";
-        searchAccountValue = "";
+    get shoppingItems() {
+        return this.$store.state.shoppingItemNames;
     }
+
+    get countsPerPage() {
+        return [5, 10, 20, 50, 100];
+    }
+
+    get accounts() {
+        return this.$store.state.accounts.map((val: any) => ({
+            text: val.name,
+            value: val.id,
+        }));
+    }
+
+    get operationTypes() {
+        // todo сделать справочником в БД по хорошему
+        return this.$store.state.operationTypes.map((val: any) => {
+            if (val === 'CONSUMPTION') {
+                return {
+                    text: 'Расход',
+                    value: val,
+                };
+            }
+            if (val === 'INCOME') {
+                return {
+                    text: 'Доход',
+                    value: val,
+                };
+            }
+
+            if (val === 'TRANSFER') {
+                return {
+                    text: 'Перевод',
+                    value: val,
+                };
+            }
+        });
+    }
+
+    get categories() {
+        return this.$store.state.categories.map((val: any) => ({
+            text: val.name,
+            value: val.id,
+        }));
+    }
+
+
+    public operationFilter = JSON.parse(JSON.stringify(this.$store.state.operationsView.filter));
+    public dateFromMenu = false;
+    public dateToMenu = false;
+    public searchCategoryValue = '';
+    public searchAccountValue = '';
+
+    public applyFilter() {
+        this.$store.commit('updateOperationsFilter', this.operationFilter);
+        this.$store.dispatch('reloadOperations');
+    }
+}
 </script>

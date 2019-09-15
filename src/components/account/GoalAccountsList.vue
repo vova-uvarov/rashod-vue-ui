@@ -18,18 +18,18 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import AccountService from "@/services/AccountService";
+import {Component, Vue} from 'vue-property-decorator';
+import AccountService from '@/services/AccountService';
 
-    @Component
-    export default class AccountList extends Vue {
-        mounted() {
-            AccountService.loadGoalBalances()
-                .then((data:any) => {
-                    this.balances = data;
-                });
-        }
+@Component
+export default class AccountList extends Vue {
 
-        balances = [];
+    public balances = [];
+    public mounted() {
+        AccountService.loadGoalBalances()
+            .then((data: any) => {
+                this.balances = data;
+            });
     }
+}
 </script>

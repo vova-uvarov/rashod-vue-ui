@@ -12,44 +12,43 @@
     </v-row>
 </template>
 <script lang="ts">
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import AccountForm from '@/components/account/AccountForm.vue';
+import AccountService from '@/services/AccountService';
 
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import AccountForm from "@/components/account/AccountForm.vue";
-    import AccountService from "@/services/AccountService";
+@Component({
+    components: {AccountForm},
+})
+export default class EditAccountDialog extends Vue {
 
-    @Component({
-        components: {AccountForm}
-    })
-    export default class EditAccountDialog extends Vue {
-
-        @Prop()
-        accountId: string | undefined;
-
-        @Prop()
-        visible!: string;
-
-        get showDialog() {
-            return this.visible;
-        }
-
-        set showDialog(value) {
-            if (!value) {
-                this.$emit("close");
-            }
-        }
-
-        @Watch("accountId")
-        accountIdChanged(value: string, oldValue: string) {
-            this.loading = true;
-            AccountService.get(value)
-                .then((data) => {
-                        this.loading = false;
-                        this.account = data;
-                    }
-                );
-        }
-
-        loading = false;
-        account = {};
+    get showDialog() {
+        return this.visible;
     }
+
+    set showDialog(value) {
+        if (!value) {
+            this.$emit('close');
+        }
+    }
+
+    @Prop()
+    public accountId: string | undefined;
+
+    @Prop()
+    public visible!: string;
+
+    public loading = false;
+    public account = {};
+
+    @Watch('accountId')
+    public accountIdChanged(value: string, oldValue: string) {
+        this.loading = true;
+        AccountService.get(value)
+            .then((data) => {
+                    this.loading = false;
+                    this.account = data;
+                },
+            );
+    }
+}
 </script>

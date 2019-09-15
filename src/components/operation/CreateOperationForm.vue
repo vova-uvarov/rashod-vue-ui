@@ -162,120 +162,120 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, PropSync, Vue} from "vue-property-decorator";
-    import OperationService from "@/services/OperationService";
-    import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
+import {Component, Prop, PropSync, Vue} from 'vue-property-decorator';
+import OperationService from '@/services/OperationService';
+import SelectShoppingItems from '@/components/operation/SelectShoppingItems.vue';
 
-    function defaultOperation() {
-        return {
-            operationDate: new Date().toISOString().substr(0, 10),
-            comment: "",
-            plan: false,
-            place: "",
-            category: {name: "Продукты", id: 32}, // todo переделать нормально
-            account: {id: 3, name: "Тинькофф"}, // todo переделать нормально это жесткий хак
-            accountToTransfer: {},
-            cost: 0,
-            shoppingList: undefined,
-            operationType: "CONSUMPTION"
-        };
+function defaultOperation() {
+    return {
+        operationDate: new Date().toISOString().substr(0, 10),
+        comment: '',
+        plan: false,
+        place: '',
+        category: {name: 'Продукты', id: 32}, // todo переделать нормально
+        account: {id: 3, name: 'Тинькофф'}, // todo переделать нормально это жесткий хак
+        accountToTransfer: {},
+        cost: 0,
+        shoppingList: undefined,
+        operationType: 'CONSUMPTION',
+    };
+}
+
+@Component({
+    components: {SelectShoppingItems},
+})
+export default class CreateOperationForm extends Vue {
+
+    get places() {
+        return this.$store.state.places;
     }
 
-    @Component({
-        components: {SelectShoppingItems}
-    })
-    export default class CreateOperationForm extends Vue {
-
-        @Prop({default: "CREATE"})
-        formMode!: string;
-
-        @PropSync("operation", {default: defaultOperation})
-        operationInner: any;
-
-        get places() {
-            return this.$store.state.places;
-        }
-
-        get shoppingItems() {
-            return this.$store.state.shoppingItemNames;
-        }
-
-        deleteOperation() {
-            if (confirm("Вы действительно хотите удалить операцию?")) {
-                OperationService.delete(this.operationInner.id)
-                    .then((response) => {
-                        alert("Операция успешно удалена: " + this.operationInner.id);
-                        this.$root.$emit("operationCreated"); // todo какжется нужно просто одно событие operationChaged
-                        this.$emit("successfull");
-                    });
-            }
-        }
-
-        createOperation() {
-            OperationService.create(this.operationInner, this.countRepeat)
-                .then((response: any) => {
-                        this.operationInner = defaultOperation();
-                        // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
-                        this.showShoppingItem = false;
-                        this.$nextTick().then(() => (this.showShoppingItem = true));
-                        alert("Операция успешно создана: " + response.id);
-                        this.$store.dispatch("loadAccounts");
-                        this.$store.dispatch("loadCategories");
-                        this.$root.$emit("operationCreated");
-                        this.$emit("successfull");
-                    }
-                );
-        }
-
-        get cardTitle() {
-            if (this.formMode === "CREATE") {
-                return "Создать - " + this.cardName;
-            }
-            if (this.formMode === "EDIT") {
-                return "Обновить - " + this.cardName;
-            }
-            if (this.formMode === "DIVIDE") {
-                return "Разбить - " + this.cardName;
-            }
-        }
-
-        get categories() {
-            return this.$store.state.categories;
-        }
-
-        get accounts() {
-            return this.$store.state.accounts;
-        }
-
-        get repeatCounts() {
-            return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        }
-
-        get cardName() {
-            if (this.operationInner.operationType == "CONSUMPTION") {
-                return "Расход";
-            }
-
-            if (this.operationInner.operationType == "TRANSFER") {
-                return "Перевод";
-            }
-            return "Доход";
-        }
-
-        get cardColor() {
-            if (this.operationInner.operationType == "CONSUMPTION") {
-                return "#FFF8F8";
-            }
-
-            if (this.operationInner.operationType == "TRANSFER") {
-                return "#FBFFD8";
-            }
-            return "#F6FFEA";
-        }
-
-        countRepeat = 1;
-        operationDateMenu = false;
-        showShoppingItem = true;
-
+    get shoppingItems() {
+        return this.$store.state.shoppingItemNames;
     }
+
+    get cardTitle() {
+        if (this.formMode === 'CREATE') {
+            return 'Создать - ' + this.cardName;
+        }
+        if (this.formMode === 'EDIT') {
+            return 'Обновить - ' + this.cardName;
+        }
+        if (this.formMode === 'DIVIDE') {
+            return 'Разбить - ' + this.cardName;
+        }
+    }
+
+    get categories() {
+        return this.$store.state.categories;
+    }
+
+    get accounts() {
+        return this.$store.state.accounts;
+    }
+
+    get repeatCounts() {
+        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    }
+
+    get cardName() {
+        if (this.operationInner.operationType == 'CONSUMPTION') {
+            return 'Расход';
+        }
+
+        if (this.operationInner.operationType == 'TRANSFER') {
+            return 'Перевод';
+        }
+        return 'Доход';
+    }
+
+    get cardColor() {
+        if (this.operationInner.operationType == 'CONSUMPTION') {
+            return '#FFF8F8';
+        }
+
+        if (this.operationInner.operationType == 'TRANSFER') {
+            return '#FBFFD8';
+        }
+        return '#F6FFEA';
+    }
+
+    @Prop({default: 'CREATE'})
+    public formMode!: string;
+
+    @PropSync('operation', {default: defaultOperation})
+    public operationInner: any;
+
+    public countRepeat = 1;
+    public operationDateMenu = false;
+    public showShoppingItem = true;
+
+    public deleteOperation() {
+        if (confirm('Вы действительно хотите удалить операцию?')) {
+            OperationService.delete(this.operationInner.id)
+                .then((response) => {
+                    alert('Операция успешно удалена: ' + this.operationInner.id);
+                    this.$root.$emit('operationCreated'); // todo какжется нужно просто одно событие operationChaged
+                    this.$emit('successfull');
+                });
+        }
+    }
+
+    public createOperation() {
+        OperationService.create(this.operationInner, this.countRepeat)
+            .then((response: any) => {
+                    this.operationInner = defaultOperation();
+                    // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
+                    this.showShoppingItem = false;
+                    this.$nextTick().then(() => (this.showShoppingItem = true));
+                    alert('Операция успешно создана: ' + response.id);
+                    this.$store.dispatch('loadAccounts');
+                    this.$store.dispatch('loadCategories');
+                    this.$root.$emit('operationCreated');
+                    this.$emit('successfull');
+                },
+            );
+    }
+
+}
 </script>

@@ -108,40 +108,40 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from "vue-property-decorator";
-    import AppParamService from "@/services/AppParamService";
+import {Component, Prop, Vue} from 'vue-property-decorator';
+import AppParamService from '@/services/AppParamService';
 
 
-    @Component
-    export default class EditParamForm extends Vue {
+@Component
+export default class EditParamForm extends Vue {
 
-        @Prop({default: {}})
-        appParam: any;
-
-        get boolValues() {
-            return [true, false];
-        }
-
-        get paramGroups() {
-            return this.$store.state.paramGroups;
-        }
-
-        get paramKeys() {
-            return this.$store.state.paramKeys;
-        }
-
-        get shoppingItems() {
-            return this.$store.state.shoppingItemNames;
-        }
-
-        editParam() {
-            AppParamService.save(this.appParam)
-                .then((response: any) => {
-                        alert("Параметр успешно обновлен: " + response.id);
-                    }
-                );
-        }
-
-        paramDateValueMenu = false;
+    get boolValues() {
+        return [true, false];
     }
+
+    get paramGroups() {
+        return this.$store.state.paramGroups;
+    }
+
+    get paramKeys() {
+        return this.$store.state.paramKeys;
+    }
+
+    get shoppingItems() {
+        return this.$store.state.shoppingItemNames;
+    }
+
+    @Prop({default: {}})
+    public appParam: any;
+
+    public paramDateValueMenu = false;
+
+    public editParam() {
+        AppParamService.save(this.appParam)
+            .then((response: any) => {
+                    alert('Параметр успешно обновлен: ' + response.id);
+                },
+            );
+    }
+}
 </script>

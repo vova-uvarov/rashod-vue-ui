@@ -11,44 +11,43 @@
     </v-row>
 </template>
 <script lang="ts">
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import CreateOperation from '@/components/operation/CreateOperationForm.vue';
+import OperationService from '@/services/OperationService';
 
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import CreateOperation from "@/components/operation/CreateOperationForm.vue";
-    import OperationService from "@/services/OperationService";
+@Component({
+    components: {CreateOperation},
+})
+export default class EditOperationDialog extends Vue {
 
-    @Component({
-        components: {CreateOperation}
-    })
-    export default class EditOperationDialog extends Vue {
-
-        @Prop()
-        operationId: string | undefined;
-
-        @Prop()
-        visible!: string;
-
-        get showDialog() {
-            return this.visible;
-        }
-
-        set showDialog(value) {
-            if (!value) {
-                this.$emit("close");
-            }
-        }
-
-        @Watch("operationId")
-        operationIdChanged(value: string, oldValue: string) {
-            this.loading = true;
-            OperationService.get(value)
-                .then((data) => {
-                        this.loading = false;
-                        this.operation = data;
-                    }
-                );
-        }
-
-        loading = false;
-        operation: any = {};
+    get showDialog() {
+        return this.visible;
     }
+
+    set showDialog(value) {
+        if (!value) {
+            this.$emit('close');
+        }
+    }
+
+    @Prop()
+    public operationId: string | undefined;
+
+    @Prop()
+    public visible!: string;
+
+    public loading = false;
+    public operation: any = {};
+
+    @Watch('operationId')
+    public operationIdChanged(value: string, oldValue: string) {
+        this.loading = true;
+        OperationService.get(value)
+            .then((data) => {
+                    this.loading = false;
+                    this.operation = data;
+                },
+            );
+    }
+}
 </script>

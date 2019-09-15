@@ -60,29 +60,29 @@
 </template>
 
 <script lang="ts">
-    import EditAccountDialog from "@/components/account/EditAccountDialog.vue";
-    import CreateAccountDialog from "@/components/account/CreateAccountDialog.vue";
-    import {Component, Vue} from "vue-property-decorator";
+import EditAccountDialog from '@/components/account/EditAccountDialog.vue';
+import CreateAccountDialog from '@/components/account/CreateAccountDialog.vue';
+import {Component, Vue} from 'vue-property-decorator';
 
-    @Component({
-        components: {EditAccountDialog, CreateAccountDialog}
-    })
-    export default class AccountList extends Vue {
-        get accounts() {
-            return this.$store.state.accounts;
-        }
-
-        addAccount() {
-            this.showCreateDialog = true;
-        }
-
-        editAccount(accountID: any) {
-            this.accountId = accountID;
-            this.showEditDialog = true;
-        }
-
-        showEditDialog = false;
-        showCreateDialog = false;
-        accountId = null;
+@Component({
+    components: {EditAccountDialog, CreateAccountDialog},
+})
+export default class AccountList extends Vue {
+    get accounts() {
+        return this.$store.state.accounts;
     }
+
+    public showEditDialog = false;
+    public showCreateDialog = false;
+    public accountId = null;
+
+    public addAccount() {
+        this.showCreateDialog = true;
+    }
+
+    public editAccount(accountID: any) {
+        this.accountId = accountID;
+        this.showEditDialog = true;
+    }
+}
 </script>

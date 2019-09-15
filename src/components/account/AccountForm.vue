@@ -104,68 +104,68 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from "vue-property-decorator";
-    import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
-    import AccountService from "@/services/AccountService";
+import {Component, Prop, Vue} from 'vue-property-decorator';
+import SelectShoppingItems from '@/components/operation/SelectShoppingItems.vue';
+import AccountService from '@/services/AccountService';
 
-    //todo понять как нормально инициализировать значение для параметра
-    function defaultAccount() {
-        return {
-            name: "",
-            description: "",
-            accountType: "SIMPLE",
-            targetCost: 0,
-            color: "red",
-            round: false,
-            isBalance: true,
-            status: "ACTIVE",
-            currency: "RUB"
-        };
+// todo понять как нормально инициализировать значение для параметра
+function defaultAccount() {
+    return {
+        name: '',
+        description: '',
+        accountType: 'SIMPLE',
+        targetCost: 0,
+        color: 'red',
+        round: false,
+        isBalance: true,
+        status: 'ACTIVE',
+        currency: 'RUB',
+    };
 
+}
+
+@Component({
+    components: {SelectShoppingItems},
+})
+export default class AccountForm extends Vue {
+
+    @Prop({default: 'CREATE'})
+    public formMode!: string;
+
+    @Prop({default: defaultAccount})
+    public account: any;
+
+    public storeAccount() {
+        AccountService.create(this.account)
+            .then((response: any) => {
+                    this.account = defaultAccount();
+
+                    alert('Счет успешно создан: ' + response.id);
+                    this.$store.dispatch('loadAccounts');
+                    this.$emit('successfull');
+                },
+            );
     }
 
-    @Component({
-        components: {SelectShoppingItems}
-    })
-    export default class AccountForm extends Vue {
-
-        @Prop({default: "CREATE"})
-        formMode!: string;
-
-        @Prop({default: defaultAccount})
-        account: any;
-
-        storeAccount() {
-            AccountService.create(this.account)
-                .then((response: any) => {
-                        this.account = defaultAccount();
-
-                        alert("Счет успешно создан: " + response.id);
-                        this.$store.dispatch("loadAccounts");
-                        this.$emit("successfull");
-                    }
-                );
+    get cardTitle() {
+        if (this.formMode === 'CREATE') {
+            return 'Создать Счет ';
         }
-
-        get cardTitle() {
-            if (this.formMode === "CREATE") {
-                return "Создать Счет ";
-            }
-            if (this.formMode === "EDIT") {
-                return "Обновить - " + this.account.name;
-            }
-        }
-
-        get accountTypes() {
-            return this.$store.state.accountTypes;
-        }
-
-        get currencies() {
-            return this.$store.state.currencies;
-        }
-
-        get accountStatuses() {
-            return this.$store.state.accountStatuses;
+        if (this.formMode === 'EDIT') {
+            return 'Обновить - ' + this.account.name;
         }
     }
+
+    get accountTypes() {
+        return this.$store.state.accountTypes;
+    }
+
+    get currencies() {
+        return this.$store.state.currencies;
+    }
+
+    get accountStatuses() {
+        return this.$store.state.accountStatuses;
+    }
+}
 </script>

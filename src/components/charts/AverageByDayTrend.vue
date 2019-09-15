@@ -23,91 +23,91 @@
 
 
 <script lang="ts">
-    import LineChart from "./js/LineChart.js";
-    import {Component, Vue, Watch} from "vue-property-decorator";
-    import StatisticsService from "@/services/StatisticsService";
+import LineChart from './js/LineChart.js';
+import {Component, Vue, Watch} from 'vue-property-decorator';
+import StatisticsService from '@/services/StatisticsService';
 
-    @Component({
-        components: {LineChart}
-    })
-    export default class AverageByDayTrend extends Vue {
-        mounted() {
-            this.loadData();
+@Component({
+    components: {LineChart},
+})
+export default class AverageByDayTrend extends Vue {
+
+
+    get categories() {
+        return this.$store.state.categories.map((val: any) => ({
+            text: val.name,
+            value: val.id,
+        }));
+    }
+
+    get datacollection() {
+        return {
+            labels: this.extractLabels(this.rawData.labels),
+            datasets: this.extractDatasets(this.rawData.datasets),
+        };
+    }
+
+    get options() {
+        return {
+            maintainAspectRatio: false, aspectRatio: 1,
+            title: {
+                display: true,
+                text: 'Динамика среднего расхода',
+            },
+            legend:
+                {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                    },
+                },
+        };
+    }
+
+    public rawData: any = {};
+    public excludeCategoryIds = [{text: 'ИП', value: 15}];
+    public searchCategoryValue = '';
+    public mounted() {
+        this.loadData();
+    }
+
+    @Watch('excludeCategoryIds')
+    public excludeCategoryIdsChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    public extractLabels(labels: any) {
+        if (labels) {
+            return labels;
         }
+        return [];
+    }
 
-        @Watch("excludeCategoryIds")
-        excludeCategoryIdsChanged(value: string, oldValue: string) {
-            this.loadData();
-        }
 
-        private loadData() {
-            StatisticsService.averageByDayInCurrMonth(
-                this.excludeCategoryIds
-            ).then((responseData) => {
-                this.rawData = responseData;
+    public extractDatasets(datasets: any) {
+        if (datasets) {
+            return datasets.map((item: any) => {
+                return {
+                    lineTension: 0,
+                    label: item.name,
+                    fill: false,
+                    borderColor: 'green',
+                    data: item.data,
+                };
             });
         }
-
-
-        get categories() {
-            return this.$store.state.categories.map((val: any) => ({
-                text: val.name,
-                value: val.id
-            }));
-        }
-
-        get datacollection() {
-            return {
-                labels: this.extractLabels(this.rawData.labels),
-                datasets: this.extractDatasets(this.rawData.datasets)
-            };
-        }
-
-        get options() {
-            return {
-                maintainAspectRatio: false, aspectRatio: 1,
-                title: {
-                    display: true,
-                    text: "Динамика среднего расхода"
-                },
-                legend:
-                    {
-                        position: "bottom",
-                        labels: {
-                            usePointStyle: true
-                        }
-                    }
-            };
-        }
-
-        extractLabels(labels: any) {
-            if (labels) {
-                return labels;
-            }
-            return [];
-        }
-
-
-        extractDatasets(datasets: any) {
-            if (datasets) {
-                return datasets.map((item: any) => {
-                    return {
-                        lineTension: 0,
-                        label: item.name,
-                        fill: false,
-                        borderColor: "green",
-                        data: item.data
-                    };
-                });
-            }
-            return [];
-        }
-
-        rawData: any = {};
-        excludeCategoryIds = [{text: "ИП", value: 15}];
-        searchCategoryValue = "";
-
+        return [];
     }
+
+    private loadData() {
+        StatisticsService.averageByDayInCurrMonth(
+            this.excludeCategoryIds,
+        ).then((responseData) => {
+            this.rawData = responseData;
+        });
+    }
+
+}
 </script>
 
 <style>

@@ -5,14 +5,14 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import CategoryList from "@/components/category/CategoryList.vue";
+import {Component, Vue} from 'vue-property-decorator';
+import CategoryList from '@/components/category/CategoryList.vue';
 
-    @Component({
-        components: {
-            CategoryList
-        }
-    })
-    export default class CategoriesView extends Vue {
-    }
+@Component({
+    components: {
+        CategoryList,
+    },
+})
+export default class CategoriesView extends Vue {
+}
 </script>

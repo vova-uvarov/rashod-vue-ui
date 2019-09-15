@@ -10,16 +10,16 @@
 
 </template>
 <script lang="ts">
-    import CategoryTrend from "@/components/charts/CategoryTrend.vue";
-    import CategoryYearTrend from "@/components/charts/CategoryYearTrend.vue";
-    import {Component, Vue} from "vue-property-decorator";
+import CategoryTrend from '@/components/charts/CategoryTrend.vue';
+import CategoryYearTrend from '@/components/charts/CategoryYearTrend.vue';
+import {Component, Vue} from 'vue-property-decorator';
 
-    @Component({
-        components: {
-            CategoryTrend, CategoryYearTrend
-        }
-    })
-    export default class CategoryTrendView extends Vue {
-    }
+@Component({
+    components: {
+        CategoryTrend, CategoryYearTrend,
+    },
+})
+export default class CategoryTrendView extends Vue {
+}
 </script>
 

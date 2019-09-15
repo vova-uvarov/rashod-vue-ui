@@ -26,44 +26,43 @@
     </v-row>
 </template>
 <script lang="ts">
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import AccountService from '@/services/AccountService';
 
-    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-    import AccountService from "@/services/AccountService";
+@Component
+export default class EqualizationAccountBalanceDialog extends Vue {
 
-    @Component
-    export default class EqualizationAccountBalanceDialog extends Vue {
-
-        @Prop()
-        accountBalance!: any;
-
-        @Prop()
-        visible!: string;
-
-        get showDialog() {
-            return this.visible;
-        }
-
-        set showDialog(value) {
-            if (!value) {
-                this.$emit("close");
-            }
-        }
-
-        @Watch("accountBalance")
-        accountIdChanged(value: any, oldValue: any) {
-            this.actualBalance = value.balance;
-        }
-
-        qualization() {
-            AccountService.equalization(this.accountBalance.accountId, this.actualBalance)
-                .then((data) => {
-                    alert("Уравнивание прошло успешно");
-                    this.$emit("close");
-                    this.$root.$emit("operationCreated");
-                });
-        }
-
-        account = {};
-        actualBalance = 0;
+    get showDialog() {
+        return this.visible;
     }
+
+    set showDialog(value) {
+        if (!value) {
+            this.$emit('close');
+        }
+    }
+
+    @Prop()
+    public accountBalance!: any;
+
+    @Prop()
+    public visible!: string;
+
+    public account = {};
+    public actualBalance = 0;
+
+    @Watch('accountBalance')
+    public accountIdChanged(value: any, oldValue: any) {
+        this.actualBalance = value.balance;
+    }
+
+    public qualization() {
+        AccountService.equalization(this.accountBalance.accountId, this.actualBalance)
+            .then((data) => {
+                alert('Уравнивание прошло успешно');
+                this.$emit('close');
+                this.$root.$emit('operationCreated');
+            });
+    }
+}
 </script>

@@ -43,53 +43,53 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import CategoryService from "@/services/CategoryService";
-    import OperationService from "@/services/OperationService";
-    import EditCategoryDialog from "@/components/category/EditCategoryDialog.vue";
+import {Component, Vue} from 'vue-property-decorator';
+import CategoryService from '@/services/CategoryService';
+import OperationService from '@/services/OperationService';
+import EditCategoryDialog from '@/components/category/EditCategoryDialog.vue';
 
-    @Component({
-        components: {EditCategoryDialog}
-    })
-    export default class CategoryList extends Vue {
-        created() {
-            this.$store.dispatch("loadCategories");
-        }
+@Component({
+    components: {EditCategoryDialog},
+})
+export default class CategoryList extends Vue {
 
-        createCategory() {
-            this.showCreateDialog = true;
-        }
-
-        editCategory(category: any) {
-            this.categoryForEdit = category;
-            this.showEditDialog = true;
-        }
-
-        deleteCategory(id: string) {
-            if (confirm("Вы действительно хотите удалить операцию?")) {
-                OperationService.search({categoryIds: [{value: id}]})
-                    .then((data: any) => {
-                        if (data.content.length > 0) {
-                            alert("Нельзя удалить категорию к которой привязаны операции");
-                        } else {
-                            CategoryService.delete(id)
-                                .then((response) => {
-                                        alert("Категория успешно удалена");
-                                        this.$store.dispatch("loadCategories");
-                                    }
-                                );
-                        }
-                    });
-
-            }
-        }
-
-        get categories() {
-            return this.$store.state.categories;
-        }
-
-        showEditDialog = false;
-        showCreateDialog = false;
-        categoryForEdit = {};
+    get categories() {
+        return this.$store.state.categories;
     }
+
+    public showEditDialog = false;
+    public showCreateDialog = false;
+    public categoryForEdit = {};
+    public created() {
+        this.$store.dispatch('loadCategories');
+    }
+
+    public createCategory() {
+        this.showCreateDialog = true;
+    }
+
+    public editCategory(category: any) {
+        this.categoryForEdit = category;
+        this.showEditDialog = true;
+    }
+
+    public deleteCategory(id: string) {
+        if (confirm('Вы действительно хотите удалить операцию?')) {
+            OperationService.search({categoryIds: [{value: id}]})
+                .then((data: any) => {
+                    if (data.content.length > 0) {
+                        alert('Нельзя удалить категорию к которой привязаны операции');
+                    } else {
+                        CategoryService.delete(id)
+                            .then((response) => {
+                                    alert('Категория успешно удалена');
+                                    this.$store.dispatch('loadCategories');
+                                },
+                            );
+                    }
+                });
+
+        }
+    }
+}
 </script>
