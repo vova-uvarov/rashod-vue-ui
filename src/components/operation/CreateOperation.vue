@@ -63,7 +63,7 @@
                                           label="На счет"
                                 ></v-select>
 
-                                <SelectShoppingItems v-if="operation.operationType!='TRANSFER' && showShoppingItem"
+                                <SelectShoppingItems v-if="operation.operationType!=='TRANSFER' && showShoppingItem"
                                                      :selectedItems.sync="operation.shoppingList"
                                                      :items="shoppingItems"/>
 
