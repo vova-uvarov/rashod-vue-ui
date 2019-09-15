@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import CategoryList from "@/components/CategoryList.vue";
+    import CategoryList from "@/components/category/CategoryList.vue";
 
     @Component({
         components: {
