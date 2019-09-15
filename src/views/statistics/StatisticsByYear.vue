@@ -54,7 +54,6 @@ import TotalConsumptionsPie from '@/components/charts/TotalConsumptionsPie.vue';
 })
 export default class StatisticByYear extends Vue {
     get months() {
-        console.log('get months');
         const months = [];
         for (let i = 0; i < 12; i++) {
             months.push({
