@@ -180,7 +180,7 @@
         rawData: any = {};
         dateFromMenu = false;
         dateToMenu = false;
-        dateFrom = IncomAndConsumptionTrend.dateFromInitValue();
+        dateFrom = IncomAndConsumptionTrend.dateFromInitValue().toISOString().substr(0, 10);
         dateTo = new Date().toISOString().substr(0, 10);
         groupBy = "MONTH";
         excludeCategoryIds = [];

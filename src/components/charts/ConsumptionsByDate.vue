@@ -201,7 +201,7 @@
         rawData: any = {};
         dateFromMenu = false;
         dateToMenu = false;
-        dateFrom = IncomAndConsumptionTrend.fromDateInitValue();
+        dateFrom = IncomAndConsumptionTrend.fromDateInitValue().toISOString().substr(0, 10);
         dateTo = new Date().toISOString().substr(0, 10);
         groupBy = "DAY";
         incomeConsumptionByMonth = {};
