@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center" align="center">
         <v-col cols="12">
-            <v-card :raised="true" :color="cardColor">
+            <v-card :raised="true">
                 <v-card-title>
                     Параметр
                 </v-card-title>
@@ -72,27 +72,7 @@
 
                         <v-row>
                             <v-col cols="6">
-                                <v-menu
-                                        v-model="paramDateValueMenu"
-                                        :close-on-content-click="false"
-                                        :nudge-right="40"
-                                        transition="scale-transition"
-                                        offset-y
-                                        full-width
-                                        min-width="290px"
-                                >
-                                    <template v-slot:activator="{ on }">
-                                        <v-text-field
-                                                v-model="appParam.dateValue"
-                                                label="Значение даты"
-                                                prepend-icon="event"
-                                                readonly
-                                                v-on="on"
-                                        ></v-text-field>
-                                    </template>
-                                    <v-date-picker v-model="appParam.dateValue"
-                                                   @input="paramDateValueMenu = false"></v-date-picker>
-                                </v-menu>
+                                <select-date label="Значение даты" :date.sync="appParam.dateValue"/>
                             </v-col>
                             <v-col cols="6">
                                 <v-btn color="success" :block="true" v-on:click="editParam">
@@ -110,9 +90,10 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import AppParamService from '@/services/AppParamService';
+import SelectDate from '@/components/common/SelectDate';
 
 
-@Component
+@Component({components: {SelectDate}})
 export default class EditParamForm extends Vue {
 
     get boolValues() {

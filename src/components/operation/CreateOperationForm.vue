@@ -63,9 +63,10 @@
                                           label="На счет"
                                 ></v-select>
 
-                                <SelectShoppingItems v-if="operationInner.operationType!=='TRANSFER' && showShoppingItem"
-                                                     :selectedItems.sync="operationInner.shoppingList"
-                                                     :items="shoppingItems"/>
+                                <SelectShoppingItems
+                                        v-if="operationInner.operationType!=='TRANSFER' && showShoppingItem"
+                                        :selectedItems.sync="operationInner.shoppingList"
+                                        :items="shoppingItems"/>
 
                             </v-col>
                         </v-row>
@@ -97,27 +98,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="6">
-                                <v-menu
-                                        v-model="operationDateMenu"
-                                        :close-on-content-click="false"
-                                        :nudge-right="40"
-                                        transition="scale-transition"
-                                        offset-y
-                                        full-width
-                                        min-width="290px"
-                                >
-                                    <template v-slot:activator="{ on }">
-                                        <v-text-field
-                                                v-model="operationInner.operationDate"
-                                                label="Дата"
-                                                prepend-icon="event"
-                                                readonly
-                                                v-on="on"
-                                        ></v-text-field>
-                                    </template>
-                                    <v-date-picker v-model="operationInner.operationDate"
-                                                   @input="operationDateMenu = false"></v-date-picker>
-                                </v-menu>
+                                <select-date label="Дата" :date.sync="operationInner.operationDate"/>
                             </v-col>
 
                             <v-col cols="3">
@@ -162,120 +143,121 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, PropSync, Vue} from 'vue-property-decorator';
-import OperationService from '@/services/OperationService';
-import SelectShoppingItems from '@/components/operation/SelectShoppingItems.vue';
+    import {Component, Prop, PropSync, Vue} from "vue-property-decorator";
+    import OperationService from "@/services/OperationService";
+    import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
+    import SelectDate from "@/components/common/SelectDate.vue";
 
-function defaultOperation() {
-    return {
-        operationDate: new Date().toISOString().substr(0, 10),
-        comment: '',
-        plan: false,
-        place: '',
-        category: {name: 'Продукты', id: 32}, // todo переделать нормально
-        account: {id: 3, name: 'Тинькофф'}, // todo переделать нормально это жесткий хак
-        accountToTransfer: {},
-        cost: 0,
-        shoppingList: undefined,
-        operationType: 'CONSUMPTION',
-    };
-}
-
-@Component({
-    components: {SelectShoppingItems},
-})
-export default class CreateOperationForm extends Vue {
-
-    get places() {
-        return this.$store.state.places;
+    function defaultOperation() {
+        return {
+            operationDate: new Date().toISOString().substr(0, 10),
+            comment: "",
+            plan: false,
+            place: "",
+            category: {name: "Продукты", id: 32}, // todo переделать нормально
+            account: {id: 3, name: "Тинькофф"}, // todo переделать нормально это жесткий хак
+            accountToTransfer: {},
+            cost: 0,
+            shoppingList: undefined,
+            operationType: "CONSUMPTION"
+        };
     }
 
-    get shoppingItems() {
-        return this.$store.state.shoppingItemNames;
-    }
+    @Component({
+        components: {SelectShoppingItems, SelectDate}
+    })
+    export default class CreateOperationForm extends Vue {
 
-    get cardTitle() {
-        if (this.formMode === 'CREATE') {
-            return 'Создать - ' + this.cardName;
-        }
-        if (this.formMode === 'EDIT') {
-            return 'Обновить - ' + this.cardName;
-        }
-        if (this.formMode === 'DIVIDE') {
-            return 'Разбить - ' + this.cardName;
-        }
-    }
-
-    get categories() {
-        return this.$store.state.categories;
-    }
-
-    get accounts() {
-        return this.$store.state.accounts;
-    }
-
-    get repeatCounts() {
-        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    }
-
-    get cardName() {
-        if (this.operationInner.operationType === 'CONSUMPTION') {
-            return 'Расход';
+        get places() {
+            return this.$store.state.places;
         }
 
-        if (this.operationInner.operationType === 'TRANSFER') {
-            return 'Перевод';
-        }
-        return 'Доход';
-    }
-
-    get cardColor() {
-        if (this.operationInner.operationType === 'CONSUMPTION') {
-            return '#FFF8F8';
+        get shoppingItems() {
+            return this.$store.state.shoppingItemNames;
         }
 
-        if (this.operationInner.operationType === 'TRANSFER') {
-            return '#FBFFD8';
+        get cardTitle() {
+            if (this.formMode === "CREATE") {
+                return "Создать - " + this.cardName;
+            }
+            if (this.formMode === "EDIT") {
+                return "Обновить - " + this.cardName;
+            }
+            if (this.formMode === "DIVIDE") {
+                return "Разбить - " + this.cardName;
+            }
         }
-        return '#F6FFEA';
-    }
 
-    @Prop({default: 'CREATE'})
-    public formMode!: string;
-
-    @PropSync('operation', {default: defaultOperation})
-    public operationInner: any;
-
-    public countRepeat = 1;
-    public operationDateMenu = false;
-    public showShoppingItem = true;
-
-    public deleteOperation() {
-        if (confirm('Вы действительно хотите удалить операцию?')) {
-            OperationService.delete(this.operationInner.id)
-                .then((response) => {
-                    alert('Операция успешно удалена: ' + this.operationInner.id);
-                    this.$root.$emit('operationCreated'); // todo какжется нужно просто одно событие operationChaged
-                    this.$emit('successfull');
-                });
+        get categories() {
+            return this.$store.state.categories;
         }
-    }
 
-    public createOperation() {
-        OperationService.create(this.operationInner, this.countRepeat)
-            .then((response: any) => {
-                    this.operationInner = defaultOperation();
-                    // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
-                    this.showShoppingItem = false;
-                    this.$nextTick().then(() => (this.showShoppingItem = true));
-                    alert('Операция успешно создана: ' + response.id);
-                    this.$store.dispatch('loadAccounts');
-                    this.$store.dispatch('loadCategories');
-                    this.$root.$emit('operationCreated');
-                    this.$emit('successfull');
-                },
-            );
-    }
+        get accounts() {
+            return this.$store.state.accounts;
+        }
 
-}
+        get repeatCounts() {
+            return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        }
+
+        get cardName() {
+            if (this.operationInner.operationType === "CONSUMPTION") {
+                return "Расход";
+            }
+
+            if (this.operationInner.operationType === "TRANSFER") {
+                return "Перевод";
+            }
+            return "Доход";
+        }
+
+        get cardColor() {
+            if (this.operationInner.operationType === "CONSUMPTION") {
+                return "#FFF8F8";
+            }
+
+            if (this.operationInner.operationType === "TRANSFER") {
+                return "#FBFFD8";
+            }
+            return "#F6FFEA";
+        }
+
+        @Prop({default: "CREATE"})
+        public formMode!: string;
+
+        @PropSync("operation", {default: defaultOperation})
+        public operationInner: any;
+
+        public countRepeat = 1;
+        public operationDateMenu = false;
+        public showShoppingItem = true;
+
+        public deleteOperation() {
+            if (confirm("Вы действительно хотите удалить операцию?")) {
+                OperationService.delete(this.operationInner.id)
+                    .then((response) => {
+                        alert("Операция успешно удалена: " + this.operationInner.id);
+                        this.$root.$emit("operationCreated"); // todo какжется нужно просто одно событие operationChaged
+                        this.$emit("successfull");
+                    });
+            }
+        }
+
+        public createOperation() {
+            OperationService.create(this.operationInner, this.countRepeat)
+                .then((response: any) => {
+                        this.operationInner = defaultOperation();
+                        // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
+                        this.showShoppingItem = false;
+                        this.$nextTick().then(() => (this.showShoppingItem = true));
+                        alert("Операция успешно создана: " + response.id);
+                        this.$store.dispatch("loadAccounts");
+                        this.$store.dispatch("loadCategories");
+                        this.$root.$emit("operationCreated");
+                        this.$emit("successfull");
+                    }
+                );
+        }
+
+    }
 </script>

@@ -22,52 +22,10 @@
         <v-card-title>
             <v-row>
                 <v-col cols="4">
-                    <!--                todo нужно сделать компонент даты-->
-                    <v-menu
-                            v-model="dateFromMenu"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            transition="scale-transition"
-                            offset-y
-                            full-width
-                            min-width="290px"
-                    >
-                        <template v-slot:activator="{ on }">
-                            <v-text-field
-                                    v-model="dateFrom"
-                                    label="Дата C"
-                                    prepend-icon="event"
-                                    readonly
-                                    v-on="on"
-                            ></v-text-field>
-                        </template>
-                        <v-date-picker v-model="dateFrom"
-                                       @input="dateFromMenu = false"></v-date-picker>
-                    </v-menu>
+                    <select-date label="Дата C" :date.sync="dateFrom"/>
                 </v-col>
                 <v-col cols="4">
-                    <!--                todo нужно сделать компонент даты-->
-                    <v-menu
-                            v-model="dateToMenu"
-                            :close-on-content-click="false"
-                            :nudge-right="40"
-                            transition="scale-transition"
-                            offset-y
-                            full-width
-                            min-width="290px"
-                    >
-                        <template v-slot:activator="{ on }">
-                            <v-text-field
-                                    v-model="dateTo"
-                                    label="Дата По"
-                                    prepend-icon="event"
-                                    readonly
-                                    v-on="on"
-                            ></v-text-field>
-                        </template>
-                        <v-date-picker v-model="dateTo"
-                                       @input="dateToMenu = false"></v-date-picker>
-                    </v-menu>
+                    <select-date label="Дата По" :date.sync="dateTo"/>
                 </v-col>
                 <v-col cols="4">
                     <v-combobox
@@ -90,11 +48,12 @@
 
 <script lang="ts">
 import BarChart from './js/BarChart.js';
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Component,  Vue, Watch} from 'vue-property-decorator';
 import StatisticsService from '@/services/StatisticsService';
+import SelectDate from "@/components/common/SelectDate.vue";
 
 @Component({
-    components: {BarChart},
+    components: {BarChart, SelectDate},
 })
 export default class IncomAndConsumptionTrend extends Vue {
 
