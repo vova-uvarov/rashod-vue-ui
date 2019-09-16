@@ -153,16 +153,10 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import SelectShoppingItems from '@/components/operation/SelectShoppingItems.vue';
+import ObjectUtils from "@/utils/ObjectUtils";
 
 @Component({
-    components: {SelectShoppingItems},
-    computed: {
-        places: {
-            get() {
-                return this.$store.state.places;
-            },
-        },
-    },
+    components: {SelectShoppingItems}
 })
 export default class OperationsFilter extends Vue {
 
@@ -172,6 +166,10 @@ export default class OperationsFilter extends Vue {
 
     get countsPerPage() {
         return [5, 10, 20, 50, 100];
+    }
+
+    get places(){
+        return this.$store.state.places;
     }
 
     get accounts() {
@@ -214,15 +212,17 @@ export default class OperationsFilter extends Vue {
     }
 
 
-    public operationFilter = JSON.parse(JSON.stringify(this.$store.state.operationsView.filter));
+    public operationFilter = ObjectUtils.copy(this.$store.state.operationsView.filter);
     public dateFromMenu = false;
     public dateToMenu = false;
     public searchCategoryValue = '';
     public searchAccountValue = '';
 
     public applyFilter() {
-        this.$store.commit('updateOperationsFilter', this.operationFilter);
+        this.$store.commit('updateOperationsFilter', ObjectUtils.copy(this.operationFilter));
         this.$store.dispatch('reloadOperations');
     }
+
+
 }
 </script>
