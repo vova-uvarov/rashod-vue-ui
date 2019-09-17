@@ -3,8 +3,8 @@ import axios, {AxiosResponse} from 'axios';
 export default class StatisticsService {
 
     public static averageByYearTrend(categoryIds: any): Promise<AxiosResponse<any>> {
-        if (categoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
-            categoryIds = categoryIds.map((item: any) => (item.value)).join(',');
+        if (categoryIds) {
+            categoryIds = categoryIds.map((item: any) => (item.value));
         }
         return axios
             .get('/api/statistics/averageByYearTrend', {
@@ -17,8 +17,8 @@ export default class StatisticsService {
     }
 
     public static categoryTrend(dateFrom: any, dateTo: any, categoryIds: any): Promise<AxiosResponse<any>> {
-        if (categoryIds) { // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
-            categoryIds = categoryIds.map((item: any) => (item.value)).join(',');
+        if (categoryIds) {
+            categoryIds = categoryIds.map((item: any) => (item.value));
         }
 
         return axios
@@ -33,9 +33,8 @@ export default class StatisticsService {
     }
 
     public static sumsGroupByCategory(requestParams: any): Promise<AxiosResponse<any>> {
-        // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
         if (requestParams.operationTypes) {
-            requestParams.operationTypes = requestParams.operationTypes.map((item: any) => (item)).join(',');
+            requestParams.operationTypes = requestParams.operationTypes.map((item: any) => (item));
         }
         return axios
             .get('/api/statistics/sumsByCategory', {params: requestParams})
@@ -45,7 +44,7 @@ export default class StatisticsService {
     public static averageByDayInCurrMonth(excludeCategoryIds: any): Promise<AxiosResponse<any>> {
         // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
         if (excludeCategoryIds) {
-            excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value)).join(',');
+            excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value));
         }
         return axios
             .get('/api/statistics/averageByDayInCurrMonth', {
@@ -66,9 +65,8 @@ export default class StatisticsService {
                                            dateTo: any,
                                            excludeCategoryIds: any,
                                            groupBy: any): Promise<AxiosResponse<any>> {
-        // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
         if (excludeCategoryIds) {
-            excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value)).join(',');
+            excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value));
         }
         return axios
             .get('/api/statistics/incomeConsumptionByGroup', {

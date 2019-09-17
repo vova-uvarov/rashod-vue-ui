@@ -9,6 +9,23 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
 
 axios.defaults.baseURL = 'http://localhost:8092';
+axios.interceptors.request.use(function (config) {
+    let params = config.params;
+    if (params && config.method==='get') {
+        Object.keys(params)
+            .forEach(key => {
+                if (Array.isArray(params[key])) {
+                    params[key] = params[key].join(',');
+                }
+            });
+    }
+    // Do something before request is sent
+    return config;
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+});
+
 Vue.config.productionTip = false;
 
 Vue.filter('dateFormatter', (value: any) => {
