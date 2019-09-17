@@ -3,21 +3,15 @@ import axios, {AxiosResponse} from 'axios';
 export default class OperationService {
 
     public static search(requestParams: any): Promise<AxiosResponse<any>> {
-        // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
         if (requestParams.categoryIds) {
-            requestParams.categoryIds = requestParams.categoryIds.map((item: any) => (item.value)).join(',');
+            requestParams.categoryIds = requestParams.categoryIds.map((item: any) => (item.value));
         }
-// todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
         if (requestParams.accountIds) {
-            requestParams.accountIds = requestParams.accountIds.map((item: any) => (item.value)).join(',');
+            requestParams.accountIds = requestParams.accountIds.map((item: any) => (item.value));
         }
-// todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
-        if (requestParams.operationTypes) {
-            requestParams.operationTypes = requestParams.operationTypes.join(',');
-        }
-// todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
+
         if (requestParams.shoppingList) {
-            requestParams.shoppingList = requestParams.shoppingList.map((item: any) => (item.name)).join(',');
+            requestParams.shoppingList = requestParams.shoppingList.map((item: any) => (item.name));
         }
         return axios.get('/api/operations/search', {params: requestParams})
             .then((response) => {
