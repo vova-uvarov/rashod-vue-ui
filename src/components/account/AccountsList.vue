@@ -27,7 +27,7 @@
                     <td>{{ item.insTime | dateFormatter}}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.description }}</td>
-                    <td>{{ item.accountType }}</td>
+                    <td>{{ item.accountType|dictionaryValue('accountTypes') }}</td>
                     <td>{{ item.targetCost | moneyFormat }}</td>
                     <td>
                         <v-switch
@@ -36,8 +36,8 @@
                                 :disabled="true"
                         ></v-switch>
                     </td>
-                    <td>{{ item.status }}</td>
-                    <td>{{ item.currency }}</td>
+                    <td>{{ item.status|dictionaryValue('accountStatuses') }}</td>
+                    <td>{{ item.currency|dictionaryValue('currencies') }}</td>
                     <td>
                         <v-switch
                                 v-model="item.balance"

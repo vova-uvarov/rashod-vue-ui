@@ -48,9 +48,6 @@ export default new Vuex.Store({
         accounts: [],
         places: [],
         appParams: [],
-        paramGroups: [],
-        paramKeys: [],
-
     },
     mutations: {
         initState: (state) => {
@@ -90,12 +87,7 @@ export default new Vuex.Store({
         updateAppParams: (state, newValue) => {
             state.appParams = newValue;
         },
-        updateParamGroups: (state, newValue) => {
-            state.paramGroups = newValue;
-        },
-        updateParamKeys: (state, newValue) => {
-            state.paramKeys = newValue;
-        },
+
         updateShoppingItemsNames: (state, newValue) => {
             state.shoppingItemNames = newValue.map((item: any) => ({name: item}));
         },
@@ -142,14 +134,6 @@ export default new Vuex.Store({
         loadParams(context) {
             AppParamService.getAll()
                 .then((data) => (context.commit('updateAppParams', data)));
-        },
-        loadParamGroups(context) {
-            AppParamService.getGroups()
-                .then((data) => (context.commit('updateParamGroups', data)));
-        },
-        loadParamKeys(context) {
-            AppParamService.getKeys()
-                .then((data) => (context.commit('updateParamKeys', data)));
         },
 
         loadYears(context) {

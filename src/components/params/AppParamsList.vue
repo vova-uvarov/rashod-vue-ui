@@ -27,8 +27,8 @@
                             </v-btn>
                         </td>
                         <td>{{ item.name }}</td>
-                        <td style="white-space: nowrap; width: 1%">{{ item.groupName }}</td>
-                        <td style="white-space: nowrap; width: 1%">{{ item.keyName }}</td>
+                        <td style="white-space: nowrap; width: 1%">{{ item.groupName|dictionaryValue('paramGroups') }}</td>
+                        <td style="white-space: nowrap; width: 1%">{{ item.keyName |dictionaryValue('paramKeys')}}</td>
                         <td>{{ item.stringValue }}</td>
                         <td>{{ item.numberValue }}</td>
                         <td>{{ item.decimalValue | moneyFormat }}</td>
