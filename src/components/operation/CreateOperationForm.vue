@@ -148,21 +148,6 @@
     import SelectShoppingItems from "@/components/operation/SelectShoppingItems.vue";
     import SelectDate from "@/components/common/SelectDate.vue";
 
-    function defaultOperation() {
-        return {
-            operationDate: new Date().toISOString().substr(0, 10),
-            comment: "",
-            plan: false,
-            place: "",
-            category: {name: "Продукты", id: 32}, // todo переделать нормально
-            account: {id: 3, name: "Тинькофф"}, // todo переделать нормально это жесткий хак
-            accountToTransfer: {},
-            cost: 0,
-            shoppingList: undefined,
-            operationType: "CONSUMPTION"
-        };
-    }
-
     @Component({
         components: {SelectShoppingItems, SelectDate}
     })
@@ -225,7 +210,7 @@
         @Prop({default: "CREATE"})
         public formMode!: string;
 
-        @PropSync("operation", {default: defaultOperation})
+        @PropSync("operation")
         public operationInner: any;
 
         public countRepeat = 1;
@@ -245,10 +230,9 @@
         public createOperation() {
             OperationService.create(this.operationInner, this.countRepeat)
                 .then((response: any) => {
-                        this.operationInner = defaultOperation();
                         // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
-                        this.showShoppingItem = false;
-                        this.$nextTick().then(() => (this.showShoppingItem = true));
+                        // this.showShoppingItem = false;
+                        // this.$nextTick().then(() => (this.showShoppingItem = true));
                         alert("Операция успешно создана: " + response.id);
                         this.$store.dispatch("loadAccounts");
                         this.$store.dispatch("loadCategories");

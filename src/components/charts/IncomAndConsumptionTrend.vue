@@ -54,7 +54,6 @@ export default class IncomAndConsumptionTrend extends Vue {
 
     get datacollection() {
         return {
-            // labels: this.rawData.labels,
             labels: this.extractLabels(this.rawData.labels),
             datasets: this.extractDatasets(this.rawData.datasets),
         };

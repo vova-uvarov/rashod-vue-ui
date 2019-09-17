@@ -14,6 +14,9 @@ export default new Vuex.Store({
 
     strict: true,
     state: {
+        dictionaries: {
+            years: []
+        },
         operationPlans: {
             operations: [],
         },
@@ -106,6 +109,10 @@ export default new Vuex.Store({
         updateAccountStatuses: (state, newValue) => {
             state.accountStatuses = newValue;
         },
+
+        updateYears: (state, newValue) => {
+            state.dictionaries.years = newValue;
+        },
     },
     actions: {
         reloadOperations(context) {
@@ -165,6 +172,10 @@ export default new Vuex.Store({
         loadAccountStatuses(context) {
             DictionaryService.getAccountStatuses()
                 .then((data) => (context.commit('updateAccountStatuses', data)));
+        },
+        loadYears(context) {
+            DictionaryService.getYears()
+                .then((data) => (context.commit('updateYears', data)));
         },
     },
 });
