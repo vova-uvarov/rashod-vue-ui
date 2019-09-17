@@ -229,7 +229,6 @@
         public operationInner: any;
 
         public countRepeat = 1;
-        public operationDateMenu = false;
         public showShoppingItem = true;
 
         public deleteOperation() {
@@ -237,7 +236,7 @@
                 OperationService.delete(this.operationInner.id)
                     .then((response) => {
                         alert("Операция успешно удалена: " + this.operationInner.id);
-                        this.$root.$emit("operationCreated"); // todo какжется нужно просто одно событие operationChaged
+                        this.$root.$emit("operationChanged"); // todo какжется нужно просто одно событие operationChaged
                         this.$emit("successfull");
                     });
             }
@@ -253,7 +252,7 @@
                         alert("Операция успешно создана: " + response.id);
                         this.$store.dispatch("loadAccounts");
                         this.$store.dispatch("loadCategories");
-                        this.$root.$emit("operationCreated");
+                        this.$root.$emit("operationChanged");
                         this.$emit("successfull");
                     }
                 );
