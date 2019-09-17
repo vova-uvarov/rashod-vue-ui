@@ -10,43 +10,43 @@ export default class AccountService {
 
     public static equalization(accountId: number, actualBalance: number): Promise<AxiosResponse<any>> {
         return axios
-            .patch('http://localhost:8092/api/accounts/' + accountId + '/equalization', {actualBalance})
+            .patch('/api/accounts/' + accountId + '/equalization', {actualBalance})
             .then((response) => (response));
     }
 
     public static getAllAccounts(): Promise<AxiosResponse<any>> {
         return axios
-            .get('http://localhost:8092/api/accounts?size=100')
+            .get('/api/accounts?size=100')
             .then((response) => (response.data.content));
     }
 
     public static loadGoalBalances(): Promise<AxiosResponse<Balance>> {
         return axios
-            .get('http://localhost:8092/api/accounts/balances/goal')
+            .get('/api/accounts/balances/goal')
             .then((response) => (response.data));
     }
 
     public static loadBalances(): Promise<AxiosResponse<Balance>> {
         return axios
-            .get('http://localhost:8092/api/accounts/balances')
+            .get('/api/accounts/balances')
             .then((response) => (response.data));
     }
 
     public static totalBalance(): Promise<AxiosResponse<any>> {
         return axios
-            .get('http://localhost:8092/api/accounts/totalBalance')
+            .get('/api/accounts/totalBalance')
             .then((response) => (response.data));
     }
 
     public static balancesByCurrency(): Promise<AxiosResponse<any>> {
         return axios
-            .get('http://localhost:8092/api/accounts/balances/goal/byCurrency')
+            .get('/api/accounts/balances/goal/byCurrency')
             .then((response) => (response.data));
     }
 
     public static get(accountId: string): Promise<AxiosResponse<any>> {
         return axios
-            .get('http://localhost:8092/api/accounts/' + accountId)
+            .get('/api/accounts/' + accountId)
             .then((response) => {
                     return response.data;
                 },
@@ -55,7 +55,7 @@ export default class AccountService {
 
     public static create(account: any): Promise<AxiosResponse<any>> {
         return axios
-            .post('http://localhost:8092/api/accounts', account)
+            .post('/api/accounts', account)
             .then((response) => (response.data));
     }
 }

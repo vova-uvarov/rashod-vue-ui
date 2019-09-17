@@ -7,7 +7,7 @@ export default class StatisticsService {
             categoryIds = categoryIds.map((item: any) => (item.value)).join(',');
         }
         return axios
-            .get('http://localhost:8092/api/statistics/averageByYearTrend', {
+            .get('/api/statistics/averageByYearTrend', {
                 params: {
                     includeCategoryIds: categoryIds,
                     operationTypes: 'CONSUMPTION',
@@ -22,7 +22,7 @@ export default class StatisticsService {
         }
 
         return axios
-            .get('http://localhost:8092/api/statistics/categoryTrend', {
+            .get('/api/statistics/categoryTrend', {
                 params: {
                     from: dateFrom,
                     to: dateTo,
@@ -38,7 +38,7 @@ export default class StatisticsService {
             requestParams.operationTypes = requestParams.operationTypes.map((item: any) => (item)).join(',');
         }
         return axios
-            .get('http://localhost:8092/api/statistics/sumsByCategory', {params: requestParams})
+            .get('/api/statistics/sumsByCategory', {params: requestParams})
             .then((response) => (response.data));
     }
 
@@ -48,7 +48,7 @@ export default class StatisticsService {
             excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value)).join(',');
         }
         return axios
-            .get('http://localhost:8092/api/statistics/averageByDayInCurrMonth', {
+            .get('/api/statistics/averageByDayInCurrMonth', {
                 params: {
                     excludeCategoryIds,
                 },
@@ -58,7 +58,7 @@ export default class StatisticsService {
 
     public static monthPlan(): Promise<AxiosResponse<any>> {
         return axios
-            .get('http://localhost:8092/api/statistics/plan/month')
+            .get('/api/statistics/plan/month')
             .then((response) => (response.data));
     }
 
@@ -71,7 +71,7 @@ export default class StatisticsService {
             excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value)).join(',');
         }
         return axios
-            .get('http://localhost:8092/api/statistics/incomeConsumptionByGroup', {
+            .get('/api/statistics/incomeConsumptionByGroup', {
                 params: {
                     from: dateFrom,
                     to: dateTo,

@@ -19,7 +19,7 @@ export default class OperationService {
         if (requestParams.shoppingList) {
             requestParams.shoppingList = requestParams.shoppingList.map((item: any) => (item.name)).join(',');
         }
-        return axios.get('http://localhost:8092/api/operations/search', {params: requestParams})
+        return axios.get('/api/operations/search', {params: requestParams})
             .then((response) => {
                 return response.data;
             });
@@ -27,7 +27,7 @@ export default class OperationService {
 
     public static delete(operationId: string): Promise<AxiosResponse<any>> {
         return axios
-            .delete('http://localhost:8092/api/operations/' + operationId);
+            .delete('/api/operations/' + operationId);
     }
 
     public static create(operation: any,
@@ -40,13 +40,13 @@ export default class OperationService {
         };
 
         return axios
-            .post('http://localhost:8092/api/operations', createRequest)
+            .post('/api/operations', createRequest)
             .then((response) => (response.data));
     }
 
     public static get(operationId: string): Promise<AxiosResponse<any>> {
         return axios
-            .get('http://localhost:8092/api/operations/' + operationId)
+            .get('/api/operations/' + operationId)
             .then((response) => {
                     return response.data;
                 },
