@@ -83,8 +83,6 @@ export default class IncomAndConsumptionTrend extends Vue {
     }
 
     public rawData: any = {};
-    public dateFromMenu = false;
-    public dateToMenu = false;
     public dateFrom = IncomAndConsumptionTrend.dateFromInitValue().toISOString().substr(0, 10);
     public dateTo = new Date().toISOString().substr(0, 10);
     public groupBy = 'MONTH';
