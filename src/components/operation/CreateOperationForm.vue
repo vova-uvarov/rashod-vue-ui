@@ -230,9 +230,6 @@
         public createOperation() {
             OperationService.create(this.operationInner, this.countRepeat)
                 .then((response: any) => {
-                        // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
-                        // this.showShoppingItem = false;
-                        // this.$nextTick().then(() => (this.showShoppingItem = true));
                         alert("Операция успешно создана: " + response.id);
                         this.$store.dispatch("loadAccounts");
                         this.$store.dispatch("loadCategories");

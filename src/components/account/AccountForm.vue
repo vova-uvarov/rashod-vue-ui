@@ -12,14 +12,14 @@
                             <v-col cols="6">
                                 <v-text-field
                                         label="Название"
-                                        v-model="account.name"
+                                        v-model="accountInner.name"
                                 ></v-text-field>
                             </v-col>
 
                             <v-col cols="6">
                                 <v-text-field
                                         label="Описание"
-                                        v-model="account.description"
+                                        v-model="accountInner.description"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -30,7 +30,7 @@
 
                                 <v-select
                                         :items="accountTypes"
-                                        v-model="account.accountType"
+                                        v-model="accountInner.accountType"
                                         label="Тип счета"
                                 ></v-select>
 
@@ -40,7 +40,7 @@
                                 <v-select
                                         :items="currencies"
                                         label="Валюта счета"
-                                        v-model="account.currency"
+                                        v-model="accountInner.currency"
                                 ></v-select>
 
                             </v-col>
@@ -52,14 +52,14 @@
                                 <v-select
                                         :items="accountStatuses"
                                         label="Статус"
-                                        v-model="account.status"
+                                        v-model="accountInner.status"
                                 ></v-select>
                             </v-col>
 
                             <v-col cols="6">
                                 <v-text-field
                                         label="Цель счета"
-                                        v-model="account.targetCost"
+                                        v-model="accountInner.targetCost"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -69,21 +69,21 @@
                             <v-col cols="4">
                                 <v-text-field
                                         label="Цвет"
-                                        v-model="account.color"
+                                        v-model="accountInner.color"
                                 ></v-text-field>
                             </v-col>
 
                             <v-col cols="4">
                                 <v-switch
                                         label="Округлять?"
-                                        v-model="account.round"
+                                        v-model="accountInner.round"
                                 ></v-switch>
                             </v-col>
 
                             <v-col cols="4">
                                 <v-switch
                                         label="Учитывать в баласе?"
-                                        v-model="account.balance"
+                                        v-model="accountInner.balance"
                                 ></v-switch>
                             </v-col>
                         </v-row>
@@ -104,25 +104,9 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, PropSync, Vue} from "vue-property-decorator";
 import SelectShoppingItems from '@/components/operation/SelectShoppingItems.vue';
 import AccountService from '@/services/AccountService';
-
-// todo понять как нормально инициализировать значение для параметра
-function defaultAccount() {
-    return {
-        name: '',
-        description: '',
-        accountType: 'SIMPLE',
-        targetCost: 0,
-        color: 'red',
-        round: false,
-        isBalance: true,
-        status: 'ACTIVE',
-        currency: 'RUB',
-    };
-
-}
 
 @Component({
     components: {SelectShoppingItems},
@@ -132,14 +116,12 @@ export default class AccountForm extends Vue {
     @Prop({default: 'CREATE'})
     public formMode!: string;
 
-    @Prop({default: defaultAccount})
-    public account: any;
+    @PropSync('account')
+    public accountInner: any;
 
     public storeAccount() {
-        AccountService.create(this.account)
+        AccountService.create(this.accountInner)
             .then((response: any) => {
-                    this.account = defaultAccount();
-
                     alert('Счет успешно создан: ' + response.id);
                     this.$store.dispatch('loadAccounts');
                     this.$emit('successfull');
@@ -152,7 +134,7 @@ export default class AccountForm extends Vue {
             return 'Создать Счет ';
         }
         if (this.formMode === 'EDIT') {
-            return 'Обновить - ' + this.account.name;
+            return 'Обновить - ' + this.accountInner.name;
         }
     }
 
