@@ -31,6 +31,9 @@
                                 <v-select
                                         :items="accountTypes"
                                         v-model="accountInner.accountType"
+                                        item-value="key"
+                                        item-text="value"
+                                        :return-object="false"
                                         label="Тип счета"
                                 ></v-select>
 
@@ -40,6 +43,9 @@
                                 <v-select
                                         :items="currencies"
                                         label="Валюта счета"
+                                        item-value="key"
+                                        item-text="value"
+                                        :return-object="false"
                                         v-model="accountInner.currency"
                                 ></v-select>
 
@@ -52,6 +58,9 @@
                                 <v-select
                                         :items="accountStatuses"
                                         label="Статус"
+                                        item-value="key"
+                                        item-text="value"
+                                        :return-object="false"
                                         v-model="accountInner.status"
                                 ></v-select>
                             </v-col>
@@ -139,15 +148,15 @@ export default class AccountForm extends Vue {
     }
 
     get accountTypes() {
-        return this.$store.state.accountTypes;
+        return this.$store.state.staticDictionaries.accountTypes;
     }
 
     get currencies() {
-        return this.$store.state.currencies;
+        return this.$store.state.staticDictionaries.currencies;
     }
 
     get accountStatuses() {
-        return this.$store.state.accountStatuses;
+        return this.$store.state.staticDictionaries.accountStatuses;
     }
 }
 </script>

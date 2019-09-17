@@ -14,6 +14,9 @@ export default new Vuex.Store({
 
     strict: true,
     state: {
+        staticDictionaries: {
+
+        },
         dictionaries: {
             years: []
         },
@@ -43,14 +46,10 @@ export default new Vuex.Store({
         shoppingItemNames: [],
         categories: [],
         accounts: [],
-        operationTypes: [],
         places: [],
         appParams: [],
         paramGroups: [],
         paramKeys: [],
-        accountTypes: [],
-        currencies: [],
-        accountStatuses: [],
 
     },
     mutations: {
@@ -68,8 +67,8 @@ export default new Vuex.Store({
             state.operationsView.filter = newValue;
         },
 
-        updateOperationTypes: (state, newValue) => {
-            state.operationTypes = newValue;
+        updateStaticDictionaries: (state, newValue) => {
+            state.staticDictionaries = newValue;
         },
 
         setOperationViewCurrentPage: (state, newValue) => {
@@ -100,15 +99,6 @@ export default new Vuex.Store({
         updateShoppingItemsNames: (state, newValue) => {
             state.shoppingItemNames = newValue.map((item: any) => ({name: item}));
         },
-        updateAccountTypes: (state, newValue) => {
-            state.accountTypes = newValue;
-        },
-        updateCurrencies: (state, newValue) => {
-            state.currencies = newValue;
-        },
-        updateAccountStatuses: (state, newValue) => {
-            state.accountStatuses = newValue;
-        },
 
         updateYears: (state, newValue) => {
             state.dictionaries.years = newValue;
@@ -123,8 +113,8 @@ export default new Vuex.Store({
 
         },
         loadDictionaries(context) {
-            DictionaryService.getOperationTypes()
-                .then((data) => (context.commit('updateOperationTypes', data)));
+            DictionaryService.getStaticDictionaries()
+                .then((data) => (context.commit('updateStaticDictionaries', data)));
         },
 
         loadCategories(context) {
@@ -161,18 +151,7 @@ export default new Vuex.Store({
             AppParamService.getKeys()
                 .then((data) => (context.commit('updateParamKeys', data)));
         },
-        loadAccountTypes(context) {
-            DictionaryService.getAccountTypes()
-                .then((data) => (context.commit('updateAccountTypes', data)));
-        },
-        loadCurrencies(context) {
-            DictionaryService.getCurrencies()
-                .then((data) => (context.commit('updateCurrencies', data)));
-        },
-        loadAccountStatuses(context) {
-            DictionaryService.getAccountStatuses()
-                .then((data) => (context.commit('updateAccountStatuses', data)));
-        },
+
         loadYears(context) {
             DictionaryService.getYears()
                 .then((data) => (context.commit('updateYears', data)));

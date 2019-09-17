@@ -185,6 +185,7 @@
             this.$store.commit("initState");
             //todo надо наверное объеденить в рамках метода loadDictionaries
             this.$store.dispatch("loadDictionaries");
+
             this.$store.dispatch("loadAccounts");
             this.$store.dispatch("loadCategories");
             this.$store.dispatch("loadShoppingItems");
@@ -192,9 +193,6 @@
             this.$store.dispatch("loadParams");
             this.$store.dispatch("loadParamGroups");
             this.$store.dispatch("loadParamKeys");
-            this.$store.dispatch("loadAccountTypes");
-            this.$store.dispatch("loadCurrencies");
-            this.$store.dispatch("loadAccountStatuses");
             this.$store.dispatch("loadYears");
         },
     }
