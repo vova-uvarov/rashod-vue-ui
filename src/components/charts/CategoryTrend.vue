@@ -54,7 +54,6 @@ export default class CategoryTrend extends Vue {
 
     get datacollection() {
         return {
-            // labels: this.rawData.labels,
             labels: this.extractLabels(this.rawData.labels),
             datasets: this.extractDatasets(this.rawData.datasets),
         };
@@ -77,8 +76,6 @@ export default class CategoryTrend extends Vue {
         };
     }
 
-    public dateToMenu = false;
-    public dateFromMenu = false;
     public dateFrom = null;
     public dateTo = null;
     public rawData: any = {};

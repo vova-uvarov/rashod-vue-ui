@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        this.$store.state.staticDictionaries = {{this.$store.state.staticDictionaries}}
         <v-row>
             <v-col cols="3">
                 <select-date label="Дата С" :date.sync="operationFilter.dateFrom"/>
@@ -63,6 +64,8 @@
                 <v-select
                         :items="operationTypes"
                         v-model="operationFilter.operationTypes"
+                        item-text="value"
+                        item-value="key"
                         clearable
                         multiple
                         label="Тип операции"
@@ -139,28 +142,7 @@ export default class OperationsFilter extends Vue {
     }
 
     get operationTypes() {
-        // todo сделать справочником в БД по хорошему
-        return this.$store.state.operationTypes.map((val: any) => {
-            if (val === 'CONSUMPTION') {
-                return {
-                    text: 'Расход',
-                    value: val,
-                };
-            }
-            if (val === 'INCOME') {
-                return {
-                    text: 'Доход',
-                    value: val,
-                };
-            }
-
-            if (val === 'TRANSFER') {
-                return {
-                    text: 'Перевод',
-                    value: val,
-                };
-            }
-        });
+        return this.$store.state.staticDictionaries.operationTypes;
     }
 
     get categories() {
