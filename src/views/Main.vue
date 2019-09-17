@@ -45,7 +45,7 @@ export default class Main extends Vue {
     public lastPlansOperations = [];
     public mounted() {
         this.loadData();
-        this.$root.$on('operationCreated', () => {
+        this.$root.$on('operationChanged', () => {
             this.loadData();
         });
 

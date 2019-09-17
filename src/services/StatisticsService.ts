@@ -42,7 +42,6 @@ export default class StatisticsService {
     }
 
     public static averageByDayInCurrMonth(excludeCategoryIds: any): Promise<AxiosResponse<any>> {
-        // todo это из за того что axios массивы передает как nam[]=1,2,3 при этом spring так не ждем
         if (excludeCategoryIds) {
             excludeCategoryIds = excludeCategoryIds.map((item: any) => (item.value));
         }

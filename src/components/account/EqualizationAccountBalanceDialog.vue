@@ -61,7 +61,7 @@ export default class EqualizationAccountBalanceDialog extends Vue {
             .then((data) => {
                 alert('Уравнивание прошло успешно');
                 this.$emit('close');
-                this.$root.$emit('operationCreated');
+                this.$root.$emit('operationChanged');
             });
     }
 }

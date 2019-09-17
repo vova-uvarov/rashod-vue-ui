@@ -52,11 +52,7 @@ export default class BalanceListBar extends Vue {
     public mounted() {
         this.loadBalances();
 
-        this.$root.$on('operationCreated', () => {
-            this.loadBalances();
-        });
-
-        this.$root.$on('operationDeleted', () => {
+        this.$root.$on('operationChanged', () => {
             this.loadBalances();
         });
     }
