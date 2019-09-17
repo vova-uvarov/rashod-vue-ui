@@ -22,7 +22,7 @@ import {Component, Vue} from 'vue-property-decorator';
 import AccountService from '@/services/AccountService';
 
 @Component
-export default class AccountList extends Vue {
+export default class GoalAccountList extends Vue {
 
     public balances = [];
     public mounted() {

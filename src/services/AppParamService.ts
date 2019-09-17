@@ -20,18 +20,6 @@ export default class AppParamService {
             .then((response) => (response.data));
     }
 
-    public static getGroups() {
-        return axios
-            .get('/api/app/params/groups')
-            .then((response) => (response.data));
-    }
-
-    public static getKeys() {
-        return axios
-            .get('/api/app/params/keys')
-            .then((response) => (response.data));
-    }
-
     public static delete(id: string) {
         return axios
             .delete('/api/app/params/' + id)

@@ -9,9 +9,9 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
 
 axios.defaults.baseURL = 'http://localhost:8092';
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(function(config) {
     let params = config.params;
-    if (params && config.method==='get') {
+    if (params && config.method === 'get') {
         Object.keys(params)
             .forEach(key => {
                 if (Array.isArray(params[key])) {
@@ -21,12 +21,18 @@ axios.interceptors.request.use(function (config) {
     }
     // Do something before request is sent
     return config;
-}, function (error) {
+}, function(error) {
     // Do something with request error
     return Promise.reject(error);
 });
 
 Vue.config.productionTip = false;
+
+Vue.filter('dictionaryValue', (value: string, dictionaryName: string) => {
+    return store.state.staticDictionaries[dictionaryName]
+        .filter((el) => (el.key == value))
+        .map((el) => (el.value))[0];
+});
 
 Vue.filter('dateFormatter', (value: any) => {
     if (!value) {
@@ -53,5 +59,5 @@ new Vue({
     router,
     store,
     vuetify,
-    render: (h) => h(App),
+    render: (h) => h(App)
 }).$mount('#app');

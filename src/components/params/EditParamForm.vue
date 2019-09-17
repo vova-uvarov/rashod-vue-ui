@@ -3,7 +3,7 @@
         <v-col cols="12">
             <v-card :raised="true">
                 <v-card-title>
-                    Параметр
+                    Параметр = {{paramKeys}}
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -21,6 +21,9 @@
                                 <v-select
                                         :items="paramGroups"
                                         v-model="appParam.groupName"
+                                        item-value="key"
+                                        item-text="value"
+                                        :return-object="false"
                                         label="Группа"
                                 ></v-select>
                             </v-col>
@@ -29,6 +32,9 @@
                                 <v-select
                                         :items="paramKeys"
                                         v-model="appParam.keyName"
+                                        item-value="key"
+                                        item-text="value"
+                                        :return-object="false"
                                         label="Ключ"
                                 ></v-select>
                             </v-col>
@@ -101,21 +107,14 @@ export default class EditParamForm extends Vue {
     }
 
     get paramGroups() {
-        return this.$store.state.paramGroups;
+        return this.$store.state.staticDictionaries.paramGroups;
     }
 
     get paramKeys() {
-        return this.$store.state.paramKeys;
+        return this.$store.state.staticDictionaries.paramKeys;
     }
-
-    get shoppingItems() {
-        return this.$store.state.shoppingItemNames;
-    }
-
     @Prop({default: {}})
     public appParam: any;
-
-    public paramDateValueMenu = false;
 
     public editParam() {
         AppParamService.save(this.appParam)
