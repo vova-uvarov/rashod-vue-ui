@@ -2,7 +2,7 @@
     <div class="home">
         <v-row>
             <v-col cols="6">
-                <CreateOperationFrom/>
+                <CreateOperationComponent/>
             </v-col>
             <v-col cols="6">
                 <ShortOperationsList title="Расходы"
@@ -28,13 +28,13 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import CreateOperationFrom from '@/components/operation/CreateOperationForm.vue';
+import CreateOperationComponent from '@/components/operation/CreateOperationComponent';
 import ShortOperationsList from '@/components/operation/ShortOperationsList.vue';
 import OperationService from '@/services/OperationService';
 
 @Component({
     components: {
-        CreateOperationFrom,
+        CreateOperationComponent,
         ShortOperationsList,
     },
 })

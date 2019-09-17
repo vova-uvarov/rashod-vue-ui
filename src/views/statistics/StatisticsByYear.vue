@@ -32,7 +32,7 @@
             </v-col>
         </v-row>
 
-        <v-row v-for="rowIndex in rows">
+        <v-row v-for="rowIndex in  [0, 1, 2, 3]">
             <v-col cols="4" v-for="colIndex in [0,1,2]" :key="colIndex">
                 <TotalConsumptionsPie operation-type="CONSUMPTION"
                                       :title="'Расходы за: '+monthNames[rowIndex*3+colIndex] "
@@ -66,12 +66,8 @@ export default class StatisticByYear extends Vue {
         return months;
     }
 
-    get rows() {
-        return [0, 1, 2, 3];
-    }
-
     get years() {
-        return [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012]; // todo Стоит этот список генерировать
+        return this.$store.state.dictionaries.years;
     }
 
     public year = 2019;

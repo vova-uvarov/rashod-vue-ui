@@ -25,4 +25,10 @@ export default class DictionaryService {
             .get('/api/dictionary/accountStatuses')
             .then((response) => (response.data));
     }
+
+    public static getYears(): Promise<AxiosResponse<any>> {
+        return axios
+            .get('http://localhost:8092/api/dictionary/years')
+            .then((response) => (response.data));
+    }
 }

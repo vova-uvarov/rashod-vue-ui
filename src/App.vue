@@ -183,6 +183,7 @@
         created() {
             this.$vuetify.theme.dark = false;
             this.$store.commit("initState");
+            //todo надо наверное объеденить в рамках метода loadDictionaries
             this.$store.dispatch("loadDictionaries");
             this.$store.dispatch("loadAccounts");
             this.$store.dispatch("loadCategories");
@@ -194,6 +195,7 @@
             this.$store.dispatch("loadAccountTypes");
             this.$store.dispatch("loadCurrencies");
             this.$store.dispatch("loadAccountStatuses");
+            this.$store.dispatch("loadYears");
         },
     }
 </script>
