@@ -4,7 +4,8 @@ import ru from 'vuetify/src/locale/ru';
 
 Vue.use(Vuetify);
 
-export default new Vuetify({
+export default
+new Vuetify({
     theme: {
         options: {
             customProperties: true,

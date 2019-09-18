@@ -9,29 +9,26 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
 
 axios.defaults.baseURL = 'http://localhost:8092';
-axios.interceptors.request.use(function(config) {
-    let params = config.params;
+axios.interceptors.request.use((config: any) => {
+    const params = config.params;
     if (params && config.method === 'get') {
         Object.keys(params)
-            .forEach(key => {
+            .forEach((key) => {
                 if (Array.isArray(params[key])) {
                     params[key] = params[key].join(',');
                 }
             });
     }
-    // Do something before request is sent
     return config;
-}, function(error) {
-    // Do something with request error
-    return Promise.reject(error);
-});
+}, (error: any) => (Promise.reject(error)));
 
 Vue.config.productionTip = false;
 
 Vue.filter('dictionaryValue', (value: string, dictionaryName: string) => {
-    return store.state.staticDictionaries[dictionaryName]
-        .filter((el) => (el.key == value))
-        .map((el) => (el.value))[0];
+    const staticDictionaries: any = store.state.staticDictionaries;
+    return staticDictionaries[dictionaryName]
+        .filter((el: any) => (el.key === value))
+        .map((el: any) => (el.value))[0];
 });
 
 Vue.filter('dateFormatter', (value: any) => {
@@ -54,10 +51,9 @@ Vue.filter('moneyFormat', (value: any) => {
     return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 });
 
-
 new Vue({
     router,
     store,
     vuetify,
-    render: (h) => h(App)
+    render: (h: any) => h(App)
 }).$mount('#app');
