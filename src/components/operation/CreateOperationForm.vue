@@ -221,7 +221,7 @@
                 OperationService.delete(this.operationInner.id)
                     .then((response) => {
                         alert("Операция успешно удалена: " + this.operationInner.id);
-                        this.$root.$emit("operationChanged"); // todo какжется нужно просто одно событие operationChaged
+                        this.$root.$emit("operationChanged");
                         this.$emit("successfull");
                     });
             }
