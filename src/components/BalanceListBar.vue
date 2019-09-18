@@ -1,7 +1,6 @@
 <template>
     <v-toolbar dense>
         <v-chip
-                class="ma-2"
                 color="secondary"
                 outlined
         >
@@ -12,17 +11,14 @@
                 v-for="item in balances" :key="item.accountId"
                 class="ma-2"
                 color="primary"
+                :small="false"
                 outlined
         >
-            <span class="group pa-2">
-                <v-icon @click.stop="equalizationAccount(item)">mdi-wrench</v-icon>
-            </span>
-            <b>{{item.accountName}}:</b> {{item.balance|moneyFormat}}
+            <b @click.stop="equalizationAccount(item)">{{item.accountName}}:</b> {{item.balance|moneyFormat}}
         </v-chip>
 
         <v-chip
                 v-for="item in balancesGoalByCurrency" :key="item.accountName"
-                class="ma-2"
                 color="accent"
                 outlined
         >
@@ -35,48 +31,47 @@
 </template>
 
 <script lang="ts">
-import AccountService from '@/services/AccountService';
-import EqualizationAccountBalanceDialog from '@/components/account/EqualizationAccountBalanceDialog.vue';
-import {Component, Vue} from 'vue-property-decorator';
+    import AccountService from '@/services/AccountService';
+    import EqualizationAccountBalanceDialog from '@/components/account/EqualizationAccountBalanceDialog.vue';
+    import {Component, Vue} from 'vue-property-decorator';
 
-@Component({
-    components: {EqualizationAccountBalanceDialog},
-})
-export default class BalanceListBar extends Vue {
+    @Component({components: {EqualizationAccountBalanceDialog},})
+    export default class BalanceListBar extends Vue {
 
-    public totalBalance = 0;
-    public balances = [];
-    public balancesGoalByCurrency = [];
-    public showEualizationDialog = false;
-    public accountBalance = {};
-    public mounted() {
-        this.loadBalances();
+        public totalBalance = 0;
+        public balances = [];
+        public balancesGoalByCurrency = [];
+        public showEualizationDialog = false;
+        public accountBalance = {};
 
-        this.$root.$on('operationChanged', () => {
+        public mounted() {
             this.loadBalances();
-        });
-    }
 
-    public equalizationAccount(selectedAccountBalance: any) {
-        this.accountBalance = selectedAccountBalance;
-        this.showEualizationDialog = true;
-    }
-
-    private loadBalances() {
-        AccountService.loadBalances()
-            .then((balances: any) => {
-                this.balances = balances;
+            this.$root.$on('operationChanged', () => {
+                this.loadBalances();
             });
+        }
 
-        AccountService.totalBalance()
-            .then((balance: any) => {
-                this.totalBalance = balance;
-            });
+        public equalizationAccount(selectedAccountBalance: any) {
+            this.accountBalance = selectedAccountBalance;
+            this.showEualizationDialog = true;
+        }
 
-        AccountService.balancesByCurrency()
-            .then((balances: any) => {
-                this.balancesGoalByCurrency = balances;
-            });
+        private loadBalances() {
+            AccountService.loadBalances()
+                .then((balances: any) => {
+                    this.balances = balances;
+                });
+
+            AccountService.totalBalance()
+                .then((balance: any) => {
+                    this.totalBalance = balance;
+                });
+
+            AccountService.balancesByCurrency()
+                .then((balances: any) => {
+                    this.balancesGoalByCurrency = balances;
+                });
+        }
     }
-}
 </script>
