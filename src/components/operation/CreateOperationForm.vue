@@ -160,7 +160,7 @@
         }
 
         get shoppingItems() {
-            return this.$store.state.shoppingItemNames;
+            return this.$store.getters.shoppintItemNamesByOperationType(this.operationInner.operationType);
         }
 
         get cardTitle() {
