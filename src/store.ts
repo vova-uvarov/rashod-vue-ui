@@ -43,11 +43,33 @@ export default new Vuex.Store({
             },
         },
 
-        shoppingItemNames: [],
+        shoppingItemNames: {},
         categories: [],
         accounts: [],
         places: [],
         appParams: [],
+    },
+    getters: {
+        shoppintItemNamesAll: (state) => {
+            const shoppingItemNames: any = state.shoppingItemNames;
+            let result: any[] = [];
+            Object.keys(shoppingItemNames)
+                .forEach((key) => {
+                    result = result.concat(shoppingItemNames[key].map((item: any) => ({name: item})));
+                });
+            return result;
+        },
+
+        shoppintItemNamesByOperationType: (state) => (operationType: string) => {
+            if (operationType) {
+                const shoppingItemNames: any = state.shoppingItemNames;
+                const operationNames = shoppingItemNames[operationType];
+                if (operationNames) {
+                    return operationNames.map((item: any) => ({name: item}));
+                }
+            }
+            return [];
+        }
     },
     mutations: {
         initState: (state) => {
@@ -89,7 +111,7 @@ export default new Vuex.Store({
         },
 
         updateShoppingItemsNames: (state, newValue) => {
-            state.shoppingItemNames = newValue.map((item: any) => ({name: item}));
+            state.shoppingItemNames = newValue;
         },
 
         updateYears: (state, newValue) => {

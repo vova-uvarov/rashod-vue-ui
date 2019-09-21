@@ -1,6 +1,5 @@
 <template>
     <v-container>
-        this.$store.state.staticDictionaries = {{this.$store.state.staticDictionaries}}
         <v-row>
             <v-col cols="3">
                 <select-date label="Дата С" :date.sync="operationFilter.dateFrom"/>
@@ -123,7 +122,7 @@ import ObjectUtils from "@/utils/ObjectUtils";
 export default class OperationsFilter extends Vue {
 
     get shoppingItems() {
-        return this.$store.state.shoppingItemNames;
+        return this.$store.getters.shoppintItemNamesAll;
     }
 
     get countsPerPage() {
