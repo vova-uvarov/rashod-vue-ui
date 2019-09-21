@@ -28,7 +28,7 @@
                     </v-list-item-content>
                 </v-list-item>
 
-<!--                todo похоже на подраздел в операциях-->
+                <!--                todo похоже на подраздел в операциях-->
                 <v-list-item to="/plans">
                     <v-list-item-action>
                         <v-icon>mdi-finance</v-icon>
@@ -149,7 +149,7 @@
         <v-app-bar
                 app
                 clipped-left
-                color="primary"
+                :color="appBarColor"
         >
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>Домашние финансы</v-toolbar-title>
@@ -169,17 +169,27 @@
     </v-app>
 </template>
 
-<script>
+<script lang="ts">
     import BalanceListBar from "./components/BalanceListBar";
+    import {Component, Prop} from "vue-property-decorator";
+    import Vue from "vue";
 
-    export default {
-        components: {BalanceListBar},
-        props: {
-            source: String,
-        },
-        data: () => ({
-            drawer: null,
-        }),
+    @Component({
+        components: {BalanceListBar}
+    })
+    export default class extends Vue {
+
+        @Prop()
+        soure!: String;
+
+        drawer = null;
+
+        get appBarColor(){
+            if (process.env.NODE_ENV==='development'){
+                return 'red';
+            }
+            return 'primary';
+        }
         created() {
             this.$vuetify.theme.dark = false;
             this.$store.commit("initState");
@@ -193,7 +203,7 @@
             this.$store.dispatch("loadParams");
 
             this.$store.dispatch("loadYears");
-        },
+        }
     }
 </script>
 
