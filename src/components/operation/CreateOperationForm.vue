@@ -27,7 +27,7 @@
                     <v-container>
 
                         <v-row>
-                            <v-col cols="6">
+                            <v-col cols="6" v-if="operationInner.operationType!=='TRANSFER'">
                                 <v-combobox
                                         :items="categories"
                                         v-model="operationInner.category"
@@ -44,6 +44,14 @@
                                 ></v-text-field>
                             </v-col>
 
+                            <v-col cols="6" v-if="operationInner.operationType==='TRANSFER'">
+                                <v-text-field
+                                        type="number"
+                                        label="Сумма в валюте счета зачисления"
+                                        v-model="operationInner.currencyCost"
+                                ></v-text-field>
+                            </v-col>
+
                         </v-row>
 
                         <v-row>
@@ -57,13 +65,13 @@
                                 ></v-combobox>
                             </v-col>
                             <v-col cols="6">
-                                <v-select v-if="operationInner.operationType==='TRANSFER'"
+                                <v-combobox v-if="operationInner.operationType==='TRANSFER'"
                                           :items="accounts"
                                           v-model="operationInner.accountToTransfer"
                                           item-value="id"
                                           item-text="name"
                                           label="На счет"
-                                ></v-select>
+                                ></v-combobox>
 
                                 <SelectShoppingItems
                                         v-if="operationInner.operationType!=='TRANSFER' && showShoppingItem"

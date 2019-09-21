@@ -28,7 +28,7 @@
                 place: "",
                 category: {name: "Продукты", id: 32}, // todo переделать нормально
                 account: {id: 3, name: "Тинькофф"}, // todo переделать нормально это жесткий хак
-                accountToTransfer: {},
+                accountToTransfer: null,
                 cost: 0,
                 shoppingList: undefined,
                 operationType: "CONSUMPTION"
