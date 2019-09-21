@@ -8,7 +8,7 @@ import moment from 'moment';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
 
-axios.defaults.baseURL = 'http://localhost:8092';
+axios.defaults.baseURL = process.env.VUE_APP_BASE_API_URL;
 axios.interceptors.request.use((config: any) => {
     const params = config.params;
     if (params && config.method === 'get') {
