@@ -14,7 +14,8 @@
                 :small="false"
                 outlined
         >
-            <b @click.stop="equalizationAccount(item)">{{item.accountName}}:</b> {{item.balance|moneyFormat}}
+            <b @click.stop="equalizationAccount(item)">{{item.accountName}}:</b> <span :class="balanceClass(item.balance)">{{item.balance|moneyFormat}}</span>
+
         </v-chip>
 
         <v-chip
@@ -52,6 +53,13 @@
             });
         }
 
+        public balanceClass(balance:number){
+            if (balance<0){
+                return 'negativeBalance'
+            }
+            return ''
+        }
+
         public equalizationAccount(selectedAccountBalance: any) {
             this.accountBalance = selectedAccountBalance;
             this.showEualizationDialog = true;
@@ -73,5 +81,11 @@
                     this.balancesGoalByCurrency = balances;
                 });
         }
+
     }
 </script>
+<style>
+    .negativeBalance{
+        color: red;
+    }
+</style>
