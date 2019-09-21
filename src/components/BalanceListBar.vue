@@ -1,11 +1,11 @@
 <template>
     <v-toolbar dense>
         <v-chip
-                color="secondary"
-                outlined
-        >
-            <b>Баланс: </b> {{totalBalance | moneyFormat}}
-        </v-chip>
+                    color="secondary"
+                    outlined
+            >
+                <b>Баланс: </b> {{totalBalance | moneyFormat}}
+            </v-chip>
 
         <v-chip
                 v-for="item in balances" :key="item.accountId"
