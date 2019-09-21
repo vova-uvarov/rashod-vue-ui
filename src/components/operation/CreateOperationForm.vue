@@ -59,7 +59,9 @@
                             <v-col cols="6">
                                 <v-select v-if="operationInner.operationType==='TRANSFER'"
                                           :items="accounts"
-                                          v-model="operationInner.accountToTransfer.id"
+                                          v-model="operationInner.accountToTransfer"
+                                          item-value="id"
+                                          item-text="name"
                                           label="На счет"
                                 ></v-select>
 
