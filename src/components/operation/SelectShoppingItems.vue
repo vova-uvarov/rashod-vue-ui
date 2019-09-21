@@ -21,7 +21,7 @@
                         @click="data.select"
                         @click:close="remove(data.item)"
                 >
-                    {{ data.item.name }}
+                    {{ data.item.name?data.item.name:data.item }}
                 </v-chip>
             </template>
 
@@ -34,7 +34,7 @@
     </div>
 </template>
 <script lang="ts">
-import {Component, Prop, PropSync, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from "vue-property-decorator";
 
 @Component
 export default class SelectShoppingItems extends Vue {
@@ -45,14 +45,21 @@ export default class SelectShoppingItems extends Vue {
     })
     public items!: object[];
 
-    @PropSync('selectedItems', {
-        default() {
+    @Prop({
+        default: function() {
             return [];
-        },
+        }
     })
-    public selectedItemsInner!: object[];
+    selectedItems!: object[];
 
-    public searchValue = '';
+    @Watch("selectedItemsInner")
+    selectedItemsInnerChanged(value: string[], oldValue: string[]) {
+        if (value != undefined) {
+            this.$emit("update:selectedItems", value.map((el: any) => {
+                return (el instanceof Object) ? el : {name: el};
+            }));
+        }
+    }
 
     public remove(item: any) {
         const index = this.selectedItemsInner.indexOf(item);
@@ -60,6 +67,11 @@ export default class SelectShoppingItems extends Vue {
             this.selectedItemsInner.splice(index, 1);
         }
     }
+
+    public searchValue = '';
+    selectedItemsInner = this.selectedItems;
+
+
 
 }
 </script>

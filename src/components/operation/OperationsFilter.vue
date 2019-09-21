@@ -154,8 +154,6 @@ export default class OperationsFilter extends Vue {
 
 
     public operationFilter = ObjectUtils.copy(this.$store.state.operationsView.filter);
-    public dateFromMenu = false;
-    public dateToMenu = false;
     public searchCategoryValue = '';
     public searchAccountValue = '';
 
