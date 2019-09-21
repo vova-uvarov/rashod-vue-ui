@@ -7,6 +7,7 @@
                     <thead>
                     <tr>
                         <th class="text-left">Дата</th>
+                        <th class="text-left">Счет</th>
                         <th class="text-left">Категория</th>
                         <th class="text-left">Список</th>
                         <th class="text-left">Сумма</th>
@@ -16,6 +17,7 @@
                     <tbody>
                     <tr v-for="item in operations" :key="item.id" :class="rowClass(item)">
                         <td>{{ item.operationDate | dateFormatter }}</td>
+                        <td>{{ item.account.name }}</td>
                         <td>{{ item.category.name }}</td>
                         <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                         <td>{{getCostSign(item)}}{{ item.cost |moneyFormat}}</td>
@@ -90,7 +92,6 @@ export default class ShortOperationsList extends Vue {
         this.operationId = selectOperationId;
         this.showEditDialog = true;
     }
-
 
     // todo Копипаста из LastOpeartions
     // todo Копипаста из LastOpeartions
