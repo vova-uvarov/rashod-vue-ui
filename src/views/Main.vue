@@ -19,6 +19,7 @@
             </v-col>
             <v-col cols="6">
                 <ShortOperationsList title="Планируемые"
+                                     :select-past-operations="true"
                                 card-color="white"
                                 :operations="lastPlansOperations"/>
             </v-col>
