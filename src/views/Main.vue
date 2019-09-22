@@ -50,7 +50,7 @@ export default class Main extends Vue {
             this.loadData();
         });
 
-        this.$root.$on('operationDeleted', () => {
+        this.$root.$on('operationChanged', () => {
             this.loadData();
         });
     }

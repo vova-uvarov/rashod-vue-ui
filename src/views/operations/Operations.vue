@@ -57,7 +57,7 @@ export default class OperationsView extends Vue {
     }
 
     public mounted() {
-        this.$root.$on('operationDeleted', () => {
+        this.$root.$on('operationChanged', () => {
             this.$store.dispatch('reloadOperations');
         });
     }

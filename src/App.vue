@@ -190,6 +190,14 @@
             }
             return 'primary';
         }
+
+        public mounted() {
+            this.$root.$on('operationChanged', () => {
+                this.$store.dispatch("loadShoppingItems");
+                this.$store.dispatch("loadPlaces");
+            });
+        }
+
         created() {
             this.$vuetify.theme.dark = false;
             this.$store.commit("initState");
@@ -198,8 +206,6 @@
 
             this.$store.dispatch("loadAccounts");
             this.$store.dispatch("loadCategories");
-            this.$store.dispatch("loadShoppingItems");
-            this.$store.dispatch("loadPlaces");
             this.$store.dispatch("loadParams");
 
             this.$store.dispatch("loadYears");

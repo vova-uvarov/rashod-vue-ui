@@ -111,7 +111,7 @@ export default class OperationsList extends Vue {
         if (confirm('Вы действительно хотите удалить операцию?')) {
             OperationService.delete(id)
                 .then((response) => {
-                        this.$root.$emit('operationDeleted');
+                        this.$root.$emit('operationChanged');
                     },
                 );
         }
