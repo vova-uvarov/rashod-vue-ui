@@ -57,12 +57,7 @@ import DivideOperationDialog from '@/components/operation/DivideOperationDialog.
     methods: {
         getCostSign(item) {
             return OperationUtils.getCostSign(item);
-        },
-        rowClass(item) {
-            if (moment(item.operationDate).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) {
-                return 'nowOperation';
-            }
-        },
+        }
     },
 })
 export default class ShortOperationsList extends Vue {
@@ -78,6 +73,9 @@ export default class ShortOperationsList extends Vue {
 
     @Prop({default: 'white'})
     public cardColor!: string;
+
+    @Prop({default: false})
+    public selectPastOperations!: string;
 
     public operationId = null;
     public showEditDialog = false;
@@ -101,11 +99,25 @@ export default class ShortOperationsList extends Vue {
         }
         return shoppingList.map((val: any) => (val.name)).toString();
     }
+
+    public rowClass(item: any) {
+        if (moment(item.operationDate).isBefore(moment(new Date())) && this.selectPastOperations){
+            return "pastOperation"
+        }
+        if (moment(item.operationDate).format('YYYY-MM-DD') === moment(new Date()).format('YYYY-MM-DD')) {
+            return 'nowOperation';
+        }
+    }
+
 }
 </script>
 
 <style>
     .nowOperation {
         background-color: aliceblue;
+    }
+
+    .pastOperation {
+        background-color: #ffa5af;
     }
 </style>
