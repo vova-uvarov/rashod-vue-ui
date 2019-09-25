@@ -245,6 +245,9 @@
                         this.$store.dispatch("loadCategories");
                         this.$root.$emit("operationChanged");
                         this.$emit("successfull");
+                    // todo hack для перерисовки внутреннего компонента. Разобраться и переделать
+                    this.showShoppingItem = false;
+                    this.$nextTick().then(() => (this.showShoppingItem = true));
                     }
                 );
         }

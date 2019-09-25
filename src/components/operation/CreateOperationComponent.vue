@@ -30,7 +30,7 @@
                 account: {id: 3, name: "Тинькофф"}, // todo переделать нормально это жесткий хак
                 accountToTransfer: null,
                 cost: 0,
-                shoppingList: undefined,
+                shoppingList: [],
                 operationType: "CONSUMPTION"
             };
         }

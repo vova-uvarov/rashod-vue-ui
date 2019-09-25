@@ -202,6 +202,9 @@
             this.$vuetify.theme.dark = false;
             this.$store.commit("initState");
 
+            this.$store.dispatch("loadShoppingItems");
+            this.$store.dispatch("loadPlaces");
+
             this.$store.dispatch("loadDictionaries");
 
             this.$store.dispatch("loadAccounts");
