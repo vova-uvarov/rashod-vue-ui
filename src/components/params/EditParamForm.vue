@@ -3,7 +3,7 @@
         <v-col cols="12">
             <v-card :raised="true">
                 <v-card-title>
-                    Параметр = {{paramKeys}}
+                    Параметр: {{appParam.name}}
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -69,8 +69,8 @@
                             <v-col cols="6">
                                 <v-select
                                         :items="boolValues"
-                                        v-model="appParam.b"
-                                        label="Ключ"
+                                        v-model="appParam.boolValue"
+                                        label="Логическое значение"
                                         clearable
                                 ></v-select>
                             </v-col>
@@ -81,6 +81,26 @@
                                 <select-date label="Значение даты" :date.sync="appParam.dateValue"/>
                             </v-col>
                             <v-col cols="6">
+                                <v-combobox
+                                        :items="categories"
+                                        v-model="appParam.category"
+                                        item-value="id"
+                                        item-text="name"
+                                        label="Категория"
+                                ></v-combobox>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="6">
+                                <v-combobox
+                                        :items="accounts"
+                                        v-model="appParam.account"
+                                        item-value="id"
+                                        item-text="name"
+                                        label="Счет"
+                                ></v-combobox>
+                            </v-col>
+                            <v-col  cols="6">
                                 <v-btn color="success" :block="true" v-on:click="editParam">
                                     <span>Сохранить параметр</span>
                                 </v-btn>
@@ -113,6 +133,15 @@ export default class EditParamForm extends Vue {
     get paramKeys() {
         return this.$store.state.staticDictionaries.paramKeys;
     }
+
+    get categories() {
+        return this.$store.state.categories;
+    }
+
+    get accounts() {
+        return this.$store.state.accounts;
+    }
+
     @Prop({default: {}})
     public appParam: any;
 

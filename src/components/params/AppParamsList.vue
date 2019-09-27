@@ -15,7 +15,9 @@
                         <th class="text-left">Денежное значение</th>
                         <th class="text-left">Логическое значение</th>
                         <th class="text-left">Значение даты</th>
-                        <th class="text-left"></th>
+                        <th class="text-left">Категория</th>
+                        <th class="text-left">Счет</th>
+                        <th class="text-left">&nbsp;</th>
 
                     </tr>
                     </thead>
@@ -40,6 +42,8 @@
                             ></v-switch>
                         </td>
                         <td>{{ item.dateValue|dateFormatter}}</td>
+                        <td>{{ extractCategoryName(item)}}</td>
+                        <td>{{ extractAccountName(item)}}</td>
                         <td style="white-space: nowrap; width: 1%">
                             <v-btn class="mx-2" icon color="primary" @click.stop="editParam(item.id)">
                                 <v-icon>mdi-file-document-edit</v-icon>
@@ -89,6 +93,20 @@ export default class AppParamsList extends Vue {
     public editParam(id: string) {
         this.paramId = id;
         this.showEditDialog = true;
+    }
+
+    public extractAccountName(item:any){
+        if (item.account){
+            return item.account.name;
+        }
+        return "";
+    }
+
+    public extractCategoryName(item:any){
+        if (item.category){
+            return item.category.name;
+        }
+        return "";
     }
 }
 </script>
