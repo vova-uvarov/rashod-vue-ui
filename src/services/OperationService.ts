@@ -2,6 +2,13 @@ import axios, {AxiosResponse} from 'axios';
 
 export default class OperationService {
 
+    public static countPlans(): Promise<AxiosResponse<any>> {
+        return axios.get('/api/operations/plans/count')
+            .then((response) => {
+                return response.data;
+            });
+    }
+
     public static search(requestParams: any): Promise<AxiosResponse<any>> {
         if (requestParams.categoryIds) {
             requestParams.categoryIds = requestParams.categoryIds.map((item: any) => (item.value));

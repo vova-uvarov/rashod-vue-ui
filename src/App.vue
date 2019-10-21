@@ -35,7 +35,7 @@
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>
-                            План
+                            План ({{countPlans}})
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
@@ -173,6 +173,7 @@
     import BalanceListBar from "./components/BalanceListBar";
     import {Component, Prop} from "vue-property-decorator";
     import Vue from "vue";
+    import OperationService from "@/services/OperationService";
 
     @Component({
         components: {BalanceListBar}
@@ -184,6 +185,7 @@
 
         drawer = null;
 
+        public countPlans = 0;
         get appBarColor(){
             if (process.env.NODE_ENV==='development'){
                 return 'red';
@@ -195,6 +197,10 @@
             this.$root.$on('operationChanged', () => {
                 this.$store.dispatch("loadShoppingItems");
                 this.$store.dispatch("loadPlaces");
+                OperationService.countPlans()
+                    .then((data: any) => {
+                        this.countPlans = data;
+                    });
             });
         }
 
@@ -212,6 +218,11 @@
             this.$store.dispatch("loadParams");
 
             this.$store.dispatch("loadYears");
+
+            OperationService.countPlans()
+                .then((data: any) => {
+                    this.countPlans = data;
+                });
         }
     }
 </script>
