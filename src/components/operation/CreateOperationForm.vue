@@ -220,7 +220,7 @@
         @Prop({default: "CREATE"})
         public formMode!: string;
 
-        @PropSync("operation")
+        @PropSync("operation") // todo посмотреть возможно propSync не нужен
         public operationInner: any;
 
         public countRepeat = 1;
