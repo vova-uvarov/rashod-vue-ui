@@ -19,7 +19,7 @@
 
         }
 
-        private operationInner: any = {};
+        private operationInner: any = this.defaultOperation();
         public operation(){
             return this.operationInner;
         }
