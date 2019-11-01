@@ -4,7 +4,7 @@
                     color="secondary"
                     outlined
             >
-                <b>Баланс: </b> {{totalBalance | moneyFormat}}
+            <b>Баланс: </b> <span :class="balanceClass(totalBalance)"> {{totalBalance | moneyFormat}}</span>
             </v-chip>
 
         <v-chip
