@@ -53,6 +53,7 @@ export default class EqualizationAccountBalanceDialog extends Vue {
 
     @Watch('accountBalance')
     public accountIdChanged(value: any, oldValue: any) {
+        console.log("changed accountBalance");
         this.actualBalance = value.balance;
     }
 
