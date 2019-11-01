@@ -2,16 +2,7 @@
     <v-container>
         <v-row v-for="item in balances">
             <v-col cols="12">
-                <v-progress-linear
-                        :value="item.balance*100/item.goalCost"
-                        color="blue-grey"
-                        height="25"
-                >
-                    <template v-slot="{ value }">
-                        <strong>{{item.accountName}}: {{item.balance|moneyFormat}} из
-                            {{item.goalCost|moneyFormat}}</strong>
-                    </template>
-                </v-progress-linear>
+                <AccountBalanceProgressBar :item="item"/>
             </v-col>
         </v-row>
     </v-container>
@@ -20,8 +11,9 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import AccountService from '@/services/AccountService';
+import AccountBalanceProgressBar from '@/components/account/AccountBalanceProgressBar.vue';
 
-@Component
+@Component({components: {AccountBalanceProgressBar}})
 export default class GoalAccountList extends Vue {
 
     public balances = [];

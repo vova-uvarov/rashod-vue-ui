@@ -20,6 +20,12 @@ export default class AccountService {
             .then((response) => (response.data.content));
     }
 
+    public static loadDebtBalances(status: string): Promise<AxiosResponse<Balance>> {
+        return axios
+            .get('/api/accounts/balances/debt/' + status)
+            .then((response) => (response.data));
+    }
+
     public static loadGoalBalances(): Promise<AxiosResponse<Balance>> {
         return axios
             .get('/api/accounts/balances/goal')
