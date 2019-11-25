@@ -12,7 +12,7 @@
             <v-text-field
                     v-model="dateInner"
                     :label="label"
-                    prepend-icon="event"
+                    prepend-icon="mdi-calendar-range"
                     readonly
                     v-on="on"
             ></v-text-field>
