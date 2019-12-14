@@ -18,7 +18,11 @@
 
         <line-chart :chart-data="datacollection"
                     :options="options"></line-chart>
+        <ShortOperationsListDialog :dateFrom="clickOperationDate" :dateTo="clickOperationDate"
+                                   :visible="showOperationsDialog"
+                                   @close="showOperationsDialog=false"/>
     </v-card>
+
 </template>
 
 
@@ -26,9 +30,10 @@
 import LineChart from './js/LineChart.js';
 import {Component, Vue, Watch} from 'vue-property-decorator';
 import StatisticsService from '@/services/StatisticsService';
+import ShortOperationsListDialog from '@/components/operation/ShortOperationsListDialog';
 
 @Component({
-    components: {LineChart},
+    components: {LineChart, ShortOperationsListDialog},
 })
 export default class AverageByDayTrend extends Vue {
 
@@ -48,8 +53,18 @@ export default class AverageByDayTrend extends Vue {
     }
 
     get options() {
+        var _this = this;
         return {
             maintainAspectRatio: false, aspectRatio: 1,
+            onClick: function(point, elements) {
+                if (elements[0]) {
+                    let index = elements[0]._index;
+                    let operationDate = _this.rawData.dates[index];
+                    console.log(JSON.stringify(operationDate));
+                    _this.showOperationsDialog = true;
+                    _this.clickOperationDate = operationDate;
+                }
+            },
             title: {
                 display: true,
                 text: 'Динамика среднего расхода',
@@ -64,9 +79,11 @@ export default class AverageByDayTrend extends Vue {
         };
     }
 
+    public clickOperationDate: any = null;
     public rawData: any = {};
     public excludeCategoryIds = [{text: 'ИП', value: 15}];
     public searchCategoryValue = '';
+    public showOperationsDialog = false;
     public mounted() {
         this.loadData();
     }
