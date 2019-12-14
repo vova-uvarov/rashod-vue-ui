@@ -34,7 +34,7 @@ export default class StatisticsService {
 
     public static sumsGroupByCategory(requestParams: any): Promise<AxiosResponse<any>> {
         if (requestParams.operationTypes) {
-            requestParams.operationTypes = requestParams.operationTypes.map((item: any) => (item));
+            requestParams.operationTypes = requestParams.operationTypes.map((item: any) => (item)); // todo как буд-то бы это и не нужно
         }
         return axios
             .get('/api/statistics/sumsByCategory', {params: requestParams})
