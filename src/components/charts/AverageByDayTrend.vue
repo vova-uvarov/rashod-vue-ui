@@ -19,6 +19,7 @@
         <line-chart :chart-data="datacollection"
                     :options="options"></line-chart>
         <ShortOperationsListDialog :dateFrom="clickOperationDate" :dateTo="clickOperationDate"
+                                   :excludeCategoryIds="excludeCategoryIds"
                                    :visible="showOperationsDialog"
                                    @close="showOperationsDialog=false"/>
     </v-card>

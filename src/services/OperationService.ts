@@ -13,6 +13,9 @@ export default class OperationService {
         if (requestParams.categoryIds) {
             requestParams.categoryIds = requestParams.categoryIds.map((item: any) => (item.value));
         }
+        if (requestParams.excludeCategoryIds) {
+            requestParams.excludeCategoryIds = requestParams.excludeCategoryIds.map((item: any) => (item.value));
+        }
         if (requestParams.accountIds) {
             requestParams.accountIds = requestParams.accountIds.map((item: any) => (item.value));
         }

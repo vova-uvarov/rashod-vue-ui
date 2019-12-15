@@ -32,6 +32,9 @@ export default class ShortOperationsListDialog extends Vue {
     }
 
     @Prop()
+    public excludeCategoryIds!: any;
+
+    @Prop()
     public dateFrom!: string;
 
     @Prop()
@@ -44,16 +47,31 @@ export default class ShortOperationsListDialog extends Vue {
     public operations: any = {};
 
     @Watch('dateFrom')
-    public operationIdChanged(value: string, oldValue: string) {
+    public dateFromChange(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    @Watch('dateTo')
+    public dateToChanged(value: string, oldValue: string) {
+        this.loadData();
+    }
+
+    @Watch('excludeCategoryIds')
+    public excludeCategoryIdsChanged(value: any, oldValue: any) {
+        this.loadData();
+    }
+
+    private loadData() {
         this.loading = true;
         OperationService.search({
             dateFrom: this.dateFrom,
             dateTo: this.dateTo,
+            excludeCategoryIds: this.excludeCategoryIds,
             operationTypes: ['CONSUMPTION', 'TRANSFER']
         })
             .then((data: any) => {
-                    console.log (JSON.stringify(data.content));
-                this.operations = data.content;
+                    console.log(JSON.stringify(data.content));
+                    this.operations = data.content;
                 }
             );
     }
