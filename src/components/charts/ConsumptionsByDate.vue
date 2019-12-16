@@ -43,6 +43,11 @@
 
         <bar-chart :chart-data="datacollection"
                    :options="options"></bar-chart>
+
+        <ShortOperationsListDialog :dateFrom="clickOperationDate" :dateTo="clickOperationDate"
+                                   :excludeCategoryIds="excludeCategoryIds"
+                                   :visible="showOperationsDialog"
+                                   @close="showOperationsDialog=false"/>
     </v-card>
 </template>
 
@@ -51,9 +56,10 @@ import BarChart from './js/BarChart.js';
 import {Component,  Vue, Watch} from 'vue-property-decorator';
 import StatisticsService from '@/services/StatisticsService';
 import SelectDate from "@/components/common/SelectDate.vue";
+import ShortOperationsListDialog from '@/components/operation/ShortOperationsListDialog';
 
 @Component({
-    components: {BarChart, SelectDate},
+    components: {BarChart, SelectDate, ShortOperationsListDialog},
 })
 export default class IncomAndConsumptionTrend extends Vue {
 
@@ -67,18 +73,25 @@ export default class IncomAndConsumptionTrend extends Vue {
 
     get datacollection() {
         return {
-            // labels: this.rawData.labels,
-            labels: this.extractLabels(this.rawData.labels),
+            labels: this.defaultIfNull(this.rawData.labels),
             datasets: this.extractDatasets(this.rawData.datasets),
         };
     }
 
     get options() {
+        var _this = this;
         return {
+            onClick: function(point: any, elements: any) {
+                if (elements[0]) {
+                    let index = elements[0]._index;
+                    _this.clickOperationDate = _this.rawData.dates[index];
+                    _this.showOperationsDialog = true;
+                }
+            },
             maintainAspectRatio: false, aspectRatio: 1,
             title: {
                 display: true,
-                text: 'Расход по дня',
+                text: 'Расход по дням',
             },
             legend:
                 {
@@ -99,14 +112,13 @@ export default class IncomAndConsumptionTrend extends Vue {
 
     public monthPlan = {};
     public rawData: any = {};
-    public dateFromMenu = false;
-    public dateToMenu = false;
     public dateFrom = IncomAndConsumptionTrend.fromDateInitValue().toISOString().substr(0, 10);
     public dateTo = new Date().toISOString().substr(0, 10);
     public groupBy = 'DAY';
-    public incomeConsumptionByMonth = {};
     public excludeCategoryIds = [{text: 'ИП', value: 15}]; // todo
     public searchCategoryValue = '';
+    public showOperationsDialog = false;
+    public clickOperationDate: any = null;
     public mounted() {
         this.loadData();
         StatisticsService.monthPlan()
@@ -130,7 +142,7 @@ export default class IncomAndConsumptionTrend extends Vue {
         this.loadData();
     }
 
-    public extractLabels(labels: any) {
+    public defaultIfNull(labels: any) {
         if (labels) {
             return labels;
         }
@@ -148,7 +160,7 @@ export default class IncomAndConsumptionTrend extends Vue {
                         fill: false,
                         borderColor: this.getColorByDataSetName(item.name),
                         backgroundColor: item.data.map((d: any) => {
-                            if (d < 1000) {
+                            if (d < 1000) { // todo числа и цвета должны быть в настройках
                                 return 'green';
                             }
                             if (d < 2000) {
@@ -164,7 +176,7 @@ export default class IncomAndConsumptionTrend extends Vue {
     }
 
     public getColorByDataSetName(dataSetName: any) {
-        if (dataSetName === 'Доход') {
+        if (dataSetName === 'Доход') { // тоже должно быть в настройках
             return 'green';
         }
         if (dataSetName === 'Расход') {

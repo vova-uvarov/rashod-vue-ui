@@ -66,6 +66,7 @@ export default class ShortOperationsListDialog extends Vue {
         OperationService.search({
             dateFrom: this.dateFrom,
             dateTo: this.dateTo,
+            size: 100, // todo возможно тоже надо делать пагинацию
             excludeCategoryIds: this.excludeCategoryIds,
             operationTypes: ['CONSUMPTION', 'TRANSFER']
         })

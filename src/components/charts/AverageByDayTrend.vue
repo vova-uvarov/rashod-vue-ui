@@ -59,11 +59,8 @@ export default class AverageByDayTrend extends Vue {
             maintainAspectRatio: false, aspectRatio: 1,
             onClick: function(point: any, elements: any) {
                 if (elements[0]) {
-                    let index = elements[0]._index;
-                    let operationDate = _this.rawData.dates[index];
-                    console.log(JSON.stringify(operationDate));
+                    _this.clickOperationDate = _this.rawData.dates[elements[0]._index];
                     _this.showOperationsDialog = true;
-                    _this.clickOperationDate = operationDate;
                 }
             },
             title: {
