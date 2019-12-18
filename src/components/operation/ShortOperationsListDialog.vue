@@ -35,6 +35,9 @@ export default class ShortOperationsListDialog extends Vue {
     public excludeCategoryIds!: any;
 
     @Prop()
+    public categoryIds!: any;
+
+    @Prop()
     public dateFrom!: string;
 
     @Prop()
@@ -61,6 +64,11 @@ export default class ShortOperationsListDialog extends Vue {
         this.loadData();
     }
 
+    @Watch('categoryIds')
+    public categoryIdsChanged(value: any, oldValue: any) {
+        this.loadData();
+    }
+
     private loadData() {
         this.loading = true;
         OperationService.search({
@@ -68,6 +76,7 @@ export default class ShortOperationsListDialog extends Vue {
             dateTo: this.dateTo,
             size: 100, // todo возможно тоже надо делать пагинацию
             excludeCategoryIds: this.excludeCategoryIds,
+            categoryIds: this.categoryIds,
             operationTypes: ['CONSUMPTION', 'TRANSFER']
         })
             .then((data: any) => {

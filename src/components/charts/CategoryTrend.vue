@@ -29,6 +29,11 @@
         </v-card-title>
         <line-chart :chart-data="datacollection"
                     :options="options"></line-chart>
+
+        <ShortOperationsListDialog :dateFrom="clickOperationDateFrom" :dateTo="clickOperationDateTo"
+                                   :categoryIds="categoryIds"
+                                   :visible="showOperationsDialog"
+                                   @close="showOperationsDialog=false"/>
     </v-card>
 </template>
 
@@ -38,9 +43,11 @@ import LineChart from './js/LineChart.js';
 import {Component,  Vue, Watch} from 'vue-property-decorator';
 import StatisticsService from '@/services/StatisticsService';
 import SelectDate from "@/components/common/SelectDate.vue";
+import ShortOperationsListDialog from '@/components/operation/ShortOperationsListDialog';
+
 
 @Component({
-    components: {LineChart, SelectDate},
+    components: {LineChart, SelectDate,ShortOperationsListDialog},
 })
 export default class CategoryTrend extends Vue {
 
@@ -64,7 +71,20 @@ export default class CategoryTrend extends Vue {
     }
 
     get options() {
+        var _this = this;
         return {
+            onClick: function(point: any) {
+                let elementAtEvent = this.getElementAtEvent(point);
+
+                if (elementAtEvent[0]) {
+                    let index = elementAtEvent[0]._index;
+                    _this.clickOperationDateFrom = _this.rawData.datasets[elementAtEvent[0]._datasetIndex].dates[index];
+                    // todo тут надо с часовыми поясами разобраться
+                    let dateFrom = new Date(_this.clickOperationDateFrom);
+                    _this.clickOperationDateTo = new Date(dateFrom.getFullYear(), dateFrom.getMonth() + 1, 0, 23, 59, 59).toISOString().substr(0, 10);
+                    _this.showOperationsDialog = true;
+                }
+            },
             maintainAspectRatio: false, aspectRatio: 1,
             legend:
                 {
@@ -76,6 +96,9 @@ export default class CategoryTrend extends Vue {
         };
     }
 
+    public clickOperationDateFrom: any = null;
+    public clickOperationDateTo: any = null;
+    public showOperationsDialog = false;
     public dateFrom = null;
     public dateTo = null;
     public rawData: any = {};
