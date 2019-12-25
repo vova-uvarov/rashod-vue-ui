@@ -74,7 +74,7 @@ export default class CategoryTrend extends Vue {
         var _this = this;
         return {
             onClick: function(point: any) {
-                let elementAtEvent = this.getElementAtEvent(point);
+                let elementAtEvent = (this as any).getElementAtEvent(point);
 
                 if (elementAtEvent[0]) {
                     let index = elementAtEvent[0]._index;
