@@ -111,10 +111,11 @@
     </v-container>
 </template>
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue, Watch} from 'vue-property-decorator';
 import SelectShoppingItems from '@/components/operation/SelectShoppingItems.vue';
 import SelectDate from '@/components/common/SelectDate.vue';
 import ObjectUtils from "@/utils/ObjectUtils";
+import Debounce from "@/utils/CustomDecorators";
 
 @Component({
     components: {SelectShoppingItems, SelectDate}
@@ -156,6 +157,14 @@ export default class OperationsFilter extends Vue {
     public searchCategoryValue = '';
     public searchAccountValue = '';
 
+    @Watch("operationFilter",{deep:true,immediate: true})
+    public operationFilterChanged(value: string, oldValue: string) {
+        console.log("operationFilter changed: " + new Date());
+        this.applyFilter();
+    }
+
+
+    @Debounce(500)
     public applyFilter() {
         this.$store.commit('updateOperationsFilter', ObjectUtils.copy(this.operationFilter));
         this.$store.dispatch('reloadOperations');
