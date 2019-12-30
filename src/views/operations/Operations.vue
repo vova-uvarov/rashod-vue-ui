@@ -9,7 +9,7 @@
             </v-expansion-panel>
         </v-expansion-panels>
 
-        <OperationsList :operations="operations"/>
+        <OperationsList :operations="operations" :loading="loading"/>
         <template>
             <div class="text-center">
                 <v-pagination
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue, Watch} from 'vue-property-decorator';
 import OperationsList from '@/components/operation/OperationsList.vue';
 import OperationsFilter from '@/components/operation/OperationsFilter.vue';
 
@@ -35,6 +35,8 @@ import OperationsFilter from '@/components/operation/OperationsFilter.vue';
     },
 })
 export default class OperationsView extends Vue {
+    public loading:boolean = false;
+
     public created() {
         this.$store.dispatch('reloadOperations');
     }
@@ -56,9 +58,18 @@ export default class OperationsView extends Vue {
         return this.$store.state.operationsView.totalPages;
     }
 
+    @Watch("operations")
+    public operationReloaded(){
+        this.loading = false;
+    }
+
     public mounted() {
         this.$root.$on('operationChanged', () => {
             this.$store.dispatch('reloadOperations');
+        });
+
+        this.$root.$on('opertionFilterChanged', () => {
+            this.loading = true;
         });
     }
 }

@@ -1,7 +1,19 @@
 <template>
     <v-row justify="center" align="start">
-        <v-col cols="12">
-            <v-simple-table :dense="true">
+       <v-col cols="6" offset="3"  v-if="loading">
+           <v-progress-circular
+
+                   :indeterminate="true"
+                   :rotate="0"
+                   :size="32"
+                   :value="0"
+                   :width="4"
+                   color="light-blue"
+           />
+           Идет загрузка данных...
+       </v-col>
+        <v-col cols="12" >
+            <v-simple-table :dense="true" v-if="!loading">
                 <thead>
                 <tr>
                     <th class="text-left"></th>
@@ -102,6 +114,9 @@ export default class OperationsList extends Vue {
 
     @Prop({default: []})
     public operations!: object[];
+
+    @Prop({default: false})
+    public loading!: boolean;
 
     public operationId = null;
     public showEditDialog = false;

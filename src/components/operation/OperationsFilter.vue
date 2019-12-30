@@ -159,7 +159,7 @@ export default class OperationsFilter extends Vue {
 
     @Watch("operationFilter",{deep:true,immediate: true})
     public operationFilterChanged(value: string, oldValue: string) {
-        console.log("operationFilter changed: " + new Date());
+        this.$root.$emit('opertionFilterChanged');
         this.applyFilter();
     }
 
@@ -169,7 +169,5 @@ export default class OperationsFilter extends Vue {
         this.$store.commit('updateOperationsFilter', ObjectUtils.copy(this.operationFilter));
         this.$store.dispatch('reloadOperations');
     }
-
-
 }
 </script>
