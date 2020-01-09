@@ -13,7 +13,7 @@
            Идет загрузка данных...
        </v-col>
         <v-col cols="12" >
-            <v-simple-table :dense="true" v-if="!loading">
+            <v-simple-table :dense="true">
                 <thead>
                 <tr>
                     <th class="text-left"></th>
