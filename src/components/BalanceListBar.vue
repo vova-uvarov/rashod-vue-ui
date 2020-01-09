@@ -15,7 +15,7 @@
                     :small="false"
                     outlined
             >
-                <b @click.stop="equalizationAccount(item)">{{item.accountName}}:</b> <span
+                <b class="equalizationAccountCursor" @click.stop="equalizationAccount(item)">{{item.accountName}}:</b> <span
                     :class="balanceClass(item.balance)">{{item.balance|moneyFormat}}</span>
 
             </v-chip>
@@ -88,6 +88,9 @@
     }
 </script>
 <style>
+    .equalizationAccountCursor {
+        cursor: pointer;
+    }
     .custom-card-text {
         padding-bottom: 0;
         padding-top: 0;
