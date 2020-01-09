@@ -1,7 +1,5 @@
 <template>
-    <v-row justify="center">
-        <CreateOperation formMode="CREATE" :operation="operation()"/>
-    </v-row>
+    <CreateOperation formMode="CREATE" :operation="operation()"/>
 </template>
 <script lang="ts">
     import {Component, Vue, Watch} from "vue-property-decorator";
