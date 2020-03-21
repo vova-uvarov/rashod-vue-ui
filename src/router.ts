@@ -12,6 +12,11 @@ export default new Router({
       component: Main,
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "about" */ './views/Login.vue'),
+    },
+    {
       path: '/categories',
       name: 'categories',
       // route level code-splitting
