@@ -3,7 +3,7 @@
         <v-col cols="4">
             <v-card :raised="true">
                 <v-card-title>
-                    <v-col> {{cardTitle}}</v-col>
+                    <v-col>Вход</v-col>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -51,7 +51,8 @@
         public password: string = '';
 
         public login() {
-            alert(this.userName);
+            const { userName, password } = this;
+            this.$store.dispatch("authRequest",  { userName, password });
         }
     }
 </script>

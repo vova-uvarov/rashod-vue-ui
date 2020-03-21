@@ -1,6 +1,7 @@
 <template>
     <v-app id="inspire">
         <v-navigation-drawer
+                v-if="isAuthenticated"
                 v-model="drawer"
                 app
                 clipped
@@ -153,12 +154,17 @@
         >
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>Домашние финансы</v-toolbar-title>
+            <v-spacer></v-spacer>
+
+            <v-btn v-on:click="logout">
+                Выйти
+            </v-btn>
         </v-app-bar>
 
 
         <v-content>
             <v-container fluid>
-                <BalanceListBar/>
+                <BalanceListBar v-if="isAuthenticated"/>
                 <router-view/>
             </v-container>
         </v-content>
@@ -186,11 +192,20 @@
         drawer = null;
 
         public countPlans = 0;
+
+        get isAuthenticated(){
+            return this.$store.getters.isAuthenticated;
+        }
+
         get appBarColor(){
             if (process.env.NODE_ENV==='development'){
                 return 'red';
             }
             return 'primary';
+        }
+
+        public logout() {
+            this.$store.dispatch("logout");
         }
 
         public mounted() {
