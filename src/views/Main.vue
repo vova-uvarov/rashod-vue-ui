@@ -58,6 +58,7 @@ export default class Main extends Vue {
     private loadData() {
         OperationService.search({
             operationTypes: ['CONSUMPTION'],
+            size: 12,
             isPlan: false,
         }).then((data: any) => {
             this.lastConsumptionOperations = data.content;
