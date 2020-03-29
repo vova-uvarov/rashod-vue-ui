@@ -3,8 +3,9 @@ services:
   - docker:dind
 stages:
   - deploy
-step-deploy-prod:
+build-docker-image:
   stage: deploy
   script:
     - docker build -t uvolodia/pets-projects:rashod-ui_v0.0.3 .
+    - docker login -u $REGISTRY_USER -p $REGISTRY_TOKEN
     - docker push uvolodia/pets-projects:rashod-ui_v0.0.3
