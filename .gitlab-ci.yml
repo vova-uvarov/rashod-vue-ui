@@ -1,0 +1,10 @@
+image: docker
+services:
+  - docker:dind
+stages:
+  - deploy
+step-deploy-prod:
+  stage: deploy
+  script:
+    - docker build -t uvolodia/pets-projects:rashod-ui_v0.0.3 .
+    - docker push uvolodia/pets-projects:rashod-ui_v0.0.3
