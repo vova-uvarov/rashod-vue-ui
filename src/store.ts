@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import router from './router';
 import AppParamService from '@/services/AppParamService';
 import PlaceService from '@/services/PlaceService';
 import AccountService from '@/services/AccountService';
 import OperationService from '@/services/OperationService';
 import DictionaryService from '@/services/DictionaryService';
 import CategoryService from '@/services/CategoryService';
+import LoginService from '@/services/LoginService';
 import ShoppingItemService from '@/services/ShoppingItemService';
+import axios, {AxiosResponse} from 'axios';
 
 Vue.use(Vuex);
 
@@ -14,14 +17,17 @@ export default new Vuex.Store({
 
     strict: true,
     state: {
-        staticDictionaries: {
-
+        auth: {
+            token: localStorage.getItem('user-token') || '',
+            status: ''
         },
+
+        staticDictionaries: {},
         dictionaries: {
             years: []
         },
         operationPlans: {
-            operations: [],
+            operations: []
         },
         operationsView: {
             operations: [],
@@ -39,17 +45,20 @@ export default new Vuex.Store({
                 costTo: null,
                 size: 10,
                 page: 1,
-                isPlan: false,
-            },
+                isPlan: false
+            }
         },
 
         shoppingItemNames: {},
         categories: [],
         accounts: [],
         places: [],
-        appParams: [],
+        appParams: []
     },
     getters: {
+        isAuthenticated: (state) => {
+            return !!state.auth.token;
+        },
         shoppintItemNamesAll: (state) => {
             const shoppingItemNames: any = state.shoppingItemNames;
             let result: any[] = [];
@@ -117,6 +126,16 @@ export default new Vuex.Store({
         updateYears: (state, newValue) => {
             state.dictionaries.years = newValue;
         },
+        authSuccess: (state, newValue) => {
+            state.auth.token = newValue;
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + newValue;
+            localStorage.setItem('user-token', newValue);
+            router.push('/');
+        },
+        logout: (state) => {
+            localStorage.removeItem('user-token');
+            state.auth.token = '';
+        }
     },
     actions: {
         reloadOperations(context) {
@@ -162,5 +181,15 @@ export default new Vuex.Store({
             DictionaryService.getYears()
                 .then((data) => (context.commit('updateYears', data)));
         },
-    },
+        authRequest(context: any, payload: any) {
+            LoginService.login(payload.userName, payload.password)
+                .then((data: any) => (context.commit('authSuccess', data.access_token)));
+            //    todo обрабатыватьошибки
+        },
+        logout(context: any) {
+            context.commit('logout');
+            delete axios.defaults.headers.common['Authorization'];
+            router.push('/login');
+        }
+    }
 });
