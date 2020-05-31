@@ -111,7 +111,14 @@
                                 <select-date label="Дата" :date.sync="operationInner.operationDate"/>
                             </v-col>
 
-                            <v-col cols="3">
+                            <v-col cols="2">
+                                <v-select  v-model="operationInner.ordinal"
+                                           :items="ordninals"
+                                           label="Порядок"
+                                ></v-select>
+                            </v-col>
+
+                            <v-col cols="2">
                                 <v-select v-if="formMode==='CREATE'"
                                           v-model="countRepeat"
                                           :items="repeatCounts"
@@ -119,7 +126,8 @@
                                 ></v-select>
                             </v-col>
 
-                            <v-col cols="3">
+
+                            <v-col cols="2">
                                 <v-switch
                                         v-model="operationInner.plan"
                                         label="План?"
@@ -200,6 +208,10 @@
 
         get repeatCounts() {
             return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        }
+
+        get ordninals() {
+            return [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         }
 
         get cardName() {

@@ -32,6 +32,7 @@
                 account: this.getParam("CREATE_OPERATION_ACCOUNT").account,
                 accountToTransfer: null,
                 cost: 0,
+                ordinal: 1,
                 shoppingList: [],
                 operationType: "CONSUMPTION"
             };
