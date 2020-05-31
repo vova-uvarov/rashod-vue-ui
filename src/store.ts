@@ -13,21 +13,19 @@ import axios, {AxiosResponse} from 'axios';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-
-    strict: true,
-    state: {
+function initialState() {
+    return {
         auth: {
             token: localStorage.getItem('user-token') || '',
-            status: ''
+            status: '',
         },
 
         staticDictionaries: {},
         dictionaries: {
-            years: []
+            years: [],
         },
         operationPlans: {
-            operations: []
+            operations: [],
         },
         operationsView: {
             operations: [],
@@ -45,16 +43,21 @@ export default new Vuex.Store({
                 costTo: null,
                 size: 10,
                 page: 1,
-                isPlan: false
-            }
+                isPlan: false,
+            },
         },
 
         shoppingItemNames: {},
         categories: [],
         accounts: [],
         places: [],
-        appParams: []
-    },
+        appParams: [],
+    };
+}
+export default new Vuex.Store({
+
+    strict: true,
+    state: initialState,
     getters: {
         isAuthenticated: (state) => {
             return !!state.auth.token;
@@ -78,7 +81,7 @@ export default new Vuex.Store({
                 }
             }
             return [];
-        }
+        },
     },
     mutations: {
         initState: (state) => {
@@ -135,7 +138,7 @@ export default new Vuex.Store({
         logout: (state) => {
             localStorage.removeItem('user-token');
             state.auth.token = '';
-        }
+        },
     },
     actions: {
         reloadOperations(context) {
@@ -187,9 +190,11 @@ export default new Vuex.Store({
             //    todo обрабатыватьошибки
         },
         logout(context: any) {
+            this.replaceState(initialState());
             context.commit('logout');
             delete axios.defaults.headers.common['Authorization'];
+            context.commit('resetState');
             router.push('/login');
-        }
-    }
+        },
+    },
 });
