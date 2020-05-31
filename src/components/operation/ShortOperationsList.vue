@@ -92,7 +92,6 @@ export default class ShortOperationsList extends Vue {
     }
 
     // todo Копипаста из LastOpeartions
-    // todo Копипаста из LastOpeartions
     public shoppingListFormatter(shoppingList: any) {
         if (!shoppingList) {
             return '';

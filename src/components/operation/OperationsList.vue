@@ -13,7 +13,7 @@
            Идет загрузка данных...
        </v-col>
         <v-col cols="12" >
-            <v-simple-table :dense="true" v-if="!loading">
+            <v-simple-table :dense="true">
                 <thead>
                 <tr>
                     <th class="text-left"></th>
@@ -41,11 +41,12 @@
                     <td>{{ item.account.name }}</td>
                     <td>{{ item.accountToTransfer?item.accountToTransfer.name:'' }}</td>
                     <td>{{ item.category.name }}</td>
-                    <td>{{getCostSign(item)}}{{ item.cost |moneyFormat}}</td>
+                    <td>{{getCostSign(item)}}{{ item.cost |moneyFormat}}<span v-if="item.cost!==item.inputCost">({{getCostSign(item)}}{{ item.inputCost |moneyFormat}})</span>
+                    </td>
                     <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                     <td>{{ item.place }}</td>
                     <td>{{ item.comment }}</td>
-                    <td>{{ item.author }}</td>
+                    <td>{{ item.creator.login }}</td>
                     <td>
                         <v-switch
                                 v-model="item.plan"

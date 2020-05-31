@@ -59,7 +59,7 @@
                                 <v-combobox
                                         :items="accounts"
                                         v-model="operationInner.account"
-                                        label="Со счета"
+                                        :label="getAccountTitle"
                                         item-value="id"
                                         item-text="name"
                                 ></v-combobox>
@@ -169,6 +169,13 @@
 
         get shoppingItems() {
             return this.$store.getters.shoppintItemNamesByOperationType(this.operationInner.operationType);
+        }
+
+        get getAccountTitle() {
+            if (this.operationInner.operationType === 'INCOME') {
+                return 'На счет';
+            }
+            return 'Со счета';
         }
 
         get cardTitle() {
