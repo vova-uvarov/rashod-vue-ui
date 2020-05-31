@@ -1,15 +1,24 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Main from './views/Main.vue';
+import store from './store.ts';
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: '/',
       name: 'main',
       component: Main,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "about" */ './views/Login.vue'),
+      meta: {
+        login: true,
+      },
     },
     {
       path: '/categories',
@@ -93,3 +102,16 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => !record.meta.login)) {
+    if (store.getters.isAuthenticated) {
+      next();
+      return;
+    }
+    next('/login');
+  } else {
+    next();
+  }
+});
+export default router;
