@@ -9,6 +9,12 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
 
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API_URL;
+const  accessToken  =  localStorage.getItem('user-token');
+
+if (accessToken) {
+    axios.defaults.headers.common['Authorization'] =  'Bearer ' + accessToken;
+}
+
 axios.interceptors.request.use((config: any) => {
     const params = config.params;
     if (params && config.method === 'get') {
@@ -21,6 +27,15 @@ axios.interceptors.request.use((config: any) => {
     }
     return config;
 }, (error: any) => (Promise.reject(error)));
+
+axios.interceptors.response.use(undefined, function(err) {
+    return new Promise(function(resolve, reject) {
+        if (err.response.status === 401) {
+            store.dispatch('logout');
+        }
+        throw err;
+    });
+});
 
 Vue.config.productionTip = false;
 

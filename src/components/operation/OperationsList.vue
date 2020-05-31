@@ -46,7 +46,7 @@
                     <td>{{ shoppingListFormatter(item.shoppingList)|truncateString }}</td>
                     <td>{{ item.place }}</td>
                     <td>{{ item.comment }}</td>
-                    <td>{{ item.author }}</td>
+                    <td>{{ item.creator.login }}</td>
                     <td>
                         <v-switch
                                 v-model="item.plan"
