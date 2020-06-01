@@ -8,6 +8,12 @@ export default class DictionaryService {
             .then((response) => (response.data));
     }
 
+    public static getTags(): Promise<AxiosResponse<any>> {
+        return axios
+            .get('/api/dictionary/tags')
+            .then((response) => (response.data));
+    }
+
     public static getYears(): Promise<AxiosResponse<any>> {
         return axios
             .get('/api/dictionary/years')

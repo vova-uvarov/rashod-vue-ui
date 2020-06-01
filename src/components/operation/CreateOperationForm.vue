@@ -91,8 +91,16 @@
                             </v-col>
 
                             <v-col cols="6">
-                                <v-text-field label="Теги" disabled
-                                ></v-text-field>
+                                <v-combobox
+                                        :items="tags"
+                                        v-model="operationInner.tags"
+                                        :clearable="true"
+                                        multiple
+                                        chips
+                                        :search-input.sync="searchTagsValue"
+                                        @change="searchTagsValue = ''"
+                                        label="Теги"
+                                ></v-combobox>
                             </v-col>
 
                         </v-row>
@@ -198,6 +206,9 @@
             }
         }
 
+        get tags() {
+            return this.$store.state.tags;
+        }
         get categories() {
             return this.$store.state.categories;
         }
@@ -244,6 +255,8 @@
 
         public countRepeat = 1;
         public showShoppingItem = true;
+        public searchCategoryValue = '';
+        public searchTagsValue = '';
 
         public deleteOperation() {
             if (confirm("Вы действительно хотите удалить операцию?")) {

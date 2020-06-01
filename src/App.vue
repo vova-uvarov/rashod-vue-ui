@@ -212,6 +212,7 @@
             this.$root.$on('operationChanged', () => {
                 this.$store.dispatch("loadShoppingItems");
                 this.$store.dispatch("loadPlaces");
+                this.$store.dispatch("loadTags");
                 OperationService.countPlans()
                     .then((data: any) => {
                         this.countPlans = data;
@@ -225,6 +226,7 @@
 
             this.$store.dispatch("loadShoppingItems");
             this.$store.dispatch("loadPlaces");
+            this.$store.dispatch("loadTags");
 
             this.$store.dispatch("loadDictionaries");
 

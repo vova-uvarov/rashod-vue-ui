@@ -51,6 +51,7 @@ function initialState() {
         categories: [],
         accounts: [],
         places: [],
+        tags: [],
         appParams: [],
     };
 }
@@ -118,6 +119,9 @@ export default new Vuex.Store({
         updatePlaces: (state, newValue) => {
             state.places = newValue;
         },
+        updateTags: (state, newValue) => {
+            state.tags = newValue;
+        },
         updateAppParams: (state, newValue) => {
             state.appParams = newValue;
         },
@@ -166,6 +170,10 @@ export default new Vuex.Store({
                 .then((names) => {
                     context.commit('updateShoppingItemsNames', names);
                 });
+        },
+        loadTags(context) {
+            DictionaryService.getTags()
+                .then((tags) => (context.commit('updateTags', tags)));
         },
         loadPlaces(context) {
             PlaceService.getPlaces()
