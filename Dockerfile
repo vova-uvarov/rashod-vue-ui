@@ -1,6 +1,6 @@
-#docker build -t rashod-ui:v0.1.0 .
-#docker tag rashod-ui:v0.1.0 uvolodia/pets-projects:rashod-ui_v0.1.0
-#docker push uvolodia/pets-projects:rashod-ui_v0.1.0
+#docker build -t rashod-ui:v0.2.0 .
+#docker tag rashod-ui:v0.2.0 uvolodia/pets-projects:rashod-ui_v0.2.0
+#docker push uvolodia/pets-projects:rashod-ui_v0.2.0
 FROM node:latest as build-stage
 WORKDIR /app
 COPY package*.json ./
