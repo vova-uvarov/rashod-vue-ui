@@ -13,7 +13,7 @@
     "chart.js": "^2.9.3",
     "core-js": "^2.6.5",
     "debounce": "^1.2.0",
-    "moment": "^2.26.0",
+    "moment": "^2.29.0",
     "roboto-fontface": "*",
     "tslib": "^2.0.0",
     "vue": "^2.6.11",
