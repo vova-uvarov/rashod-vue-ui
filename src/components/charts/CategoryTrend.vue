@@ -176,6 +176,9 @@ export default class CategoryTrend extends Vue {
         if (year === 2020) {
             return 'YELLOW';
         }
+        if (year === 2021) {
+            return '#0942d0';
+         }
         const letters = '0123456789ABCDEF';
         let color = '#';
         for (let i = 0; i < 6; i++) {

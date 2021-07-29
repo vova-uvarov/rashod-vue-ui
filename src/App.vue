@@ -170,7 +170,7 @@
         </v-content>
 
         <v-footer app>
-            <span>Владимир Уваров &copy; 2019. rashod-java ver 0.0.1</span>
+            <span>Владимир Уваров &copy; 2021. rashod-java ver 0.0.1</span>
         </v-footer>
     </v-app>
 </template>

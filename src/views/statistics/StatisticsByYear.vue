@@ -70,7 +70,7 @@ export default class StatisticByYear extends Vue {
         return this.$store.state.dictionaries.years;
     }
 
-    public year = 2019;
+    public year = new Date().getFullYear();
     public monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 }
 </script>
